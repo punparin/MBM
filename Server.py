@@ -15,11 +15,11 @@ class Server:
     def listen(self):
         try:
             while True:
-                client_socket, address = self.socket.accept()
+                clientSocket, address = self.socket.accept()
                 print("Got a connection from %s" % str(address))
                 msg = "Connected Successfully"
-                client_socket.send(msg.encode('ascii'))
-                thread = Handler(self.userManager, client_socket, address)
+                clientSocket.send(msg.encode('ascii'))
+                thread = Handler(self.userManager, clientSocket, address)
                 thread.start()
         except OSError:
             print("The port is not available")

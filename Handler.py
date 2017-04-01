@@ -4,10 +4,10 @@ import threading
 
 
 class Handler(threading.Thread):
-    def __init__(self, user_manager, client_socket, address):
+    def __init__(self, userManager, clientSocket, address):
         threading.Thread.__init__(self)
-        self.userManager = user_manager
-        self.clientSocket = client_socket
+        self.userManager = userManager
+        self.clientSocket = clientSocket
         self.address = address
         self.userManagerTasks = ['logIn', 'register', 'getUsers']
         print(self.userManager)
