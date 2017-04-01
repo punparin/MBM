@@ -1,4 +1,5 @@
 import socket
+import pickle
 
 
 class Client:
@@ -12,6 +13,11 @@ class Client:
         msg = self.s.recv(1024)
         print(msg.decode('ascii'))
 
+    def send(self, task, obj):
+        self.s.send(task.encode('ascii'))
+        obj = pickle.dumps(obj)
+        self.s.send(obj)
+
     def close(self):
         self.s.close()
 
@@ -20,6 +26,11 @@ def main():
     try:
         client = Client(socket.gethostname())
         client.connect()
+        while True:
+            task, username, password, email = input().split()
+            client.send(task, [username, password, email])
+            print("Sent")
+
         client.close()
     except OSError:
         print("Connection Failed")
