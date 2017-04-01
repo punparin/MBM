@@ -12,6 +12,8 @@ class UserManager:
             self.createUser(obj[0], obj[1], obj[2])
         elif task == 'getUsers':
             self.getUsers()
+        elif task == 'logIn':
+            self.login(obj[0], obj[1])
 
     def getUsers(self):
         self.userList = []
@@ -37,6 +39,12 @@ class UserManager:
             print("Create user:", username, "successfully")
         else:
             print("Failed")
+
+    def login(self, username, password):
+        for user in self.userList:
+            if username == user.username and password == user.password:
+                print("Logged In")
+        print("Failed")
 
     def credentialValidation(self, username, password, email):
         if not ('@' in email and '.' in email):

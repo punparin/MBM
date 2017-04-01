@@ -10,7 +10,6 @@ class Handler(threading.Thread):
         self.clientSocket = clientSocket
         self.address = address
         self.userManagerTasks = ['logIn', 'register', 'getUsers']
-        print(self.userManager)
         self.listen()
 
     def listen(self):
