@@ -21,9 +21,9 @@ class Server:
                 clientSocket.send(msg.encode('ascii'))
                 thread = Handler(self.userManager, clientSocket, address)
                 thread.start()
+                print("done")
         except OSError:
             print("The port is not available")
-
 
 def main():
     server = Server()

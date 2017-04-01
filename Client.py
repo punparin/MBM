@@ -1,7 +1,6 @@
 import socket
 import pickle
 
-
 class Client:
     def __init__(self, host, port=9999):
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -20,7 +19,6 @@ class Client:
 
     def close(self):
         self.s.close()
-
 
 def main():
     try:

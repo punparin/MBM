@@ -9,11 +9,11 @@ class UserManager:
 
     def work(self, task, obj):
         if task == 'register':
-            self.createUser(obj[0], obj[1], obj[2])
+            self.registerUser(obj[0], obj[1], obj[2])
         elif task == 'getUsers':
             self.getUsers()
         elif task == 'logIn':
-            self.login(obj[0], obj[1])
+            self.logIn(obj[0], obj[1])
 
     def getUsers(self):
         self.userList = []
@@ -29,7 +29,7 @@ class UserManager:
         except EOFError:
             pass
 
-    def createUser(self, username, password, email):
+    def registerUser(self, username, password, email):
         if self.credentialValidation(username, password, email):
             user = User(username, password, email)
             fileObject = open(self.userListFileName, 'ab')
@@ -40,10 +40,12 @@ class UserManager:
         else:
             print("Failed")
 
-    def login(self, username, password):
+    def logIn(self, username, password):
+        print(username, password)
         for user in self.userList:
             if username == user.username and password == user.password:
                 print("Logged In")
+                return
         print("Failed")
 
     def credentialValidation(self, username, password, email):
