@@ -7,13 +7,13 @@ class UserManager:
         self.userList = []
         self.getUsers()
 
-    def work(self, task, obj):
+    def work(self, task, user):
         if task == 'register':
-            self.registerUser(obj[0], obj[1], obj[2])
+            self.registerUser(user)
         elif task == 'getUsers':
             self.getUsers()
         elif task == 'logIn':
-            self.logIn(obj[0], obj[1])
+            self.logIn(user)
 
     def getUsers(self):
         self.userList = []
@@ -29,21 +29,21 @@ class UserManager:
         except EOFError:
             pass
 
-    def registerUser(self, username, password, email):
-        if self.credentialValidation(username, password, email):
-            user = User(username, password, email)
+    def registerUser(self, user):
+        if self.credentialValidation(user.username, user.password, user.email):
+            user = User(user.username, user.password, user.email)
             fileObject = open(self.userListFileName, 'ab')
             pickle.dump(user, fileObject)
             fileObject.close()
             self.userList.append(user)
-            print("Create user:", username, "successfully")
+            print("Create user:", user.username, "successfully")
         else:
             print("Failed")
 
-    def logIn(self, username, password):
-        print(username, password)
-        for user in self.userList:
-            if username == user.username and password == user.password:
+    def logIn(self, user):
+        print(user.username, user.password)
+        for registeredUser in self.userList:
+            if user.username == registeredUser.username and user.password == registeredUser.password:
                 print("Logged In")
                 return
         print("Failed")
