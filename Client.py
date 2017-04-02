@@ -21,6 +21,7 @@ class Client:
     def close(self):
         self.s.close()
 
+'''
 def main():
     try:
         client = Client(socket.gethostname())
@@ -42,3 +43,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+'''
