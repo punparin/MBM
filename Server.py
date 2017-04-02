@@ -8,10 +8,14 @@ class Server:
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.host = socket.gethostname()
         self.port = port
-        self.socket.bind((self.host, self.port))
-        self.socket.listen(5)
-        self.userManager = UserManager(self.socket)
-        print("The server is ready!")
+        try:
+            self.socket.bind((self.host, self.port))
+            self.socket.listen(5)
+            self.userManager = UserManager(self.socket)
+            print("The server is ready!")
+            self.listen()
+        except OSError:
+            print("Server is already working!")
 
     # Waiting for connection, then send the connection to Handler
     def listen(self):
@@ -27,7 +31,6 @@ class Server:
 
 def main():
     server = Server()
-    server.listen()
 
 if __name__ == "__main__":
     main()
