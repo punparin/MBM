@@ -1,14 +1,11 @@
 from loginUI import *
 from registerUI import *
-from PySide.QtCore import *
 from PySide.QtGui import *
-from PySide.QtUiTools import *
 from User import *
 import socket
 import pickle
 import sys
 import threading
-import time
 
 # Main UI / Client
 class UImanager(QMainWindow):

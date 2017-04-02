@@ -2,7 +2,6 @@ from PySide.QtCore import *
 from PySide.QtGui import *
 from PySide.QtUiTools import *
 from User import *
-import sys
 
 class LoginUI(QMainWindow):
     def __init__(self, parent = None):
