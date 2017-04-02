@@ -2,20 +2,22 @@ import pickle
 from User import *
 
 class UserManager:
-    def __init__(self):
+    def __init__(self, clientSocket):
         self.userListFileName = "userList"
         self.userList = []
+        self.clientSocket = clientSocket
         self.getUsers()
 
     def work(self, task, user):
+        processedObj = None
         if task == 'register':
-            self.registerUser(user)
-        elif task == 'getUsers':
-            self.getUsers()
+            processedObj = self.registerUser(user)
         elif task == 'logIn':
-            self.logIn(user)
+            processedObj = self.logIn(user)
+        return processedObj
 
     def getUsers(self):
+        print("Loading users...")
         self.userList = []
         try:
             file_object = open(self.userListFileName, 'rb')
@@ -25,7 +27,6 @@ class UserManager:
             while True:
                 obj = pickle.load(file_object)
                 self.userList.append(obj)
-                print(obj)
         except EOFError:
             pass
 
@@ -33,31 +34,34 @@ class UserManager:
         for registeredUser in self.userList:
             if user.username == registeredUser.username:
                 print(user.username + " is not available")
-                return
+                return user.username + " is not available"
             if user.email == registeredUser.email:
                 print(user.email + " is not available")
-                return
-        if self.credentialValidation(user.username, user.password, user.email):
+                return user.email + " is not available"
+        credential = self.credentialValidation(user.username, user.password, user.email)
+        if credential is True:
             user = User(user.username, user.password, user.email)
             fileObject = open(self.userListFileName, 'ab')
             pickle.dump(user, fileObject)
             fileObject.close()
             self.userList.append(user)
-            print("Create user:", user.username, "successfully")
+            print("Created User:", user.username, "successfully")
+            return True
         else:
-            print("Failed")
+            print("Created User:", user.username, "failed")
+            return "Your " + credential + " is not valid"
 
     def logIn(self, user):
-        print(user.username, user.password)
         for registeredUser in self.userList:
             if user.username == registeredUser.username and user.password == registeredUser.password:
-                print("Logged In")
-                return
-        print("Failed")
+                print("User:", user.username, "logged in successfully")
+                return registeredUser
+        print("User:", user.username, "logged in failed")
+        return "User: " + user.username + " logged in failed"
 
     def credentialValidation(self, username, password, email):
         if not ('@' in email and '.' in email):
-            return False
+            return "email"
         isDigit = False
         isCapitalized = False
         for alp in password:
@@ -66,10 +70,10 @@ class UserManager:
             if alp.isupper():
                 isCapitalized= True
         if not (isDigit and isCapitalized):
-            return False
+            return "password"
         for user in self.userList:
             if username == user.username or email == user.email:
-                return False
+                return "username"
         return True
 
 

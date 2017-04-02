@@ -7,6 +7,8 @@ from User import *
 import socket
 import pickle
 import sys
+import threading
+import time
 
 # Main UI / Client
 class UImanager(QMainWindow):
@@ -31,24 +33,66 @@ class UImanager(QMainWindow):
         self.port = port
         self.connect()
 
+        # Init user
+        self.user = None
+        self.userThread = threading.Thread(target=self.waitingForUser, args=[])
+        self.userThread.setDaemon(True)
+        self.userThread.start()
+
+        # Start listening for the server
+        #self.thread = threading.Thread(target=self.listen, args=[])
+        #self.thread.setDaemon(True)
+        #self.thread.start()
+
     # Change page signal (send from log in UI page)
     def changePageLoginSection(self, signal = None, user = None):
         if signal == "login":
-            print(user)
             self.send('logIn', user)
         elif signal == "register":
             register_widget = RegisterUI(self)
             self.central_widget.addWidget(register_widget)
             self.centralWidget().setCurrentWidget(register_widget)
 
-    # Change Page signal (send from register UI page)
+        # Change Page signal (send from register UI page)
     def changePageRegisterSection(self, signal = None, user = None):
         if signal == "register_confirm":
-            print(user)
             self.send('register', user)
             login_widget = LoginUI(self)
             self.central_widget.addWidget(login_widget)
             self.centralWidget().setCurrentWidget(login_widget)
+
+    def waitingForUser(self):
+        print('Waiting for User')
+        while True:
+            task = self.socket.recv(1024).decode('ascii')
+            if task == '':
+                break
+            try:
+                obj = pickle.loads(self.socket.recv(4096))
+                # check if the user logged in successfully
+                if task == 'logIn' and type(obj) == User:
+                    self.user = obj
+                    print("Initialize user successfully")
+                    break
+                # check if the user registered successfully
+                elif task == 'register' and obj is True:
+                    print("Registered successfully")
+                else:
+                    print(obj)
+            except EOFError as e:
+                print(e)
+
+    def listen(self):
+        while True:
+            print('listening')
+            task = self.clientSocket.recv(1024).decode('ascii')
+            if task == '':
+                break
+            try:
+                obj = pickle.loads(self.socket.recv(4096))
+                #do sth. with the object
+            except EOFError as e:
+                print(e)
 
     def connect(self):
         self.socket.connect((self.host, self.port))

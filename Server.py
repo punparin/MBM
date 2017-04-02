@@ -9,7 +9,7 @@ class Server:
         self.port = port
         self.socket.bind((self.host, self.port))
         self.socket.listen(5)
-        self.userManager = UserManager()
+        self.userManager = UserManager(self.socket)
         print("The server is ready!")
 
     def listen(self):
@@ -17,9 +17,10 @@ class Server:
             while True:
                 clientSocket, address = self.socket.accept()
                 print("Got a connection from %s" % str(address))
-                msg = "Connected Successfully"
-                clientSocket.send(msg.encode('ascii'))
+                #msg = "Connected Successfully"
+                #clientSocket.send(msg.encode('ascii'))
                 thread = Handler(self.userManager, clientSocket, address)
+                thread.setDaemon(True)
                 thread.start()
         except OSError:
             print("The port is not available")

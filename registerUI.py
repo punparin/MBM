@@ -28,7 +28,7 @@ class RegisterUI(QMainWindow):
 
         self.comform_button.clicked.connect(self.confirm)
 
-    # click buttin "con firm"
+    # click button "confirm"
     def confirm(self):
         user = User(self.user_id.text(), self.password.text() , self.email.text())
         self.parent.changePageRegisterSection("register_confirm", user)
