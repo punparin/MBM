@@ -30,6 +30,13 @@ class UserManager:
             pass
 
     def registerUser(self, user):
+        for registeredUser in self.userList:
+            if user.username == registeredUser.username:
+                print(user.username + " is not available")
+                return
+            if user.email == registeredUser.email:
+                print(user.email + " is not available")
+                return
         if self.credentialValidation(user.username, user.password, user.email):
             user = User(user.username, user.password, user.email)
             fileObject = open(self.userListFileName, 'ab')

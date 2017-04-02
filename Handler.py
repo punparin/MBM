@@ -11,17 +11,17 @@ class Handler(threading.Thread):
         self.userManagerTasks = ['logIn', 'register', 'getUsers']
 
     def run(self):
-        try:
-            while True:
-                print('listening')
-                task = self.clientSocket.recv(1024).decode('ascii')
-                try:
-                    obj = pickle.loads(self.clientSocket.recv(4096))
-                    #seperate task for each manager here
-                    if task in self.userManagerTasks:
-                        self.userManager.work(task, obj)
-                except EOFError:
-                    pass
-
-        finally:
-            self.clientSocket.close()
+        while True:
+            print('listening')
+            task = self.clientSocket.recv(1024).decode('ascii')
+            if task == '':
+                break
+            try:
+                obj = pickle.loads(self.clientSocket.recv(4096))
+                #seperate task for each manager here
+                if task in self.userManagerTasks:
+                    self.userManager.work(task, obj)
+            except EOFError:
+                self.clientSocket.close()
+        self.clientSocket.close()
+        print(self.address, "disconnected")
