@@ -8,6 +8,7 @@ class UserManager:
         self.clientSocket = clientSocket
         self.getUsers()
 
+    # Identify task for the exact function
     def work(self, task, user):
         processedObj = None
         if task == 'register':
@@ -16,6 +17,7 @@ class UserManager:
             processedObj = self.logIn(user)
         return processedObj
 
+    # Get all users to self.userList
     def getUsers(self):
         print("Loading users...")
         self.userList = []
@@ -30,6 +32,7 @@ class UserManager:
         except EOFError:
             pass
 
+    # Register new user
     def registerUser(self, user):
         for registeredUser in self.userList:
             if user.username == registeredUser.username:
@@ -51,6 +54,7 @@ class UserManager:
             print("Created User:", user.username, "failed")
             return "Your " + credential + " is not valid"
 
+    # Log in user
     def logIn(self, user):
         for registeredUser in self.userList:
             if user.username == registeredUser.username and user.password == registeredUser.password:
@@ -59,6 +63,7 @@ class UserManager:
         print("User:", user.username, "logged in failed")
         return "User: " + user.username + " logged in failed"
 
+    # Check whether the credentials are valid
     def credentialValidation(self, username, password, email):
         if not ('@' in email and '.' in email):
             return "email"

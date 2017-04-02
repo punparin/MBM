@@ -1,3 +1,4 @@
+import socket
 from Handler import *
 from UserManager import *
 
@@ -12,13 +13,12 @@ class Server:
         self.userManager = UserManager(self.socket)
         print("The server is ready!")
 
+    # Waiting for connection, then send the connection to Handler
     def listen(self):
         try:
             while True:
                 clientSocket, address = self.socket.accept()
                 print("Got a connection from %s" % str(address))
-                #msg = "Connected Successfully"
-                #clientSocket.send(msg.encode('ascii'))
                 thread = Handler(self.userManager, clientSocket, address)
                 thread.setDaemon(True)
                 thread.start()
