@@ -25,16 +25,18 @@ class UImanager(QMainWindow):
         self.central_widget.addWidget(login_widget)
 
         # Init socket part
+        self.isServerOnline = False
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.host = host
         self.port = port
         self.connect()
 
-        # Init user
-        self.user = None
-        self.userThread = threading.Thread(target=self.waitingForUser, args=[])
-        self.userThread.setDaemon(True)
-        self.userThread.start()
+        if self.isServerOnline:
+            # Init user
+            self.user = None
+            self.userThread = threading.Thread(target=self.waitingForUser, args=[])
+            self.userThread.setDaemon(True)
+            self.userThread.start()
 
         # Start listening for the server
         #self.thread = threading.Thread(target=self.listen, args=[])
@@ -92,9 +94,13 @@ class UImanager(QMainWindow):
                 print(e)
 
     def connect(self):
-        self.socket.connect((self.host, self.port))
-        msg = self.socket.recv(1024)
-        print(msg.decode('ascii'))
+        try:
+            self.socket.connect((self.host, self.port))
+            msg = self.socket.recv(1024)
+            print(msg.decode('ascii'))
+            self.isServerOnline = True
+        except ConnectionRefusedError:
+            print("The server is currently offline.")
 
     def send(self, task, obj):
         self.socket.send(task.encode('ascii'))
