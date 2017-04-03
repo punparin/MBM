@@ -24,7 +24,7 @@ class UserManager:
         try:
             file_object = open(self.userListFileName, 'rb')
         except FileNotFoundError:
-            open(self.userListFileName, 'ab')
+            file_object = open(self.userListFileName, 'ab')
         try:
             while True:
                 obj = pickle.load(file_object)
