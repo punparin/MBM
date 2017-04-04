@@ -38,10 +38,8 @@ class UImanager(QMainWindow):
             self.userThread.setDaemon(True)
             self.userThread.start()
 
-        # Start listening for the server
-        #self.thread = threading.Thread(target=self.listen, args=[])
-        #self.thread.setDaemon(True)
-        #self.thread.start()
+        self.thread = threading.Thread(target=self.listen, args=[])
+        self.thread.setDaemon(True)
 
     # Change page signal (send from log in UI page)
     def changePageLoginSection(self, signal = None, user = None):
@@ -80,11 +78,13 @@ class UImanager(QMainWindow):
                     print(obj)
             except EOFError as e:
                 print(e)
+        # Start listening for the server
+        self.thread.start()
 
     def listen(self):
         while True:
             print('listening')
-            task = self.clientSocket.recv(1024).decode('ascii')
+            task = self.socket.recv(1024).decode('ascii')
             if task == '':
                 break
             try:
