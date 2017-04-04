@@ -1,6 +1,6 @@
 import socket
 import pickle
-
+from User import *
 
 class Client:
     def __init__(self, host, port=9999):
@@ -21,19 +21,26 @@ class Client:
     def close(self):
         self.s.close()
 
-
+'''
 def main():
     try:
         client = Client(socket.gethostname())
         client.connect()
         while True:
-            task, username, password, email = input().split()
-            client.send(task, [username, password, email])
+            task = input()
+            if task == 'logIn':
+                username, password = input().split()
+                user = User(username, password)
+                client.send(task, user)
+            elif task == 'register':
+                username, password, email = input().split()
+                user = User(username, password, email)
+                client.send(task, user)
             print("Sent")
-
         client.close()
     except OSError:
         print("Connection Failed")
 
 if __name__ == "__main__":
     main()
+'''
