@@ -50,7 +50,7 @@ class UImanager(QMainWindow):
             self.central_widget.addWidget(register_widget)
             self.centralWidget().setCurrentWidget(register_widget)
 
-        # Change Page signal (send from register UI page)
+    # Change Page signal (send from register UI page)
     def changePageRegisterSection(self, signal = None, user = None):
         if signal == "register_confirm":
             self.send('register', user)
@@ -58,6 +58,7 @@ class UImanager(QMainWindow):
             self.central_widget.addWidget(login_widget)
             self.centralWidget().setCurrentWidget(login_widget)
 
+    # Recieve task and object before logged in
     def waitingForUser(self):
         print('Waiting for User')
         while True:
@@ -81,6 +82,7 @@ class UImanager(QMainWindow):
         # Start listening for the server
         self.thread.start()
 
+    # Recieve task and object after logged in
     def listen(self):
         while True:
             print('listening')
@@ -93,6 +95,7 @@ class UImanager(QMainWindow):
             except EOFError as e:
                 print(e)
 
+    # Connect to the server
     def connect(self):
         try:
             self.socket.connect((self.host, self.port))
@@ -102,11 +105,13 @@ class UImanager(QMainWindow):
         except ConnectionRefusedError:
             print("The server is currently offline.")
 
+    # Send task and object
     def send(self, task, obj):
         self.socket.send(task.encode('ascii'))
         obj = pickle.dumps(obj)
         self.socket.send(obj)
 
+    # Close the socket connection
     def close(self):
         self.socket.close()
 
