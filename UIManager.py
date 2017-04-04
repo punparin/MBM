@@ -1,5 +1,6 @@
 from loginUI import *
 from registerUI import *
+from MainUI import *
 from PySide.QtGui import *
 from User import *
 import socket
@@ -24,6 +25,17 @@ class UImanager(QMainWindow):
         login_widget = LoginUI(self)
         self.central_widget.addWidget(login_widget)
 
+        # Init state attributes
+        self.state = "offline"
+
+        #add widget
+        self.login_widget = LoginUI(self)
+        self.main_widget = MainUI(self)
+        self.register_widget = RegisterUI(self)
+        self.central_widget.addWidget(self.login_widget)
+        self.central_widget.addWidget(self.main_widget)
+        self.central_widget.addWidget(self.register_widget)
+
         # Init socket part
         self.isServerOnline = False
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -38,25 +50,27 @@ class UImanager(QMainWindow):
             self.userThread.setDaemon(True)
             self.userThread.start()
 
-        self.thread = threading.Thread(target=self.listen, args=[])
-        self.thread.setDaemon(True)
+            self.thread = threading.Thread(target=self.listen, args=[])
+            self.thread.setDaemon(True)
 
     # Change page signal (send from log in UI page)
     def changePageLoginSection(self, signal = None, user = None):
         if signal == "login":
+            self.state = "waiting"
             self.send('logIn', user)
+            while self.state == "waiting":
+                print("waiting to login")
+            if self.state == "online":
+                self.centralWidget().setCurrentWidget(self.main_widget)
+
         elif signal == "register":
-            register_widget = RegisterUI(self)
-            self.central_widget.addWidget(register_widget)
-            self.centralWidget().setCurrentWidget(register_widget)
+            self.centralWidget().setCurrentWidget(self.register_widget)
 
     # Change Page signal (send from register UI page)
     def changePageRegisterSection(self, signal = None, user = None):
         if signal == "register_confirm":
             self.send('register', user)
-            login_widget = LoginUI(self)
-            self.central_widget.addWidget(login_widget)
-            self.centralWidget().setCurrentWidget(login_widget)
+            self.centralWidget().setCurrentWidget(self.login_widget)
 
     # Recieve task and object before logged in
     def waitingForUser(self):
@@ -67,15 +81,19 @@ class UImanager(QMainWindow):
                 break
             try:
                 obj = pickle.loads(self.socket.recv(4096))
+                self.state = "waiting"
                 # check if the user logged in successfully
                 if task == 'logIn' and type(obj) == User:
                     self.user = obj
                     print("Initialize user successfully")
+                    self.state = "online"
                     break
                 # check if the user registered successfully
                 elif task == 'register' and obj is True:
                     print("Registered successfully")
                 else:
+                    print("Invalid Username or Password")
+                    self.state = "offline"
                     print(obj)
             except EOFError as e:
                 print(e)
