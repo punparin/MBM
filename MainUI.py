@@ -64,8 +64,9 @@ class MainUI(QMainWindow):
         self.parent.user.email = self.email_line.text()
         #have more
         #send user(modified) back to server
-        self.parent.send("update_profile", self.parent.user)
+        self.parent.send("updateProfile", self.parent.user)
         self.loadProfile()
+        print(self.parent.user)
         print("save complete")
 
     def loadProfile(self):
