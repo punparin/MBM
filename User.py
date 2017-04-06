@@ -4,9 +4,12 @@ class User:
         self.username = username
         self.password = password
         self.email = email
+
+        #user
         self.name = ""
         self.middle_name = ""
         self.last_name = ""
+
         self.nickname = ""
         self.address = ""
         self.phone_number = ""
@@ -14,10 +17,9 @@ class User:
         self.position = ""
         self.department = ""
         self.biology = ""
-        self.nationality = ""
-        print("done")
+        self.nationality =""
 
     def __str__(self):
-        return self.username + " " + self.password + " " + self.email + " " + self.name + " " + self.middle_name + " " + self.last_name + " " + self.nickname
+        return self.username + " " + self.password + " " + self.email + " " + self.nickname + " " + self.address + " " + self.phone_number
 
 
