@@ -7,7 +7,7 @@ class Handler(threading.Thread):
         self.clientSocket = clientSocket
         self.userManager = userManager
         self.address = address
-        self.userManagerTasks = ['logIn', 'register']
+        self.userManagerTasks = ['logIn', 'register', 'updateProfile']
         msg = "Connected Successfully"
         self.clientSocket.send(msg.encode('ascii'))
 
