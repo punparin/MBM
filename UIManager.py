@@ -1,6 +1,6 @@
-from loginUI import *
-from registerUI import *
-from mainUI import *
+from LoginUI import *
+from RegisterUI import *
+from MainUI import *
 from PySide.QtGui import *
 from User import *
 import socket
