@@ -1,6 +1,6 @@
 from loginUI import *
 from registerUI import *
-from MainUI import *
+from mainUI import *
 from PySide.QtGui import *
 from User import *
 import socket
@@ -50,17 +50,17 @@ class UImanager(QMainWindow):
             self.userThread.setDaemon(True)
             self.userThread.start()
 
-            self.thread = threading.Thread(target=self.listen, args=[])
-            self.thread.setDaemon(True)
+        self.thread = threading.Thread(target=self.listen, args=[])
+        self.thread.setDaemon(True)
 
     # Change page signal (send from log in UI page)
     def changePageLoginSection(self, signal = None, user = None):
         if signal == "login":
             self.state = "waiting"
             self.send('logIn', user)
-            while self.state == "waiting":
+            while(self.state == "waiting"):
                 print("waiting to login")
-            if self.state == "online":
+            if(self.state == "online"):
                 self.centralWidget().setCurrentWidget(self.main_widget)
 
         elif signal == "register":
