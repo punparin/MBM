@@ -950,7 +950,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
     <enum>QFrame::WinPanel</enum>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="main_page">
     <property name="styleSheet">
@@ -1107,190 +1107,258 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
       <string>upload</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_5">
-     <property name="geometry">
-      <rect>
-       <x>310</x>
-       <y>120</y>
-       <width>91</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Name : </string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_6">
+    <widget class="QScrollArea" name="scrollArea">
      <property name="geometry">
       <rect>
        <x>260</x>
-       <y>180</y>
-       <width>111</width>
-       <height>16</height>
+       <y>30</y>
+       <width>691</width>
+       <height>541</height>
       </rect>
      </property>
-     <property name="text">
-      <string>Middle Name:</string>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOn</enum>
      </property>
-    </widget>
-    <widget class="QLabel" name="label_7">
-     <property name="geometry">
-      <rect>
-       <x>290</x>
-       <y>230</y>
-       <width>91</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Surname:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_9">
-     <property name="geometry">
-      <rect>
-       <x>280</x>
-       <y>280</y>
-       <width>91</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Nickname:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_10">
-     <property name="geometry">
-      <rect>
-       <x>300</x>
-       <y>330</y>
-       <width>91</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Position:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_11">
-     <property name="geometry">
-      <rect>
-       <x>260</x>
-       <y>390</y>
-       <width>121</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Bio(optional):</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="save_button">
-     <property name="geometry">
-      <rect>
-       <x>480</x>
-       <y>540</y>
-       <width>93</width>
-       <height>28</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Save</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="cancel_button">
-     <property name="geometry">
-      <rect>
-       <x>600</x>
-       <y>540</y>
-       <width>93</width>
-       <height>28</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Cancel</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="name_lineEdit">
-     <property name="geometry">
-      <rect>
-       <x>380</x>
-       <y>130</y>
-       <width>441</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="mouseTracking">
-      <bool>false</bool>
-     </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
-     </property>
-     <property name="frame">
+     <property name="widgetResizable">
       <bool>true</bool>
      </property>
-    </widget>
-    <widget class="QTextEdit" name="bio_textEdit">
-     <property name="geometry">
-      <rect>
-       <x>370</x>
-       <y>390</y>
-       <width>431</width>
-       <height>121</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="middlename_lineEdit">
-     <property name="geometry">
-      <rect>
-       <x>380</x>
-       <y>180</y>
-       <width>441</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="mouseTracking">
-      <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="surname_lineEdit">
-     <property name="geometry">
-      <rect>
-       <x>380</x>
-       <y>230</y>
-       <width>441</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="mouseTracking">
-      <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="nickname_lineEdit">
-     <property name="geometry">
-      <rect>
-       <x>380</x>
-       <y>280</y>
-       <width>441</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="mouseTracking">
-      <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="position_lineEdit">
-     <property name="geometry">
-      <rect>
-       <x>380</x>
-       <y>330</y>
-       <width>441</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="mouseTracking">
-      <bool>false</bool>
-     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>-86</y>
+        <width>668</width>
+        <height>625</height>
+       </rect>
+      </property>
+      <layout class="QFormLayout" name="formLayout">
+       <property name="fieldGrowthPolicy">
+        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+       </property>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>Name : </string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="name_lineEdit">
+         <property name="mouseTracking">
+          <bool>false</bool>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="frame">
+          <bool>true</bool>
+         </property>
+         <property name="placeholderText">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Middle Name :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="middlename_lineEdit">
+         <property name="mouseTracking">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Surname :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="surname_lineEdit">
+         <property name="mouseTracking">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>Nickname :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="nickname_lineEdit">
+         <property name="mouseTracking">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_10">
+         <property name="text">
+          <string>Phone No. :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="phone_lineEdit">
+         <property name="mouseTracking">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_17">
+         <property name="text">
+          <string>Email :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="email_lineEdit">
+         <property name="mouseTracking">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>Address:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QTextEdit" name="address_textEdit"/>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>Bio(optional):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QTextEdit" name="bio_textEdit"/>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="label_13">
+         <property name="text">
+          <string>Birth Date :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QDateEdit" name="dateEdit">
+         <property name="locale">
+          <locale language="English" country="UnitedStates"/>
+         </property>
+         <property name="date">
+          <date>
+           <year>1996</year>
+           <month>1</month>
+           <day>1</day>
+          </date>
+         </property>
+         <property name="calendarPopup">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="label_16">
+         <property name="text">
+          <string>Nationality :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QComboBox" name="nation_box"/>
+       </item>
+       <item row="10" column="0">
+        <widget class="QLabel" name="label_14">
+         <property name="text">
+          <string>Position :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1">
+        <widget class="QComboBox" name="position_box"/>
+       </item>
+       <item row="11" column="0">
+        <widget class="QLabel" name="label_15">
+         <property name="text">
+          <string>Department :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="1">
+        <widget class="QComboBox" name="department_box"/>
+       </item>
+       <item row="13" column="1">
+        <widget class="QPushButton" name="cancel_button">
+         <property name="text">
+          <string>CANCEL</string>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="1">
+        <widget class="QPushButton" name="save_button">
+         <property name="text">
+          <string>SAVE</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+      <zorder>name_lineEdit</zorder>
+      <zorder>phone_lineEdit</zorder>
+      <zorder>label_9</zorder>
+      <zorder>surname_lineEdit</zorder>
+      <zorder>label_11</zorder>
+      <zorder>nickname_lineEdit</zorder>
+      <zorder>middlename_lineEdit</zorder>
+      <zorder>label_6</zorder>
+      <zorder>label_5</zorder>
+      <zorder>label_10</zorder>
+      <zorder>label_7</zorder>
+      <zorder>address_textEdit</zorder>
+      <zorder>label_5</zorder>
+      <zorder>phone_lineEdit</zorder>
+      <zorder>label_9</zorder>
+      <zorder>surname_lineEdit</zorder>
+      <zorder>name_lineEdit</zorder>
+      <zorder>label_11</zorder>
+      <zorder>nickname_lineEdit</zorder>
+      <zorder>middlename_lineEdit</zorder>
+      <zorder>label_6</zorder>
+      <zorder>label_10</zorder>
+      <zorder>label_7</zorder>
+      <zorder>address_textEdit</zorder>
+      <zorder>bio_textEdit</zorder>
+      <zorder>label_12</zorder>
+      <zorder>dateEdit</zorder>
+      <zorder>label_13</zorder>
+      <zorder>position_box</zorder>
+      <zorder>department_box</zorder>
+      <zorder>label_14</zorder>
+      <zorder>label_15</zorder>
+      <zorder>label_16</zorder>
+      <zorder>nation_box</zorder>
+      <zorder>label_17</zorder>
+      <zorder>email_lineEdit</zorder>
+      <zorder>cancel_button</zorder>
+      <zorder>save_button</zorder>
+     </widget>
     </widget>
    </widget>
    <widget class="QWidget" name="setting">
