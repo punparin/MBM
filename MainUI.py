@@ -56,22 +56,24 @@ class MainUI(QMainWindow):
         print("test")
 
     def saveProfile(self):
-        self.parent.user.name =  self.name_line.text()
-        self.parent.user.middle_name = self.middlename_line.text()
-        self.parent.user.last_name =  self.surname_line.text()
-        #self.parent.user.nick_name = self.nickname_line.text()
-        #self.parent.user.phone_number = self.phone_line.text()
+        self.parent.user.name = (self.name_line.text())
+        self.parent.user.middle_name = (self.middlename_line.text())
+        self.parent.user.last_name = (self.surname_line.text())
+        self.parent.user.nickname = (self.nickname_line.text())
+        self.parent.user.phone_number = self.phone_line.text()
         self.parent.user.email = self.email_line.text()
+        #have more
+        #send user(modified) back to server
+        self.parent.send("update_profile", self.parent.user)
         self.loadProfile()
         print("save complete")
-        print(self.parent.user)
 
     def loadProfile(self):
         self.name_line.setText(self.parent.user.name)
         self.middlename_line.setText(self.parent.user.middle_name)
         self.surname_line.setText(self.parent.user.last_name)
-        #self.nickname_line.setText(self.parent.user.nick_name)
-        #self.phone_line.setText(self.parent.user.phone_number)
+        self.nickname_line.setText(self.parent.user.nickname)
+        self.phone_line.setText(self.parent.user.phone_number)
         self.email_line.setText(self.parent.user.email)
         '''
         self.address_text
@@ -87,6 +89,7 @@ class MainUI(QMainWindow):
         if(self.menu.currentText() == "Main Page"):
             self.subWidget.setCurrentIndex(0)
         elif(self.menu.currentText() == "Edit Profile"):
+            print(self.parent.user)
             self.subWidget.setCurrentIndex(1)
             self.loadProfile()
         elif (self.menu.currentText() == "Settings"):
