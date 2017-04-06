@@ -15,6 +15,8 @@ class UserManager:
             processedObj = self.registerUser(user)
         elif task == 'logIn':
             processedObj = self.logIn(user)
+        elif task == 'updateProfile':
+            self.update(user)
         return processedObj
 
     # Get all users to self.userList
@@ -62,6 +64,19 @@ class UserManager:
                 return registeredUser
         print("User:", user.username, "logged in failed")
         return "User: " + user.username + " logged in failed"
+
+    #update user
+    def update(self, user):
+        for i in range(len(self.userList)):
+            if user.username == self.userList[i].username:
+                self.userList[i] = user
+        self.saveUsers()
+
+    def saveUsers(self):
+        fileObject = open(self.userListFileName, 'wb')
+        for registeredUser in self.userList:
+            pickle.dump(registeredUser, fileObject)
+        fileObject.close()
 
     # Check whether the credentials are valid
     def credentialValidation(self, username, password, email):
