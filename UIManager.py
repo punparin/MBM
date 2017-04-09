@@ -62,6 +62,9 @@ class UImanager(QMainWindow):
                 print("waiting to login")
             if(self.state == "online"):
                 self.centralWidget().setCurrentWidget(self.main_widget)
+                palette = QPalette()
+                palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/background2.png")))
+                self.setPalette(palette)
 
         elif signal == "register":
             self.centralWidget().setCurrentWidget(self.register_widget)
@@ -70,6 +73,8 @@ class UImanager(QMainWindow):
     def changePageRegisterSection(self, signal = None, user = None):
         if signal == "register_confirm":
             self.send('register', user)
+            self.centralWidget().setCurrentWidget(self.login_widget)
+        elif signal == "back":
             self.centralWidget().setCurrentWidget(self.login_widget)
 
     # Recieve task and object before logged in
