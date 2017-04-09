@@ -8,9 +8,6 @@ class LoginUI(QMainWindow):
         QMainWindow.__init__(self, None)
         self.setMinimumSize(1280, 720)
         self.setWindowTitle("MBM v.0")
-        palette = QPalette()
-        palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/background.png")))
-        self.setPalette(palette)
         self.parent = parent
         self.UIinit()
 

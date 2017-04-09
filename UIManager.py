@@ -62,6 +62,9 @@ class UImanager(QMainWindow):
                 print("waiting to login")
             if(self.state == "online"):
                 self.centralWidget().setCurrentWidget(self.main_widget)
+                palette = QPalette()
+                palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/background2.png")))
+                self.setPalette(palette)
 
         elif signal == "register":
             self.centralWidget().setCurrentWidget(self.register_widget)

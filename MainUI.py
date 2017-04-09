@@ -10,9 +10,6 @@ class MainUI(QMainWindow):
         #setting main window
         self.setMinimumSize(1280, 720)
         self.setWindowTitle("MBM v.0")
-        palette = QPalette()
-        palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/background2.png")))
-        self.setPalette(palette)
         self.parent = parent
         self.UIinit()
 
