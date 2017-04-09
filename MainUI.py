@@ -30,7 +30,9 @@ class MainUI(QMainWindow):
         self.subWidget = form.findChild(QStackedWidget, "stackedWidget")
         self.subWidget.setCurrentIndex(0)
 
-        #init components of sub Widget
+        #Edit Profile section components
+        self.save_warn_label = form.findChild(QLabel, "save_warn_label")
+
         self.name_line = form.findChild(QLineEdit, "name_lineEdit")
         self.middlename_line = form.findChild(QLineEdit, "middlename_lineEdit")
         self.surname_line = form.findChild(QLineEdit, "surname_lineEdit")
@@ -46,8 +48,23 @@ class MainUI(QMainWindow):
         self.department_box = form.findChild(QComboBox, "department_box")
         self.save_button = form.findChild(QPushButton, "save_button")
         self.cancel_button = form.findChild(QPushButton, "cancel_button")
+        self.change_password_button = form.findChild(QPushButton, "change_password_button")
+
         self.save_button.clicked.connect(self.saveProfile)
-        self.cancel_button.clicked.connect(self.loadProfile)
+        self.cancel_button.clicked.connect(self.backToMainPage)
+        self.change_password_button.clicked.connect(self.changePassWordWidget)
+
+        #Change password section component
+        self.cur_password = form.findChild(QLineEdit, "cur_password")
+        self.new_password = form.findChild(QLineEdit, "new_password")
+        self.re_password = form.findChild(QLineEdit, "re_password")
+        self.warn_change_label = form.findChild(QLabel, "warn_change_label")
+
+        self.confirm_password_button = form.findChild(QPushButton, "confirm_password_button")
+        self.cancel_password_button =  form.findChild(QPushButton, "cancel_password_button")
+
+        self.confirm_password_button.clicked.connect(self.confirm_password)
+        self.cancel_password_button.clicked.connect(self.backToProfilePage)
 
     def mainPageSlot(self):
         print("test")
@@ -66,8 +83,7 @@ class MainUI(QMainWindow):
         #send user(modified) back to server
         self.parent.send("updateProfile", self.parent.user)
         self.loadProfile()
-        print(self.parent.user)
-        print("save complete")
+        self.save_warn_label.setText("Profile already updated (saved)")
 
     def loadProfile(self):
         self.name_line.setText(self.parent.user.name)
@@ -76,15 +92,35 @@ class MainUI(QMainWindow):
         self.nickname_line.setText(self.parent.user.nickname)
         self.phone_line.setText(self.parent.user.phone_number)
         self.email_line.setText(self.parent.user.email)
-        '''
-        self.address_text
-        self.bio_text
-        
-        self.birth_edit
-        self.nation_box
-        self.position_box
-        self.department_box
-        '''
+        self.save_warn_label.setText("")
+
+    def confirm_password(self):
+        if self.cur_password.text() != self.parent.user.password:
+            self.warn_change_label.setText("Wrong current password")
+        elif self.re_password.text() == "" or self.new_password.text() == "":
+            self.warn_change_label.setText("Please enter password")
+        elif self.re_password.text() != self.new_password.text():
+            self.warn_change_label.setText("Re-enter password wrong")
+        elif not self.passwordValidation(self.new_password.text()):
+            self.warn_change_label.setText("Password must contain digit and Capital letter")
+        else:
+            self.parent.user.password = self.new_password.text()
+            self.parent.send("updateProfile", self.parent.user)
+            self.warn_change_label.setText("Password Changed (Completed)")
+
+    def changePassWordWidget(self):
+        self.warn_change_label.setText("")
+        self.new_password.setText("")
+        self.cur_password.setText("")
+        self.re_password.setText("")
+        self.subWidget.setCurrentIndex(3)
+
+    def backToMainPage(self):
+        if self.menu.currentText() == "Edit Profile":
+            self.subWidget.setCurrentIndex(0)
+
+    def backToProfilePage(self):
+        self.subWidget.setCurrentIndex(1)
 
     def changePage(self):
         if(self.menu.currentText() == "Main Page"):
@@ -95,4 +131,16 @@ class MainUI(QMainWindow):
             self.loadProfile()
         elif (self.menu.currentText() == "Settings"):
             self.subWidget.setCurrentIndex(2)
+
+    def passwordValidation(self, password):
+        isDigit = False
+        isCapitalized = False
+        for alp in password:
+            if alp.isdigit():
+                isDigit = True
+            if alp.isupper():
+                isCapitalized = True
+        if not (isDigit and isCapitalized):
+            return False
+        return True
 

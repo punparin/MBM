@@ -71,6 +71,8 @@ class UImanager(QMainWindow):
         if signal == "register_confirm":
             self.send('register', user)
             self.centralWidget().setCurrentWidget(self.login_widget)
+        elif signal == "back":
+            self.centralWidget().setCurrentWidget(self.login_widget)
 
     # Recieve task and object before logged in
     def waitingForUser(self):

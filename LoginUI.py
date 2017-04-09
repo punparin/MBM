@@ -26,13 +26,6 @@ class LoginUI(QMainWindow):
         self.login_button = form.findChild(QPushButton, "pushButton_1")
         self.signin_button = form.findChild(QPushButton, "pushButton_2")
 
-        icon = QIcon("Images/login.png")
-        self.login_button.setIcon(icon)
-        self.login_button.setIconSize(QSize(self.login_button.size().width()-2,self.login_button.size().height()-5 ))
-        icon = QIcon("Images/signup.png")
-        self.signin_button.setIcon(icon)
-        self.signin_button.setIconSize(QSize(self.signin_button.size().width()-2,self.signin_button.size().height()-5 ))
-
         self.login_button.clicked.connect(self.logIn)
         self.signin_button.clicked.connect(self.signUp)
 

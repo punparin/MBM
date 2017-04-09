@@ -13,6 +13,52 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QPushButton{
+    background-color: rgb(255, 170, 127);
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px;
+    min-width: 5em;
+    padding: 3px;
+}
+
+QComboBox {
+	background-color: rgb(67, 196, 255);
+    border: 1px rgb(85, 170, 255);
+    border-radius: 3px;
+    padding: 1px 18px 1px 3px;
+    min-width: 6em;
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+}
+
+QComboBox:editable {
+    background: rgb(85, 170, 255);
+}
+
+QComboBox:!editable:on, QComboBox::drop-down:editable:on {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #D3D3D3, stop: 0.4 #D8D8D8,
+                                stop: 0.5 #DDDDDD, stop: 1.0 #E1E1E1);
+}
+
+QComboBox:on { /* shift the text when the popup opens */
+    padding-top: 3px;
+    padding-left: 4px;
+}
+
+QComboBox QAbstractItemView {
+    border: 2px solid rgb(75, 177, 255);
+    selection-background-color: rgb(137, 190, 255);
+}
+
+</string>
+  </property>
   <widget class="QLineEdit" name="lineEdit_1">
    <property name="geometry">
     <rect>
@@ -46,7 +92,7 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>760</x>
+     <x>630</x>
      <y>430</y>
      <width>141</width>
      <height>51</height>
@@ -54,8 +100,11 @@
    </property>
    <property name="font">
     <font>
-     <family>Rockwell</family>
-     <pointsize>10</pointsize>
+     <family>Segoe UI Semibold</family>
+     <pointsize>14</pointsize>
+     <weight>7</weight>
+     <italic>false</italic>
+     <bold>false</bold>
     </font>
    </property>
    <property name="cursor">
@@ -67,8 +116,11 @@
    <property name="autoFillBackground">
     <bool>false</bool>
    </property>
+   <property name="styleSheet">
+    <string notr="true">font: 63 14pt &quot;Segoe UI Semibold&quot;;</string>
+   </property>
    <property name="text">
-    <string>CONFIRM</string>
+    <string>Confirm</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">
@@ -123,6 +175,40 @@
    </property>
    <property name="text">
     <string>Email :</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>880</x>
+     <y>430</y>
+     <width>141</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI Semibold</family>
+     <pointsize>14</pointsize>
+     <weight>7</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="acceptDrops">
+    <bool>false</bool>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 63 14pt &quot;Segoe UI Semibold&quot;;</string>
+   </property>
+   <property name="text">
+    <string>Back</string>
    </property>
   </widget>
  </widget>

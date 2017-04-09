@@ -23,12 +23,16 @@ class RegisterUI(QMainWindow):
         self.password = form.findChild(QLineEdit, "lineEdit_2")
         self.email = form.findChild(QLineEdit, "lineEdit_3")
         self.comform_button = form.findChild(QPushButton, "pushButton")
+        self.back_button = form.findChild(QPushButton, "pushButton_2")
 
         self.comform_button.clicked.connect(self.confirm)
-
+        self.back_button.clicked.connect(self.back)
     # click button "confirm"
     def confirm(self):
         user = User(self.user_id.text(), self.password.text() , self.email.text())
         self.parent.changePageRegisterSection("register_confirm", user)
+
+    def back(self):
+        self.parent.changePageRegisterSection("back")
 
 
