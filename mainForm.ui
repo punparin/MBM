@@ -953,7 +953,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
     <enum>QFrame::WinPanel</enum>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="main_page">
     <property name="styleSheet">
@@ -988,7 +988,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
@@ -1326,16 +1326,6 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
          </property>
         </widget>
        </item>
-       <item row="13" column="1">
-        <widget class="QPushButton" name="cancel_button">
-         <property name="cursor">
-          <cursorShape>PointingHandCursor</cursorShape>
-         </property>
-         <property name="text">
-          <string>CANCEL</string>
-         </property>
-        </widget>
-       </item>
        <item row="12" column="1">
         <widget class="QPushButton" name="save_button">
          <property name="cursor">
@@ -1343,6 +1333,16 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
          </property>
          <property name="text">
           <string>SAVE</string>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="1">
+        <widget class="QPushButton" name="cancel_button">
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="text">
+          <string>CANCEL</string>
          </property>
         </widget>
        </item>
