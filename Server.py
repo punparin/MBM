@@ -1,6 +1,7 @@
 import socket
 from Handler import *
 from UserManager import *
+from ProjectManager import *
 
 class Server:
     def __init__(self, port=9999, maximumClient = 10):
@@ -13,6 +14,7 @@ class Server:
             self.socket.bind((self.host, self.port))
             self.socket.listen(self.maximumClient)
             self.userManager = UserManager(self.socket)
+            self.projectManager = ProjectManager(self.socket)
             print("The server is ready!")
             self.listen()
         except OSError:
@@ -24,7 +26,7 @@ class Server:
             while True:
                 clientSocket, address = self.socket.accept()
                 print("Got a connection from %s" % str(address))
-                thread = Handler(self.userManager, clientSocket, address)
+                thread = Handler(self.userManager, self.projectManager, clientSocket, address)
                 thread.setDaemon(True)
                 thread.start()
         except OSError:

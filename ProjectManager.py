@@ -34,7 +34,7 @@ class ProjectManager:
         except EOFError:
             pass
 
-    # Register new user
+    # Create a new project
     def createProject(self, project):
         for createdProject in self.projectList:
             if project.title == createdProject.title:
@@ -49,7 +49,7 @@ class ProjectManager:
         print("Created Event:", project.title, "successfully")
         return True
 
-    # Log in user
+    # Search for a project
     def searchProject(self, project):
         for createdProject in self.projectList:
             if project.title == createdProject.title:
@@ -58,13 +58,14 @@ class ProjectManager:
         print("Project: ", project.title, "Project Not Found")
         return "Project: ", project.title, "Project Not Found"
 
-    #update user
+    # Update project
     def update(self, project):
         for i in range(len(self.projectList)):
             if project.title == self.projectList[i].title:
                 self.projectList[i] = project
         self.saveProjects()
 
+    # Save project
     def saveProjects(self):
         fileObject = open(self.projectListFileName, 'wb')
         for createdProject in self.projectList:
