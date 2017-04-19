@@ -58,8 +58,9 @@ class UImanager(QMainWindow):
         if signal == "login":
             self.state = "waiting"
             self.send('logIn', user)
+            # Waiting for user to login
             while(self.state == "waiting"):
-                print("waiting to login")
+                pass
             if(self.state == "online"):
                 self.centralWidget().setCurrentWidget(self.main_widget)
                 palette = QPalette()
