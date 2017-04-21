@@ -19,6 +19,8 @@ class User:
         self.biology = ""
         self.nationality =""
 
+        self.isAdmin = False
+
     def __str__(self):
         return self.username + " " + self.password + " " + self.email + " " + self.nickname + " " + self.address + " " + self.phone_number
 

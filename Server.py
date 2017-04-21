@@ -10,15 +10,50 @@ class Server:
         self.host = socket.gethostname()
         self.port = port
         self.maximumClient = maximumClient
+        self.passwordFileName = 'serverPW'
+        self.logFileName = 'serverLog'
+        try:
+            fileObject = open(self.passwordFileName, 'rb')
+            self.password = pickle.load(fileObject)
+            fileObject.close()
+        except FileNotFoundError:
+            fileObject = open(self.passwordFileName, 'wb')
+            self.password = 'admin'
+            pickle.dump(self.password, fileObject)
+            fileObject.close()
         try:
             self.socket.bind((self.host, self.port))
             self.socket.listen(self.maximumClient)
             self.userManager = UserManager(self.socket)
             self.projectManager = ProjectManager(self.socket)
             print("The server is ready!")
-            self.listen()
+            self.thread = threading.Thread(target=self.listen, args=[])
+            self.thread.setDaemon(True)
+            self.thread.start()
+            self.command()
         except OSError:
             print("Server is already working!")
+
+    def command(self):
+        print('Type \'cm\' to show all the command list ...')
+        cm = input()
+        while cm != 'exit':
+            isCommandValid = False
+            cms = cm.split()
+            if cms[0] == 'cm':
+                print('1) addAdmin [username] : to promote a user to be admin')
+                isCommandValid = True
+            if cms[0] == 'addAdmin' and len(cms) == 2:
+                print('Password: ', end = "")
+                pw = input()
+                if pw == self.password:
+                    self.userManager.addAdmin(cms[1])
+                else:
+                    print('Invalid password')
+                isCommandValid = True
+            if not isCommandValid:
+                print('Invalid Command')
+            cm = input()
 
     # Waiting for connection, then send the connection to Handler
     def listen(self):
