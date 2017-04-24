@@ -44,12 +44,20 @@ class Server:
             cms = cm.split()
             if cms[0] == 'cm':
                 print('1) addAdmin [username] : to promote a user to be admin')
-                print('2) changePassword : to change the password')
+                print('2) delAdmin [username] : to demote an admin to be user')
+                print('3) changePassword : to change the password')
                 isCommandValid = True
             elif cms[0] == 'addAdmin' and len(cms) == 2:
                 pw = input("Password: ")
                 if pw == self.password:
                     self.userManager.addAdmin(cms[1])
+                else:
+                    print('Invalid password')
+                isCommandValid = True
+            elif cms[0] == 'delAdmin' and len(cms) == 2:
+                pw = input("Password: ")
+                if pw == self.password:
+                    self.userManager.delAdmin(cms[1])
                 else:
                     print('Invalid password')
                 isCommandValid = True

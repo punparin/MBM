@@ -23,7 +23,15 @@ class UserManager:
         for user in self.userList:
             if user.username == username:
                 user.isAdmin = True
-                print('Promoted', username, 'to be admin successfully')
+                print('Promoted', username, 'successfully')
+                return
+        print(username, 'does not exist')
+
+    def delAdmin(self, username):
+        for user in self.userList:
+            if user.username == username:
+                user.isAdmin = False
+                print('demoted', username, 'successfully')
                 return
         print(username, 'does not exist')
 
