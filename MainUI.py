@@ -3,6 +3,7 @@ from PySide.QtGui import *
 from PySide.QtUiTools import *
 from User import *
 import sys
+import ctypes
 
 class MainUI(QMainWindow):
     def __init__(self , parent = None):
@@ -16,8 +17,20 @@ class MainUI(QMainWindow):
     # init UI form (attribute)
     def UIinit(self):
         #init mainWidget
-        loader = QUiLoader()
-        form = loader.load("mainForm.ui", None)
+        user32 = ctypes.windll.user32
+        screensize = user32.GetSystemMetrics(1)
+        form_name = "mainForm(" + str(screensize) + ")" + ".ui"
+        form = None
+
+        try:
+            loader = QUiLoader()
+            form = loader.load(form_name, None)
+            self.setCentralWidget(form)
+        except:
+            loader = QUiLoader()
+            form = loader.load("mainForm(1080).ui", None)
+            self.setCentralWidget(form)
+
         self.setCentralWidget(form)
         self.profile = form.findChild(QLabel, "profile")
         self.menu = form.findChild(QComboBox, "comboBox")

@@ -1,6 +1,7 @@
 from PySide.QtGui import *
 from PySide.QtUiTools import *
 from User import *
+import ctypes
 
 class RegisterUI(QMainWindow):
     def __init__(self , parent = None):
@@ -12,8 +13,19 @@ class RegisterUI(QMainWindow):
 
     # init UI form (attribute)
     def UIinit(self):
-        loader = QUiLoader()
-        form = loader.load("registerForm.ui", None)
+        user32 = ctypes.windll.user32
+        screensize = user32.GetSystemMetrics(1)
+        form_name = "registerForm(" + str(screensize) + ")" + ".ui"
+        form = None
+
+        try:
+            loader = QUiLoader()
+            form = loader.load(form_name, None)
+            self.setCentralWidget(form)
+        except:
+            loader = QUiLoader()
+            form = loader.load("registerForm(1080).ui", None)
+            self.setCentralWidget(form)
         self.setCentralWidget(form)
 
         self.user_id = form.findChild(QLineEdit, "lineEdit_1")
