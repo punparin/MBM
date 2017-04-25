@@ -61,9 +61,10 @@ class UImanager(QMainWindow):
         if signal == "login":
             self.state = "waiting"
             self.send('logIn', user)
-            while(self.state == "waiting"):
-                print("waiting to login")
-            if(self.state == "online"):
+            # Waiting for user to login
+            while self.state == "waiting":
+                pass
+            if self.state == "online":
                 self.centralWidget().setCurrentWidget(self.main_widget)
                 palette = QPalette()
                 palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/background2.png")))

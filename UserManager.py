@@ -19,20 +19,36 @@ class UserManager:
             self.update(user)
         return processedObj
 
+    def addAdmin(self, username):
+        for user in self.userList:
+            if user.username == username:
+                user.isAdmin = True
+                print('Promoted', username, 'successfully')
+                return
+        print(username, 'does not exist')
+
+    def delAdmin(self, username):
+        for user in self.userList:
+            if user.username == username:
+                user.isAdmin = False
+                print('demoted', username, 'successfully')
+                return
+        print(username, 'does not exist')
+
     # Get all users to self.userList
     def getUsers(self):
         print("Loading users...")
         self.userList = []
         try:
-            file_object = open(self.userListFileName, 'rb')
+            fileObject = open(self.userListFileName, 'rb')
         except FileNotFoundError:
-            file_object = open(self.userListFileName, 'ab')
+            fileObject = open(self.userListFileName, 'ab')
         try:
             while True:
-                obj = pickle.load(file_object)
+                obj = pickle.load(fileObject)
                 self.userList.append(obj)
         except EOFError:
-            pass
+            fileObject.close()
 
     # Register new user
     def registerUser(self, user):
