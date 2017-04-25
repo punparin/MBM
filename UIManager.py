@@ -19,6 +19,9 @@ class UImanager(QMainWindow):
         palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/background.png")))
         self.setPalette(palette)
 
+        #self.setWindowState(Qt.WindowMaximized)
+        self.showFullScreen()
+
         # Init main Widget
         self.central_widget = QStackedWidget()
         self.setCentralWidget(self.central_widget)
