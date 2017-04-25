@@ -53,7 +53,9 @@ class Server:
         while cm != 'exit':
             isCommandValid = False
             cms = cm.split()
-            if cms[0] == 'cm':
+            if len(cms) == 0:
+                pass
+            elif cms[0] == 'cm':
                 print('1) addAdmin [username] : to promote a user to be admin')
                 print('2) delAdmin [username] : to demote an admin to be user')
                 print('3) changePassword : to change the password')
