@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>2160</width>
-    <height>1445</height>
+    <width>1920</width>
+    <height>1080</height>
    </rect>
   </property>
   <property name="cursor">
@@ -75,8 +75,8 @@ QComboBox QAbstractItemView {
   <widget class="QWidget" name="formLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>1770</x>
-     <y>40</y>
+     <x>1540</x>
+     <y>20</y>
      <width>351</width>
      <height>188</height>
     </rect>
@@ -184,21 +184,15 @@ QComboBox QAbstractItemView {
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>650</x>
-     <y>290</y>
-     <width>851</width>
+     <x>490</x>
+     <y>60</y>
+     <width>877</width>
      <height>741</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLabel" name="nameMBM">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
       <property name="font">
        <font>
         <family>Eras Demi ITC</family>
@@ -206,7 +200,7 @@ QComboBox QAbstractItemView {
        </font>
       </property>
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Modern Business Management&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;(MBM)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:36pt;&quot;&gt;Modern Business Management&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:36pt;&quot;&gt;(MBM)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="textFormat">
        <enum>Qt::AutoText</enum>
