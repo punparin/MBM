@@ -5,6 +5,7 @@ class UserManager:
     def __init__(self, clientSocket):
         self.userListFileName = "userList"
         self.userList = []
+        self.latestUserID = 0
         self.clientSocket = clientSocket
         self.getUsers()
 
@@ -35,6 +36,12 @@ class UserManager:
                 return
         print(username, 'does not exist')
 
+    def findByUsername(self, username):
+        for user in self.userList:
+            if user.username == username:
+                return user
+        return None
+
     # Get all users to self.userList
     def getUsers(self):
         print("Loading users...")
@@ -61,7 +68,8 @@ class UserManager:
                 return user.email + " is not available"
         credential = self.credentialValidation(user.username, user.password, user.email)
         if credential is True:
-            user = User(user.username, user.password, user.email)
+            self.latestUserID += 1
+            user = User(self.latestUserID, user.username, user.password, user.email)
             fileObject = open(self.userListFileName, 'ab')
             pickle.dump(user, fileObject)
             fileObject.close()
