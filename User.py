@@ -1,10 +1,10 @@
 class User:
-    def __init__(self, id, username, password, email = ""):
+    def __init__(self, username, password, email = ""):
         # system
-        self.id = id
         self.username = username
         self.password = password
         self.email = email
+        self.id = ""
 
         #user
         self.name = ""
@@ -23,6 +23,6 @@ class User:
         self.isAdmin = False
 
     def __str__(self):
-        return self.username + " " + self.password + " " + self.email + " " + self.nickname + " " + self.address + " " + self.phone_number
+        return format(self.id, '05d') + " " + self.username + " " + self.email
 
 

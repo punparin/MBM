@@ -4,8 +4,9 @@ from User import *
 class UserManager:
     def __init__(self, clientSocket):
         self.userListFileName = "userList"
+        self.latestUserIDFileName = "constantID"
         self.userList = []
-        self.latestUserID = 0
+        self.latestUserID = self.getLatestUserID()
         self.clientSocket = clientSocket
         self.getUsers()
 
@@ -19,6 +20,23 @@ class UserManager:
         elif task == 'updateProfile':
             self.update(user)
         return processedObj
+
+    def getLatestUserID(self):
+        latestUserID = 0
+        try:
+            fileObject = open(self.latestUserIDFileName, 'rb')
+            latestUserID = pickle.load(fileObject)
+            fileObject.close()
+        except FileNotFoundError:
+            fileObject = open(self.latestUserIDFileName, 'wb')
+            pickle.dump(latestUserID, fileObject)
+            fileObject.close()
+        return latestUserID
+
+    def saveLatestUserID(self):
+        fileObject = open(self.latestUserIDFileName, 'wb')
+        pickle.dump(self.latestUserID, fileObject)
+        fileObject.close()
 
     def addAdmin(self, username):
         for user in self.userList:
@@ -42,9 +60,15 @@ class UserManager:
                 return user
         return None
 
+    def findByID(self, id):
+        for user in self.userList:
+            if user.id == id:
+                return user
+        return None
+
     # Get all users to self.userList
     def getUsers(self):
-        print("Loading users...")
+        print("\nLoading users...")
         self.userList = []
         try:
             fileObject = open(self.userListFileName, 'rb')
@@ -53,6 +77,7 @@ class UserManager:
         try:
             while True:
                 obj = pickle.load(fileObject)
+                print("- " + str(obj))
                 self.userList.append(obj)
         except EOFError:
             fileObject.close()
@@ -69,11 +94,11 @@ class UserManager:
         credential = self.credentialValidation(user.username, user.password, user.email)
         if credential is True:
             self.latestUserID += 1
-            user = User(self.latestUserID, user.username, user.password, user.email)
-            fileObject = open(self.userListFileName, 'ab')
-            pickle.dump(user, fileObject)
-            fileObject.close()
+            user = User(user.username, user.password, user.email)
+            user.id = self.latestUserID
+            self.saveUser(user)
             self.userList.append(user)
+            self.saveLatestUserID()
             print("Created User:", user.username, "successfully")
             return True
         else:
@@ -95,6 +120,11 @@ class UserManager:
             if user.username == self.userList[i].username:
                 self.userList[i] = user
         self.saveUsers()
+
+    def saveUser(self, user):
+        fileObject = open(self.userListFileName, 'ab')
+        pickle.dump(user, fileObject)
+        fileObject.close()
 
     def saveUsers(self):
         fileObject = open(self.userListFileName, 'wb')

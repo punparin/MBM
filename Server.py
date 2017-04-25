@@ -2,6 +2,7 @@ import socket
 from Handler import *
 from UserManager import *
 from ProjectManager import *
+from EventManager import *
 from DepartmentManager import *
 
 class Server:
@@ -18,36 +19,37 @@ class Server:
             self.socket.bind((self.host, self.port))
             self.socket.listen(self.maximumClient)
             self.userManager = UserManager(self.socket)
-            self.projectManager = ProjectManager(self.socket)
+            #self.projectManager = ProjectManager(self.socket)
+            #self.projectManager = EventManager(self.socket)
             self.departmentManager = DepartmentManager(self.userManager)
-            print("The server is ready!")
+            print("\n--- Server is Online ---")
             self.thread = threading.Thread(target=self.listen, args=[])
             self.thread.setDaemon(True)
             self.thread.start()
-
+            self.getInformation()
             self.command()
         except OSError:
-            print("Server is already working!")
+            print("\n!!! Server is already working !!!")
 
     # Get data from a secret file
     def getInformation(self):
         try:
             fileObject = open(self.constant, 'rb')
             self.password = pickle.load(fileObject)
-            self.userManager.latestUserID = pickle.load(fileObject)
             fileObject.close()
+            if self.password == 'admin':
+                print("The initial password is \'admin\', Please change the password as soon as possible\n")
         except FileNotFoundError:
             fileObject = open(self.constant, 'wb')
             self.password = 'admin'
             pickle.dump(self.password, fileObject)
-            pickle.dump(0, fileObject)
             fileObject.close()
-            print("The initial password is \'admin\', Please change the password as soon as possible")
+            print("The initial password is \'admin\', Please change the password as soon as possible\n")
 
     # Recieving command from user
     def command(self):
         print('Type \'cm\' to show all the command list ...')
-        cm = input()
+        cm = input('\nCommand: ')
         while cm != 'exit':
             isCommandValid = False
             cms = cm.split()
@@ -56,6 +58,7 @@ class Server:
                 print('2) delAdmin [username] : to demote an admin to be user')
                 print('3) changePassword : to change the password')
                 print('4) addDepartment [name] : to add a new department')
+                print('5) addEmployee [department] [name] : to add a new employee to a specific department')
                 isCommandValid = True
             # addAdmin
             elif cms[0] == 'addAdmin' and len(cms) == 2:
@@ -78,16 +81,32 @@ class Server:
                 self.changePassword()
                 isCommandValid = True
             # addDepartment
-            elif cms[0] == 'addDepartment' and len(cms) == 3:
+            elif cms[0] == 'addDepartment' and len(cms) == 2:
+                pw = input("Password: ")
+                if pw == self.password:
+                    self.departmentManager.addDepartment(cms[1])
+                else:
+                    print('Invalid password')
+                isCommandValid = True
+            # addEmployee
+            elif cms[0] == 'addEmployee' and len(cms) == 3:
                 pw = input("Password: ")
                 if pw == self.password:
                     self.departmentManager.addEmployee(cms[1], cms[2])
                 else:
                     print('Invalid password')
                 isCommandValid = True
+            # showDepartment
+            elif cms[0] == 'showDepartment':
+                pw = input("Password: ")
+                if pw == self.password:
+                    self.departmentManager.showDepartment()
+                else:
+                    print('Invalid password')
+                isCommandValid = True
             if not isCommandValid:
                 print('Invalid Command')
-            cm = input()
+            cm = input('\nCommand: ')
 
     def changePassword(self):
         currentPassword = input("Current Password: ")
@@ -99,7 +118,7 @@ class Server:
             print("Passwords are not the same")
         else:
             self.password = newPassword
-            fileObject = open(self.passwordFileName, 'wb')
+            fileObject = open(self.constant, 'wb')
             pickle.dump(self.password, fileObject)
             fileObject.close()
             print("Changed password successfully")

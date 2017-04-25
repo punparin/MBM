@@ -21,7 +21,7 @@ class ProjectManager:
 
     # Get all users to self.userList
     def getProjects(self):
-        print("Loading projects...")
+        print("\nLoading projects...")
         self.projectList = []
         try:
             file_object = open(self.projectListFileName, 'rb')
