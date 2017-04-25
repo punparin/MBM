@@ -4,6 +4,7 @@ class User:
         self.username = username
         self.password = password
         self.email = email
+        self.id = ""
 
         #user
         self.name = ""
@@ -22,6 +23,6 @@ class User:
         self.isAdmin = False
 
     def __str__(self):
-        return self.username + " " + self.password + " " + self.email + " " + self.nickname + " " + self.address + " " + self.phone_number
+        return format(self.id, '05d') + " " + self.username + " " + self.email
 
 

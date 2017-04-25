@@ -2,6 +2,7 @@ from PySide.QtCore import *
 from PySide.QtGui import *
 from PySide.QtUiTools import *
 from User import *
+import ctypes
 
 class LoginUI(QMainWindow):
     def __init__(self, parent = None):
@@ -13,9 +14,20 @@ class LoginUI(QMainWindow):
 
     #init UI form (attribute)
     def UIinit(self):
-        loader = QUiLoader()
-        form = loader.load("loginForm.ui", None)
-        self.setCentralWidget(form)
+        #setForm Screen Size
+        user32 = ctypes.windll.user32
+        screensize = user32.GetSystemMetrics(1)
+        form_name = "loginForm(" + str(screensize) + ")" + ".ui"
+        form = None
+
+        try:
+            loader = QUiLoader()
+            form = loader.load(form_name, None)
+            self.setCentralWidget(form)
+        except:
+            loader = QUiLoader()
+            form = loader.load("loginForm(1080).ui", None)
+            self.setCentralWidget(form)
 
         self.user_id = form.findChild(QLineEdit, "lineEdit_1")
         self.password = form.findChild(QLineEdit, "lineEdit_2")
