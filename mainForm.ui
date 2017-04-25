@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1280</width>
-    <height>720</height>
+    <width>2160</width>
+    <height>1440</height>
    </rect>
   </property>
   <property name="palette">
@@ -459,10 +459,10 @@ QComboBox QAbstractItemView {
   <widget class="QLabel" name="profile">
    <property name="geometry">
     <rect>
-     <x>1120</x>
-     <y>20</y>
-     <width>91</width>
-     <height>111</height>
+     <x>1930</x>
+     <y>100</y>
+     <width>101</width>
+     <height>131</height>
     </rect>
    </property>
    <property name="text">
@@ -478,10 +478,10 @@ QComboBox QAbstractItemView {
    </property>
    <property name="geometry">
     <rect>
-     <x>1110</x>
-     <y>130</y>
-     <width>121</width>
-     <height>31</height>
+     <x>1900</x>
+     <y>240</y>
+     <width>161</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="palette">
@@ -939,10 +939,10 @@ QComboBox QAbstractItemView {
   <widget class="QStackedWidget" name="stackedWidget">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>40</y>
-     <width>1000</width>
-     <height>600</height>
+     <x>380</x>
+     <y>290</y>
+     <width>1241</width>
+     <height>851</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -953,7 +953,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
     <enum>QFrame::WinPanel</enum>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="main_page">
     <property name="styleSheet">
@@ -980,8 +980,8 @@ QWidget {background-image: url(Images/widget.png) }</string>
       <rect>
        <x>50</x>
        <y>90</y>
-       <width>831</width>
-       <height>401</height>
+       <width>1121</width>
+       <height>691</height>
       </rect>
      </property>
      <property name="toolTip">
@@ -999,8 +999,8 @@ QWidget {background-image: url(Images/widget.png) }</string>
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>831</width>
-         <height>371</height>
+         <width>1121</width>
+         <height>651</height>
         </rect>
        </property>
        <property name="locale">
@@ -1068,10 +1068,10 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
     <widget class="QLabel" name="label_2">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>10</x>
        <y>30</y>
-       <width>191</width>
-       <height>51</height>
+       <width>321</width>
+       <height>61</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -1100,10 +1100,10 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
     <widget class="QPushButton" name="upload_button">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>210</y>
-       <width>151</width>
-       <height>31</height>
+       <x>20</x>
+       <y>220</y>
+       <width>211</width>
+       <height>41</height>
       </rect>
      </property>
      <property name="cursor">
@@ -1116,10 +1116,10 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
     <widget class="QScrollArea" name="scrollArea">
      <property name="geometry">
       <rect>
-       <x>260</x>
+       <x>370</x>
        <y>30</y>
-       <width>691</width>
-       <height>541</height>
+       <width>821</width>
+       <height>791</height>
       </rect>
      </property>
      <property name="verticalScrollBarPolicy">
@@ -1133,8 +1133,8 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>668</width>
-        <height>674</height>
+        <width>793</width>
+        <height>789</height>
        </rect>
       </property>
       <layout class="QFormLayout" name="formLayout">
@@ -1386,10 +1386,10 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
     <widget class="QPushButton" name="change_password_button">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>240</y>
-       <width>151</width>
-       <height>31</height>
+       <x>20</x>
+       <y>270</y>
+       <width>211</width>
+       <height>41</height>
       </rect>
      </property>
      <property name="cursor">
@@ -1402,7 +1402,7 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
    </widget>
    <widget class="QWidget" name="setting">
     <property name="styleSheet">
-     <string notr="true">QWidget {background-image: url(Images/widget.png) }</string>
+     <string notr="true">QWidget#setting {background-image: url(Images/widget.png) }</string>
     </property>
     <widget class="QLabel" name="label_8">
      <property name="geometry">
@@ -1540,7 +1540,7 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
    </widget>
    <widget class="QWidget" name="change_password">
     <property name="styleSheet">
-     <string notr="true">QWidget {background-image: url(Images/widget.png) }
+     <string notr="true">QWidget#change_password{background-image: url(Images/widget.png) }
 </string>
     </property>
     <widget class="QPushButton" name="confirm_password_button">
@@ -1667,14 +1667,63 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
      </property>
     </widget>
    </widget>
+   <widget class="QWidget" name="project_page">
+    <widget class="QScrollArea" name="scrollArea_2">
+     <property name="geometry">
+      <rect>
+       <x>-10</x>
+       <y>0</y>
+       <width>1011</width>
+       <height>601</height>
+      </rect>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOn</enum>
+     </property>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>983</width>
+        <height>599</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>983</width>
+        <height>0</height>
+       </size>
+      </property>
+      <layout class="QFormLayout" name="formLayout_2">
+       <property name="fieldGrowthPolicy">
+        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+       </property>
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="label_21">
+         <property name="styleSheet">
+          <string notr="true">font: 26pt &quot;MS Shell Dlg 2&quot;;</string>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Project&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </widget>
   </widget>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>1080</x>
-     <y>670</y>
-     <width>181</width>
-     <height>31</height>
+     <x>1880</x>
+     <y>1340</y>
+     <width>231</width>
+     <height>61</height>
     </rect>
    </property>
    <property name="cursor">
