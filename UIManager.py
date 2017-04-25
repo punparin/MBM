@@ -84,30 +84,34 @@ class UImanager(QMainWindow):
     # Recieve task and object before logged in
     def waitingForUser(self):
         print('Waiting for User')
-        while True:
-            task = self.socket.recv(1024).decode('ascii')
-            if task == '':
-                break
-            try:
-                obj = pickle.loads(self.socket.recv(4096))
-                self.state = "waiting"
-                # check if the user logged in successfully
-                if task == 'logIn' and type(obj) == User:
-                    self.user = obj
-                    print("Initialize user successfully")
-                    self.state = "online"
+        try:
+            while True:
+                task = self.socket.recv(1024).decode('ascii')
+                if task == '':
                     break
-                # check if the user registered successfully
-                elif task == 'register' and obj is True:
-                    print("Registered successfully")
-                else:
-                    print("Invalid Username or Password")
-                    self.state = "offline"
-                    print(obj)
-            except EOFError as e:
-                print(e)
-        # Start listening for the server
-        self.thread.start()
+                try:
+                    obj = pickle.loads(self.socket.recv(4096))
+                    self.state = "waiting"
+                    # check if the user logged in successfully
+                    if task == 'logIn' and type(obj) == User:
+                        self.user = obj
+                        print("Initialize user successfully")
+                        self.state = "online"
+                        break
+                    # check if the user registered successfully
+                    elif task == 'register' and obj is True:
+                        print("Registered successfully")
+                    else:
+                        print("Invalid Username or Password")
+                        self.state = "offline"
+                        print(obj)
+                except EOFError as e:
+                    print(e)
+            # Start listening for the server
+            self.thread.start()
+        except ConnectionResetError:
+            # Completely terminate connection when the client disconnects
+            print("The server is currently offline.")
 
     # Recieve task and object after logged in
     def listen(self):
