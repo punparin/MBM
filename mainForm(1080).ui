@@ -953,7 +953,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
     <enum>QFrame::WinPanel</enum>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="main_page">
     <property name="styleSheet">

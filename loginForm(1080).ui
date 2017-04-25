@@ -70,6 +70,8 @@ QComboBox QAbstractItemView {
     selection-background-color: rgb(137, 190, 255);
 }
 
+QLabel#warn_label { color : red; }
+
 </string>
   </property>
   <widget class="QWidget" name="formLayoutWidget">
@@ -82,6 +84,9 @@ QComboBox QAbstractItemView {
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout">
+    <property name="fieldGrowthPolicy">
+     <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+    </property>
     <property name="horizontalSpacing">
      <number>64</number>
     </property>
@@ -176,6 +181,23 @@ QComboBox QAbstractItemView {
       </property>
       <property name="text">
        <string>Sign Up</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0" colspan="2">
+     <widget class="QLabel" name="warn_label">
+      <property name="contextMenuPolicy">
+       <enum>Qt::PreventContextMenu</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
+QLabel { background-color : red; color : blue; }</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
