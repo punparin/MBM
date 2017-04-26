@@ -19,8 +19,8 @@ class Server:
             self.socket.bind((self.host, self.port))
             self.socket.listen(self.maximumClient)
             self.userManager = UserManager(self.socket)
-            #self.projectManager = ProjectManager(self.socket)
-            #self.projectManager = EventManager(self.socket)
+            self.projectManager = ProjectManager(self.socket)
+            #self.eventManager = EventManager(self.socket)
             self.departmentManager = DepartmentManager(self.userManager)
             print("\n--- Server is Online ---")
             self.thread = threading.Thread(target=self.listen, args=[])
@@ -49,7 +49,7 @@ class Server:
     # Recieving command from user
     def command(self):
         print('Type \'cm\' to show all the command list ...')
-        cm = input('\nCommand: ')
+        cm = input('')
         while cm != 'exit':
             isCommandValid = False
             cms = cm.split()
@@ -61,6 +61,8 @@ class Server:
                 print('3) changePassword : to change the password')
                 print('4) addDepartment [name] : to add a new department')
                 print('5) addEmployee [department] [name] : to add a new employee to a specific department')
+                print('6) addSubdepartment [department] [subdepartment] : to add a subdepartment to a specific department')
+                print('7) showDepartment [department] : to show infomation of the department')
                 isCommandValid = True
             # addAdmin
             elif cms[0] == 'addAdmin' and len(cms) == 2:
@@ -98,6 +100,14 @@ class Server:
                 else:
                     print('Invalid password')
                 isCommandValid = True
+            # addSubdepartment
+            elif cms[0] == 'addSubdepartment' and len(cms) == 3:
+                pw = input("Password: ")
+                if pw == self.password:
+                    self.departmentManager.addSubDepartment(cms[1], cms[2])
+                else:
+                    print('Invalid password')
+                isCommandValid = True
             # showDepartment
             elif cms[0] == 'showDepartment':
                 pw = input("Password: ")
@@ -108,7 +118,7 @@ class Server:
                 isCommandValid = True
             if not isCommandValid:
                 print('Invalid Command')
-            cm = input('\nCommand: ')
+            cm = input('')
 
     def changePassword(self):
         currentPassword = input("Current Password: ")
