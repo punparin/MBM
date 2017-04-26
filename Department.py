@@ -11,7 +11,7 @@ class Department:
         #self.departmentFileName = name + 'Info'
         self.employeeIDList = []
         self.positionList = []
-        self.subdepartment = []
+        self.subdepartmentList = []
     '''
     def getEmployees(self):
         try:
@@ -39,8 +39,20 @@ class Department:
         self.employeeIDList.append(userID)
         print(self.employeeIDList)
 
+    def addSubdepartment(self, subdepartment):
+        self.subdepartmentList.append(subdepartment)
+
+    def hasSubdepartment(self, subdepartment):
+        return subdepartment in self.subdepartmentList
+
     def __str__(self):
         s = self.name
+        if len(self.employeeIDList) != 0:
+            s += '\nEmployees:'
         for employeeID in self.employeeIDList:
             s += "\n\t- " + format(employeeID, '05d')
+        if len(self.subdepartmentList) != 0:
+            s += '\nSubdepartments:'
+        for subdepartment in self.subdepartmentList:
+            s += "\n\t- " + subdepartment.name
         return s
