@@ -1,4 +1,3 @@
-import pickle
 from Department import *
 
 class DepartmentManager:
@@ -17,7 +16,7 @@ class DepartmentManager:
         try:
             while True:
                 obj = pickle.load(fileObject)
-                print("- " + str(obj))
+                print("\n- " + str(obj))
                 self.departmentList.append(obj)
         except EOFError:
             fileObject.close()
@@ -42,6 +41,26 @@ class DepartmentManager:
         self.departmentList.append(dep)
         self.saveDepartment(dep)
         print('Created', department, 'successfully')
+
+    def addSubDepartment(self, department, subdepartment):
+        dep = None
+        subdep = None
+        for temp in self.departmentList:
+            if temp.name == department:
+                dep = temp
+            elif temp.name == subdepartment:
+                subdep = temp
+        if dep is None:
+            print(department, 'does not exist')
+        if subdep is None:
+            print(subdepartment, 'does not exist')
+        if dep is not None and subdep is not None:
+            if subdep.hasSubdepartment(dep):
+                print(department, 'is a subdepartment of', subdepartment, ', Please remove', department, 'from subdepartment of', subdep, 'before adding it')
+            else:
+                dep.addSubdepartment(subdep)
+                self.saveDepartments()
+                print('Added', subdepartment, 'to', department, 'successfully')
 
     def addEmployee(self, department, username):
         for dep in self.departmentList:
