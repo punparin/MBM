@@ -63,6 +63,7 @@ class Server:
                 print('5) addEmployee [department] [name] : to add a new employee to a specific department')
                 print('6) addSubdepartment [department] [subdepartment] : to add a subdepartment to a specific department')
                 print('7) showDepartment [department] : to show infomation of the department')
+                print('7) removeDepartment [department] : to remove the department')
                 isCommandValid = True
             # addAdmin
             elif cms[0] == 'addAdmin' and len(cms) == 2:
@@ -113,6 +114,14 @@ class Server:
                 pw = input("Password: ")
                 if pw == self.password:
                     self.departmentManager.showDepartment()
+                else:
+                    print('Invalid password')
+                isCommandValid = True
+            # removeDepartment
+            elif cms[0] == 'removeDepartment' and len(cms) == 2:
+                pw = input("Password: ")
+                if pw == self.password:
+                    self.departmentManager.removeDepartment(cms[1])
                 else:
                     print('Invalid password')
                 isCommandValid = True
