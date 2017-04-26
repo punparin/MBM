@@ -32,6 +32,21 @@ class DepartmentManager:
             pickle.dump(department, fileObject)
         fileObject.close()
 
+    def removeDepartment(self, department):
+        dep = None
+        for temp in self.departmentList:
+            if temp.name == department:
+                dep = temp
+        if dep is None:
+            print(department, 'does not exist')
+        else:
+            for temp in self.departmentList:
+                if temp.hasSubdepartment(dep.name):
+                    temp.removeSubdepartment(dep.name)
+            self.departmentList.remove(dep)
+            self.saveDepartments()
+            print('Removed', department, 'successfully')
+
     def addDepartment(self, department):
         for dep in self.departmentList:
             if dep.name == department:
@@ -55,7 +70,7 @@ class DepartmentManager:
         if subdep is None:
             print(subdepartment, 'does not exist')
         if dep is not None and subdep is not None:
-            if subdep.hasSubdepartment(dep):
+            if subdep.hasSubdepartment(dep.name):
                 print(department, 'is a subdepartment of', subdepartment, ', Please remove', department, 'from subdepartment of', subdep, 'before adding it')
             else:
                 dep.addSubdepartment(subdep)
