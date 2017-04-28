@@ -86,9 +86,14 @@ class UserManager:
             user.status = status
             #notify all
 
+    def showUserList(self):
+        for user in self.userList:
+            if user.isActivated:
+                print(user)
+
     def findUserByUsername(self, username):
         user = self.findByUsername(username)
-        if user is not None:
+        if user is not None and user.isActivated:
             print(user)
         else:
             print(username, "not found")
@@ -100,7 +105,7 @@ class UserManager:
                 print(id, "not found")
                 return
             user = self.findByID(id)
-            if user is not None:
+            if user is not None and user.isActivated:
                 print(user)
             else:
                 print(id, "not found")
@@ -145,6 +150,15 @@ class UserManager:
         else:
             print("Created User:", user.username, "failed")
             return "Your " + credential + " is not valid"
+
+    def removeUser(self, username):
+        user = self.findByUsername(username)
+        if user is not None:
+            user.isActivated = False
+            self.saveUsers()
+            print("Removed", username, "successfully")
+        else:
+            print(username, "not found")
 
     # Log in user
     def logIn(self, user):
