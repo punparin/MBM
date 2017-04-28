@@ -80,6 +80,12 @@ class UserManager:
             return self.userList[index]
         return None
 
+    def setStatus(self, userID, status):
+        user = self.findByID(userID)
+        if user is not None:
+            user.status = status
+            #notify all
+
     def findUserByUsername(self, username):
         user = self.findByUsername(username)
         if user is not None:
