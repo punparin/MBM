@@ -66,6 +66,9 @@ class Server:
                 print('7) removeDepartment [department] : to remove a department')
                 print('8) findUserByID [id] : to show information of a user by ID')
                 print('9) findUserByUsername [id] : to show information of a user by username')
+                print('10) createUser [username] [password] [email] : to register a new user')
+                print('11) removeUser [username] : to remove a user')
+                print('12) showUserList : to show all users infomation')
                 isCommandValid = True
             # addAdmin
             elif cms[0] == 'addAdmin' and len(cms) == 2:
@@ -140,6 +143,30 @@ class Server:
                 pw = input("Password: ")
                 if pw == self.password:
                     self.userManager.findUserByID(cms[1])
+                else:
+                    print('Invalid password')
+                isCommandValid = True
+            # createUser
+            elif cms[0] == 'createUser' and len(cms) == 4:
+                pw = input("Password: ")
+                if pw == self.password:
+                    self.userManager.registerUser(User(cms[1], cms[2], cms[3]))
+                else:
+                    print('Invalid password')
+                isCommandValid = True
+            # removeUser
+            elif cms[0] == 'removeUser' and len(cms) == 2:
+                pw = input("Password: ")
+                if pw == self.password:
+                    self.userManager.removeUser(cms[1])
+                else:
+                    print('Invalid password')
+                isCommandValid = True
+            # showUserList
+            elif cms[0] == 'showUserList' and len(cms) == 1:
+                pw = input("Password: ")
+                if pw == self.password:
+                    self.userManager.showUserList()
                 else:
                     print('Invalid password')
                 isCommandValid = True
