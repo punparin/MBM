@@ -21,6 +21,7 @@ class User:
         self.nationality =""
 
         self.isAdmin = False
+        self.status = "Offline"
 
     def __str__(self):
         return format(self.id, '05d') + " " + self.username + " " + self.email
