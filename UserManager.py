@@ -54,17 +54,63 @@ class UserManager:
                 return
         print(username, 'does not exist')
 
+    def binary_search(self, userList, id, low, high):
+        mid = (low + high) // 2
+        userID = userList[mid].id
+        if low > high:
+            return None
+        if id == userID:
+            return mid
+        elif id < userID:
+            return self.binary_search(userList, id, low, mid - 1)
+        else:
+            return self.binary_search(userList, id, mid + 1, high)
+
+    # Use brute-force approach
     def findByUsername(self, username):
         for user in self.userList:
             if user.username == username:
                 return user
         return None
 
+    # Use binary search approach
     def findByID(self, id):
-        for user in self.userList:
-            if user.id == id:
-                return user
+        index = self.binary_search(self.userList, id, 0, len(self.userList))
+        if index is not None:
+            return self.userList[index]
         return None
+
+    def setStatus(self, userID, status):
+        user = self.findByID(userID)
+        if user is not None:
+            user.status = status
+            #notify all
+
+    def showUserList(self):
+        for user in self.userList:
+            if user.isActivated:
+                print(user)
+
+    def findUserByUsername(self, username):
+        user = self.findByUsername(username)
+        if user is not None and user.isActivated:
+            print(user)
+        else:
+            print(username, "not found")
+
+    def findUserByID(self, id):
+        try:
+            id = int(id)
+            if id > len(self.userList) or id <= 0:
+                print(id, "not found")
+                return
+            user = self.findByID(id)
+            if user is not None and user.isActivated:
+                print(user)
+            else:
+                print(id, "not found")
+        except ValueError:
+            print("Invalid ID")
 
     # Get all users to self.userList
     def getUsers(self):
@@ -104,6 +150,15 @@ class UserManager:
         else:
             print("Created User:", user.username, "failed")
             return "Your " + credential + " is not valid"
+
+    def removeUser(self, username):
+        user = self.findByUsername(username)
+        if user is not None:
+            user.isActivated = False
+            self.saveUsers()
+            print("Removed", username, "successfully")
+        else:
+            print(username, "not found")
 
     # Log in user
     def logIn(self, user):
