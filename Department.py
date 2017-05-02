@@ -1,4 +1,5 @@
-import pickle
+from anytree import Node, RenderTree
+from Position import *
 
 class InvalidArgument(Exception) : pass
 
@@ -8,40 +9,52 @@ class Department:
         if name in self.departments:
             raise InvalidArgument('The name has already been used')
         self.name = name
-        self.employeeIDList = []
-        self.positionList = []
-        self.subdepartmentList = []
+        self.positionTree = None
 
     def setName(self, name):
         if name in self.departments:
             raise InvalidArgument('The name has already been used')
         self.name = name
 
-    def addEmployee(self, userID):
-        self.employeeIDList.append(userID)
+    def addEmployee(self, position, user):
+        pos = self.searchPosition(position)
+        if pos is None:
+            raise InvalidArgument(position, "does not exist")
+        else:
+            pos = pos.name
+            pos.insertUser(user)
 
-    def addSubdepartment(self, subdepartment):
-        self.subdepartmentList.append(subdepartment)
+    def searchPosition(self, position):
+        if self.positionTree is None:
+            return None
+        for pre, fill, node in RenderTree(self.positionTree):
+            if node.name.name == position:
+                return node
+        return None
 
-    def removeSubdepartment(self, subdepartmentName):
-        for subdepartment in self.subdepartmentList:
-            if subdepartment.name == subdepartmentName:
-                self.subdepartmentList.remove(subdepartment)
-
-    def hasSubdepartment(self, subdepartmentName):
-        for subdepartment in self.subdepartmentList:
-            if subdepartment.name == subdepartmentName:
+    def addPosition(self, position, parent):
+        pos = self.searchPosition(position)
+        if pos is not None:
+            raise InvalidArgument(position, "has already been created")
+        elif self.positionTree is None:
+            newPos = Position(position)
+            self.positionTree = Node(newPos)
+            return True
+        else:
+            par = self.searchPosition(parent)
+            if par is None:
+                raise InvalidArgument(parent, "does not exist")
+            else:
+                newPos = Position(position)
+                Node(newPos, par)
                 return True
-        return False
+
+    def removePosition(self, position):
+        pass
 
     def __str__(self):
-        s = self.name
-        if len(self.employeeIDList) != 0:
-            s += '\nEmployees:'
-        for employeeID in self.employeeIDList:
-            s += "\n\t- " + format(employeeID, '05d')
-        if len(self.subdepartmentList) != 0:
-            s += '\nSubdepartments:'
-        for subdepartment in self.subdepartmentList:
-            s += "\n\t- " + subdepartment.name
+        s = 'Deparment: ' + self.name
+        if self.positionTree is not None:
+            for pre, fill, node in RenderTree(self.positionTree):
+                s += "\n\t%s%s" % (pre, node.name.show(pre))
         return s

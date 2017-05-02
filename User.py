@@ -25,6 +25,6 @@ class User:
         self.isActivated = True
 
     def __str__(self):
-        return format(self.id, '05d') + " " + self.username + " " + self.email
+        return 'User: ' + format(self.id, '05d') + " " + self.username + " " + self.email
 
 

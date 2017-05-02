@@ -54,30 +54,11 @@ class UserManager:
                 return
         print(username, 'does not exist')
 
-    def binary_search(self, userList, id, low, high):
-        mid = (low + high) // 2
-        userID = userList[mid].id
-        if low > high:
-            return None
-        if id == userID:
-            return mid
-        elif id < userID:
-            return self.binary_search(userList, id, low, mid - 1)
-        else:
-            return self.binary_search(userList, id, mid + 1, high)
-
-    # Use brute-force approach
+    # Search using brute-force approach
     def findByUsername(self, username):
         for user in self.userList:
             if user.username == username:
                 return user
-        return None
-
-    # Use binary search approach
-    def findByID(self, id):
-        index = self.binary_search(self.userList, id, 0, len(self.userList))
-        if index is not None:
-            return self.userList[index]
         return None
 
     def setStatus(self, userID, status):
@@ -98,19 +79,20 @@ class UserManager:
         else:
             print(username, "not found")
 
+    # Search by Index
     def findUserByID(self, id):
         try:
-            id = int(id)
-            if id > len(self.userList) or id <= 0:
-                print(id, "not found")
-                return
-            user = self.findByID(id)
-            if user is not None and user.isActivated:
-                print(user)
-            else:
-                print(id, "not found")
+            id = int(id) - 1
+            try:
+                user = self.userList[id]
+                if not user.isActivated:
+                    print("Invalid ID1")
+                else:
+                    print(user)
+            except IndexError:
+                print("Invalid ID2")
         except ValueError:
-            print("Invalid ID")
+            print("Invalid ID3")
 
     # Get all users to self.userList
     def getUsers(self):
