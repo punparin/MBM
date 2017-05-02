@@ -1,3 +1,4 @@
+import pickle
 from Department import *
 
 class DepartmentManager:
@@ -6,6 +7,20 @@ class DepartmentManager:
         self.userManager = userManager
         self.departmentList = []
         self.getDepartments()
+
+    def addPosition(self, department, position, parent = None):
+        for dep in self.departmentList:
+            if dep.name == department:
+                try:
+                    dep.addPosition(position, parent)
+                    print("Added", position, "successfully")
+                    self.saveDepartments()
+                except InvalidArgument as err:
+                    print(err)
+                break
+
+    def removePosition(self, department, position):
+        pass
 
     def getDepartments(self):
         print("\nLoading departments...")
@@ -57,32 +72,12 @@ class DepartmentManager:
         self.saveDepartment(dep)
         print('Created', department, 'successfully')
 
-    def addSubDepartment(self, department, subdepartment):
-        dep = None
-        subdep = None
-        for temp in self.departmentList:
-            if temp.name == department:
-                dep = temp
-            elif temp.name == subdepartment:
-                subdep = temp
-        if dep is None:
-            print(department, 'does not exist')
-        if subdep is None:
-            print(subdepartment, 'does not exist')
-        if dep is not None and subdep is not None:
-            if subdep.hasSubdepartment(dep.name):
-                print(department, 'is a subdepartment of', subdepartment, ', Please remove', department, 'from subdepartment of', subdep, 'before adding it')
-            else:
-                dep.addSubdepartment(subdep)
-                self.saveDepartments()
-                print('Added', subdepartment, 'to', department, 'successfully')
-
-    def addEmployee(self, department, username):
+    def addEmployee(self, department, position, username):
         for dep in self.departmentList:
             if dep.name == department:
                 user = self.userManager.findByUsername(username)
                 if user is not None:
-                    dep.addEmployee(user.id)
+                    dep.addEmployee(position, user)
                     self.saveDepartments()
                     print('Added', username, 'to', department, 'successfully')
                 else:
