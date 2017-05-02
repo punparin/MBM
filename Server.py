@@ -60,15 +60,17 @@ class Server:
                 print('2) delAdmin [username] : to demote an admin to be user')
                 print('3) changePassword : to change the password')
                 print('4) addDepartment [name] : to add a new department')
-                print('5) addEmployee [department] [name] : to add a new employee to a specific department')
-                print('6) addSubdepartment [department] [subdepartment] : to add a subdepartment to a specific department')
-                print('7) showDepartment [department] : to show infomation of a department')
+                print('5) addEmployee [department] [position] [username] : to add a new employee to a specific department')
+                print('6) showDepartment [department] : to show infomation of a department')
                 print('7) removeDepartment [department] : to remove a department')
                 print('8) findUserByID [id] : to show information of a user by ID')
                 print('9) findUserByUsername [id] : to show information of a user by username')
                 print('10) createUser [username] [password] [email] : to register a new user')
                 print('11) removeUser [username] : to remove a user')
                 print('12) showUserList : to show all users infomation')
+                print('13) addPosition [department] [position] [parentPosition] : to add a new position to a specific department (parentPosition can be empty)')
+                print('14) removePosition [department] [position] : to remove a position from a specific department')
+                print('15) removeEmployee [department] [username] : to remove an employee from a specific department')
                 isCommandValid = True
             elif cms[0] == 'stop':
                 pw = input("Password: ")
@@ -192,6 +194,22 @@ class Server:
                     else:
                         print('Invalid password')
                     isCommandValid = True
+            # removePosition
+            elif cms[0] == 'removePosition' and len(cms) == 3:
+                pw = input("Password: ")
+                if pw == self.password:
+                    self.departmentManager.removePosition(cms[1], cms[2])
+                else:
+                    print('Invalid password')
+                isCommandValid = True
+            # removeEmployee
+            elif cms[0] == 'removeEmployee' and len(cms) == 3:
+                pw = input("Password: ")
+                if pw == self.password:
+                    self.departmentManager.removeEmployee(cms[1], cms[2])
+                else:
+                    print('Invalid password')
+                isCommandValid = True
             if not isCommandValid:
                 print('Invalid Command')
 
