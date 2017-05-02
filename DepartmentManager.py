@@ -8,19 +8,35 @@ class DepartmentManager:
         self.departmentList = []
         self.getDepartments()
 
-    def addPosition(self, department, position, parent = None):
+    def searchDepartment(self, department):
         for dep in self.departmentList:
             if dep.name == department:
-                try:
-                    dep.addPosition(position, parent)
-                    print("Added", position, "successfully")
-                    self.saveDepartments()
-                except InvalidArgument as err:
-                    print(err)
-                break
+                return dep
+        return None
+
+    def addPosition(self, department, position, parent = None):
+        dep = self.searchDepartment(department)
+        if dep is None:
+            print(department, 'does not exist')
+            return
+        try:
+            dep.addPosition(position, parent)
+            print("Added", position, "successfully")
+            self.saveDepartments()
+        except InvalidArgument as err:
+            print(err)
 
     def removePosition(self, department, position):
-        pass
+        dep = self.searchDepartment(department)
+        if dep is None:
+            print(department, 'does not exist')
+            return
+        try:
+            dep.removePosition(position)
+            print("Removed", position, "successfully")
+            self.saveDepartments()
+        except InvalidArgument as err:
+            print(err)
 
     def getDepartments(self):
         print("\nLoading departments...")
@@ -48,10 +64,7 @@ class DepartmentManager:
         fileObject.close()
 
     def removeDepartment(self, department):
-        dep = None
-        for temp in self.departmentList:
-            if temp.name == department:
-                dep = temp
+        dep = self.searchDepartment(department)
         if dep is None:
             print(department, 'does not exist')
         else:
@@ -63,27 +76,40 @@ class DepartmentManager:
             print('Removed', department, 'successfully')
 
     def addDepartment(self, department):
-        for dep in self.departmentList:
-            if dep.name == department:
-                print(department, 'already exists')
-                return
+        dep = self.searchDepartment(department)
+        if dep is not None:
+            print(department, 'already exists')
+            return
         dep = Department(department)
         self.departmentList.append(dep)
         self.saveDepartment(dep)
         print('Created', department, 'successfully')
 
     def addEmployee(self, department, position, username):
-        for dep in self.departmentList:
-            if dep.name == department:
-                user = self.userManager.findByUsername(username)
-                if user is not None:
-                    dep.addEmployee(position, user)
-                    self.saveDepartments()
-                    print('Added', username, 'to', department, 'successfully')
-                else:
-                    print(username, 'does not exist')
-                return
-        print(department, 'does not exist')
+        dep = self.searchDepartment(department)
+        if dep is not None:
+            user = self.userManager.findByUsername(username)
+            if user is not None:
+                dep.addEmployee(position, user)
+                self.saveDepartments()
+                print('Added', username, 'to', department, 'successfully')
+            else:
+                print(username, 'does not exist')
+        else:
+            print(department, 'does not exist')
+
+    def removeEmployee(self, department, username):
+        dep = self.searchDepartment(department)
+        if dep is not None:
+            user = self.userManager.findByUsername(username)
+            if user is not None:
+                dep.removeEmployee(user)
+                self.saveDepartments()
+                print('Removed', username, 'from', department, 'successfully')
+            else:
+                print(username, 'does not exist')
+        else:
+            print(department, 'does not exist')
 
     def showDepartment(self):
         for department in self.departmentList:

@@ -4,16 +4,11 @@ from Position import *
 class InvalidArgument(Exception) : pass
 
 class Department:
-    departments = []
     def __init__(self, name):
-        if name in self.departments:
-            raise InvalidArgument('The name has already been used')
         self.name = name
         self.positionTree = None
 
     def setName(self, name):
-        if name in self.departments:
-            raise InvalidArgument('The name has already been used')
         self.name = name
 
     def addEmployee(self, position, user):
@@ -23,6 +18,15 @@ class Department:
         else:
             pos = pos.name
             pos.insertUser(user)
+
+    def removeEmployee(self, employee):
+        for pre, fill, node in RenderTree(self.positionTree):
+            try:
+                node.name.removeUser(employee)
+                return
+            except UserNotFound:
+                 pass
+        raise InvalidArgument(employee, "does not exist in", self.name)
 
     def searchPosition(self, position):
         if self.positionTree is None:
@@ -39,7 +43,6 @@ class Department:
         elif self.positionTree is None:
             newPos = Position(position)
             self.positionTree = Node(newPos)
-            return True
         else:
             par = self.searchPosition(parent)
             if par is None:
@@ -47,10 +50,12 @@ class Department:
             else:
                 newPos = Position(position)
                 Node(newPos, par)
-                return True
 
     def removePosition(self, position):
-        pass
+        pos = self.searchPosition(position)
+        if pos is None:
+            raise InvalidArgument(position, "does not exist")
+        pos.parent = None
 
     def __str__(self):
         s = 'Deparment: ' + self.name

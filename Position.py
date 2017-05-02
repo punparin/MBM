@@ -45,10 +45,10 @@ class Position:
             self.employeeList.insert(index, user)
 
     def removeUser(self, user):
-        pos = self.searchUserIndex(user.id, 0, len(self.employeeList))
-        if pos is None:
-            raise UserNotFound(user.name, "is not", pos.name)
-        self.employeeList.remove(user)
+        index = self.searchUserIndex(user.id, 0, len(self.employeeList))
+        if index is None:
+            raise UserNotFound(user.name, "does not exist in", self.name)
+        self.employeeList.pop(index)
 
     def show(self, pre):
         s = self.name
