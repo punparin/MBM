@@ -131,4 +131,4 @@ class DepartmentManager:
 
     def showDepartmentList(self):
         for department in self.departmentList:
-            print('-', department)
+            print('\n-', department)

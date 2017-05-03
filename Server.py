@@ -52,17 +52,17 @@ class Server:
         print('Type \'cm\' to show all the command list ...')
         while True:
             isCommandValid = False
-            cm = input()
+            cm = input("\nCommand: ")
             cms = cm.split()
             if len(cms) == 0:
                 pass
             elif cms[0] == 'cm':
-                print('Catagory:')
+                print('\nCatagory:')
                 print('1) Server')
                 print('2) User')
                 print('3) Department')
                 print("Press a number to show commands for a specific catagory or any key to exit")
-                cat = input("Command: ")
+                cat = input("\nCommand: ")
                 if cat == '1':
                     print('Server:')
                     print('\t- stop : to terminate the server')
@@ -70,12 +70,14 @@ class Server:
                     print('\t- addAdmin [username] : to promote a user to be admin')
                     print('\t- removeAdmin [username] : to demote an admin to be user')
                 elif cat == '2':
+                    print('User:')
                     print('\t- findUserByID [id] : to show information of a user by ID')
                     print('\t- findUserByUsername [id] : to show information of a user by username')
                     print('\t- createUser [username] [password] [email] : to register a new user')
                     print('\t- removeUser [username] : to remove a user')
                     print('\t- showUserList : to show all users information')
                 elif cat == '3':
+                    print('Department:')
                     print('\t- addDepartment [name] : to add a new department')
                     print('\t- removeDepartment [department] : to remove a department')
                     print('\t- showDepartment [department] : to show information of a department')
@@ -97,6 +99,7 @@ class Server:
             elif cms[0] == 'addAdmin' and len(cms) == 2:
                 pw = input("Password: ")
                 if pw == self.password:
+                    print()
                     self.userManager.addAdmin(cms[1])
                 else:
                     print('Invalid password')
@@ -105,6 +108,7 @@ class Server:
             elif cms[0] == 'removeAdmin' and len(cms) == 2:
                 pw = input("Password: ")
                 if pw == self.password:
+                    print()
                     self.userManager.delAdmin(cms[1])
                 else:
                     print('Invalid password')
@@ -117,6 +121,7 @@ class Server:
             elif cms[0] == 'addDepartment' and len(cms) == 2:
                 pw = input("Password: ")
                 if pw == self.password:
+                    print()
                     self.departmentManager.addDepartment(cms[1])
                 else:
                     print('Invalid password')
@@ -125,6 +130,7 @@ class Server:
             elif cms[0] == 'addEmployee' and len(cms) == 4:
                 pw = input("Password: ")
                 if pw == self.password:
+                    print()
                     self.departmentManager.addEmployee(cms[1], cms[2], cms[3])
                 else:
                     print('Invalid password')
@@ -141,6 +147,7 @@ class Server:
             elif cms[0] == 'removeDepartment' and len(cms) == 2:
                 pw = input("Password: ")
                 if pw == self.password:
+                    print()
                     self.departmentManager.removeDepartment(cms[1])
                 else:
                     print('Invalid password')
@@ -149,6 +156,7 @@ class Server:
             elif cms[0] == 'findUserByUsername' and len(cms) == 2:
                 pw = input("Password: ")
                 if pw == self.password:
+                    print()
                     self.userManager.findUserByUsername(cms[1])
                 else:
                     print('Invalid password')
@@ -157,6 +165,7 @@ class Server:
             elif cms[0] == 'findUserByID' and len(cms) == 2:
                 pw = input("Password: ")
                 if pw == self.password:
+                    print()
                     self.userManager.findUserByID(cms[1])
                 else:
                     print('Invalid password')
@@ -165,6 +174,7 @@ class Server:
             elif cms[0] == 'createUser' and len(cms) == 4:
                 pw = input("Password: ")
                 if pw == self.password:
+                    print()
                     self.userManager.registerUser(User(cms[1], cms[2], cms[3]))
                 else:
                     print('Invalid password')
@@ -173,6 +183,7 @@ class Server:
             elif cms[0] == 'removeUser' and len(cms) == 2:
                 pw = input("Password: ")
                 if pw == self.password:
+                    print()
                     self.userManager.removeUser(cms[1])
                 else:
                     print('Invalid password')
@@ -181,6 +192,7 @@ class Server:
             elif cms[0] == 'showUserList' and len(cms) == 1:
                 pw = input("Password: ")
                 if pw == self.password:
+                    print()
                     self.userManager.showUserList()
                 else:
                     print('Invalid password')
@@ -190,6 +202,7 @@ class Server:
                 if len(cms) == 3:
                     pw = input("Password: ")
                     if pw == self.password:
+                        print()
                         self.departmentManager.addPosition(cms[1], cms[2])
                     else:
                         print('Invalid password')
@@ -197,6 +210,7 @@ class Server:
                 elif len(cms) == 4:
                     pw = input("Password: ")
                     if pw == self.password:
+                        print()
                         self.departmentManager.addPosition(cms[1], cms[2], cms[3])
                     else:
                         print('Invalid password')
@@ -205,6 +219,7 @@ class Server:
             elif cms[0] == 'removePosition' and len(cms) == 3:
                 pw = input("Password: ")
                 if pw == self.password:
+                    print()
                     self.departmentManager.removePosition(cms[1], cms[2])
                 else:
                     print('Invalid password')
@@ -213,6 +228,7 @@ class Server:
             elif cms[0] == 'removeEmployee' and len(cms) == 3:
                 pw = input("Password: ")
                 if pw == self.password:
+                    print()
                     self.departmentManager.removeEmployee(cms[1], cms[2])
                 else:
                     print('Invalid password')
@@ -221,6 +237,7 @@ class Server:
             elif cms[0] == 'showDepartment' and len(cms) == 2:
                 pw = input("Password: ")
                 if pw == self.password:
+                    print()
                     self.departmentManager.showDepartment(cms[1])
                 else:
                     print('Invalid password')
@@ -229,6 +246,7 @@ class Server:
             elif cms[0] == 'findEmployeePosition' and len(cms) == 3:
                 pw = input("Password: ")
                 if pw == self.password:
+                    print()
                     self.departmentManager.findEmployeePosition(cms[1], cms[2])
                 else:
                     print('Invalid password')

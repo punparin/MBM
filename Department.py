@@ -73,7 +73,7 @@ class Department:
             pos.parent = None
 
     def __str__(self):
-        s = 'Deparment: ' + self.name
+        s = 'Department: ' + self.name
         if self.positionTree is not None:
             for pre, fill, node in RenderTree(self.positionTree):
                 s += "\n\t%s%s" % (pre, node.name.show(pre))
