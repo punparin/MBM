@@ -61,6 +61,20 @@ class UserManager:
                 return user
         return None
 
+    def findByID(self, userID):
+        try:
+            userID = int(userID) - 1
+            try:
+                user = self.userList[userID]
+                if not user.isActivated:
+                    return None
+                else:
+                    return User
+            except IndexError:
+                return None
+        except ValueError:
+            return None
+
     def setStatus(self, userID, status):
         user = self.findByID(userID)
         if user is not None:
