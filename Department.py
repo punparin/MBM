@@ -11,22 +11,32 @@ class Department:
     def setName(self, name):
         self.name = name
 
-    def addEmployee(self, position, user):
+    def addEmployee(self, position, employee):
         pos = self.searchPosition(position)
         if pos is None:
             raise InvalidArgument(position, "does not exist")
         else:
             pos = pos.name
-            pos.insertUser(user)
+            pos.insertUser(employee)
 
-    def removeEmployee(self, employee):
+    def removeEmployee(self, employeeID):
+        if self.positionTree is None:
+            raise InvalidArgument(employeeID, "does not exist in", self.name)
         for pre, fill, node in RenderTree(self.positionTree):
             try:
-                node.name.removeUser(employee)
+                node.name.removeUser(employeeID)
                 return
             except UserNotFound:
                  pass
-        raise InvalidArgument(employee, "does not exist in", self.name)
+        raise InvalidArgument(employeeID, "does not exist in", self.name)
+
+    def findEmployeePosition(self, employeeID):
+        if self.positionTree is None:
+            return None
+        for pre, fill, node in RenderTree(self.positionTree):
+            if node.name.hasUser(employeeID):
+                return node.name.name
+        return None
 
     def searchPosition(self, position):
         if self.positionTree is None:
@@ -43,6 +53,8 @@ class Department:
         elif self.positionTree is None:
             newPos = Position(position)
             self.positionTree = Node(newPos)
+        elif parent is None:
+            raise InvalidArgument("Root can be only one")
         else:
             par = self.searchPosition(parent)
             if par is None:
@@ -55,7 +67,10 @@ class Department:
         pos = self.searchPosition(position)
         if pos is None:
             raise InvalidArgument(position, "does not exist")
-        pos.parent = None
+        if pos.parent is None:
+            self.positionTree = None
+        else:
+            pos.parent = None
 
     def __str__(self):
         s = 'Deparment: ' + self.name
