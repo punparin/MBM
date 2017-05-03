@@ -76,10 +76,11 @@ class UserManager:
             return None
 
     def setStatus(self, userID, status):
-        user = self.findByID(userID)
-        if user is not None:
-            user.status = status
-            #notify all
+        if userID is not None:
+            user = self.findByID(userID)
+            if user is not None:
+                user.status = status
+                #notify all
 
     def showUserList(self):
         for user in self.userList:
