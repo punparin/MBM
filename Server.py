@@ -9,7 +9,7 @@ class Server:
     def __init__(self, port=9999, maximumClient = 10):
         print("Initializing Server...")
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.host = socket.gethostname()
+        self.host = socket.gethostbyname(socket.gethostname())
         self.port = port
         self.maximumClient = maximumClient
         self.logFileName = 'serverLog'
@@ -23,6 +23,7 @@ class Server:
             #self.eventManager = EventManager(self.socket)
             self.departmentManager = DepartmentManager(self.userManager)
             print("\n--- Server is Online ---")
+            print("IP:", self.host, "Port:", self.port)
             self.thread = threading.Thread(target=self.listen, args=[])
             self.thread.setDaemon(True)
             self.thread.start()
@@ -56,21 +57,34 @@ class Server:
             if len(cms) == 0:
                 pass
             elif cms[0] == 'cm':
-                print('1) addAdmin [username] : to promote a user to be admin')
-                print('2) delAdmin [username] : to demote an admin to be user')
-                print('3) changePassword : to change the password')
-                print('4) addDepartment [name] : to add a new department')
-                print('5) addEmployee [department] [position] [username] : to add a new employee to a specific department')
-                print('6) showDepartment [department] : to show infomation of a department')
-                print('7) removeDepartment [department] : to remove a department')
-                print('8) findUserByID [id] : to show information of a user by ID')
-                print('9) findUserByUsername [id] : to show information of a user by username')
-                print('10) createUser [username] [password] [email] : to register a new user')
-                print('11) removeUser [username] : to remove a user')
-                print('12) showUserList : to show all users infomation')
-                print('13) addPosition [department] [position] [parentPosition] : to add a new position to a specific department (parentPosition can be empty)')
-                print('14) removePosition [department] [position] : to remove a position from a specific department')
-                print('15) removeEmployee [department] [username] : to remove an employee from a specific department')
+                print('Catagory:')
+                print('1) Server')
+                print('2) User')
+                print('3) Department')
+                print("Press a number to show commands for a specific catagory or any key to exit")
+                cat = input("Command: ")
+                if cat == '1':
+                    print('Server:')
+                    print('\t- stop : to terminate the server')
+                    print("\t- changePassword : to change the server's password")
+                    print('\t- addAdmin [username] : to promote a user to be admin')
+                    print('\t- removeAdmin [username] : to demote an admin to be user')
+                elif cat == '2':
+                    print('\t- findUserByID [id] : to show information of a user by ID')
+                    print('\t- findUserByUsername [id] : to show information of a user by username')
+                    print('\t- createUser [username] [password] [email] : to register a new user')
+                    print('\t- removeUser [username] : to remove a user')
+                    print('\t- showUserList : to show all users information')
+                elif cat == '3':
+                    print('\t- addDepartment [name] : to add a new department')
+                    print('\t- removeDepartment [department] : to remove a department')
+                    print('\t- showDepartment [department] : to show information of a department')
+                    print('\t- showDepartmentList : to show information of all departments')
+                    print('\t- addPosition [department] [position] [parentPosition] : to add a new position to a department (parentPosition can be empty)')
+                    print('\t- removePosition [department] [position] : to remove a position from a department')
+                    print('\t- addEmployee [department] [position] [username] : to add a new employee to a department')
+                    print('\t- removeEmployee [department] [username] : to remove an employee from a department')
+                    print('\t- findEmployeePosition [department] [username] : to find a current position of a user')
                 isCommandValid = True
             elif cms[0] == 'stop':
                 pw = input("Password: ")
@@ -78,6 +92,7 @@ class Server:
                     break
                 else:
                     print('Invalid password')
+                isCommandValid = True
             # addAdmin
             elif cms[0] == 'addAdmin' and len(cms) == 2:
                 pw = input("Password: ")
@@ -87,7 +102,7 @@ class Server:
                     print('Invalid password')
                 isCommandValid = True
             # delAdmin
-            elif cms[0] == 'delAdmin' and len(cms) == 2:
+            elif cms[0] == 'removeAdmin' and len(cms) == 2:
                 pw = input("Password: ")
                 if pw == self.password:
                     self.userManager.delAdmin(cms[1])
@@ -114,19 +129,11 @@ class Server:
                 else:
                     print('Invalid password')
                 isCommandValid = True
-            # addSubdepartment
-            elif cms[0] == 'addSubdepartment' and len(cms) == 3:
+            # showDepartmentList
+            elif cms[0] == 'showDepartmentList':
                 pw = input("Password: ")
                 if pw == self.password:
-                    self.departmentManager.addSubDepartment(cms[1], cms[2])
-                else:
-                    print('Invalid password')
-                isCommandValid = True
-            # showDepartment
-            elif cms[0] == 'showDepartment':
-                pw = input("Password: ")
-                if pw == self.password:
-                    self.departmentManager.showDepartment()
+                    self.departmentManager.showDepartmentList()
                 else:
                     print('Invalid password')
                 isCommandValid = True
@@ -207,6 +214,22 @@ class Server:
                 pw = input("Password: ")
                 if pw == self.password:
                     self.departmentManager.removeEmployee(cms[1], cms[2])
+                else:
+                    print('Invalid password')
+                isCommandValid = True
+            # showDepartment
+            elif cms[0] == 'showDepartment' and len(cms) == 2:
+                pw = input("Password: ")
+                if pw == self.password:
+                    self.departmentManager.showDepartment(cms[1])
+                else:
+                    print('Invalid password')
+                isCommandValid = True
+            # findEmployeePosition
+            elif cms[0] == 'findEmployeePosition' and len(cms) == 3:
+                pw = input("Password: ")
+                if pw == self.password:
+                    self.departmentManager.findEmployeePosition(cms[1], cms[2])
                 else:
                     print('Invalid password')
                 isCommandValid = True

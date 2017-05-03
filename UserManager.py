@@ -50,7 +50,7 @@ class UserManager:
         for user in self.userList:
             if user.username == username:
                 user.isAdmin = False
-                print('demoted', username, 'successfully')
+                print('Demoted', username, 'successfully')
                 return
         print(username, 'does not exist')
 
@@ -96,7 +96,7 @@ class UserManager:
 
     # Get all users to self.userList
     def getUsers(self):
-        print("\nLoading users...")
+        print("Loading users...")
         self.userList = []
         try:
             fileObject = open(self.userListFileName, 'rb')
@@ -105,7 +105,6 @@ class UserManager:
         try:
             while True:
                 obj = pickle.load(fileObject)
-                print("- " + str(obj))
                 self.userList.append(obj)
         except EOFError:
             fileObject.close()
