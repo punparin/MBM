@@ -22,6 +22,18 @@ class Position:
         else:
             return self.__insertUser(userID, mid + 1, high)
 
+    def hasUser(self, userID):
+        if len(self.employeeList) == 0:
+            return False
+        elif userID < self.employeeList[0].id:
+            return False
+        elif userID > self.employeeList[len(self.employeeList) - 1].id:
+            return False
+        index = self.searchUserIndex(userID, 0, len(self.employeeList))
+        if index is None:
+            return False
+        return True
+
     def searchUserIndex(self, userID, low, high):
         mid = (low + high) // 2
         if low > high:
@@ -44,11 +56,20 @@ class Position:
             index = self.__insertUser(user.id, 0, len(self.employeeList))
             self.employeeList.insert(index, user)
 
-    def removeUser(self, user):
-        index = self.searchUserIndex(user.id, 0, len(self.employeeList))
+    def removeUser(self, userID):
+        if len(self.employeeList) == 0:
+            raise UserNotFound(userID, "does not exist in", self.name)
+        elif userID < self.employeeList[0].id:
+            raise UserNotFound(userID, "does not exist in", self.name)
+        elif userID > self.employeeList[len(self.employeeList) - 1].id:
+            raise UserNotFound(userID, "does not exist in", self.name)
+        index = self.searchUserIndex(userID, 0, len(self.employeeList))
         if index is None:
-            raise UserNotFound(user.name, "does not exist in", self.name)
+            raise UserNotFound(userID, "does not exist in", self.name)
         self.employeeList.pop(index)
+
+    def __str__(self):
+        return self.name
 
     def show(self, pre):
         s = self.name
