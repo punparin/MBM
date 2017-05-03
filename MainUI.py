@@ -1,4 +1,4 @@
- from PySide.QtCore import *
+from PySide.QtCore import *
 from PySide.QtGui import *
 from PySide.QtUiTools import *
 from User import *
@@ -23,7 +23,7 @@ class MainUI(QMainWindow):
         #screensize = user32.GetSystemMetrics(1)
         #form_name = "mainForm(" + str(screensize) + ")" + ".ui"
         form_name = "mainForm(1080).ui"
-         form = None
+        form = None
 
         try:
             loader = QUiLoader()

@@ -52,7 +52,7 @@ class Server:
         print('Type \'cm\' to show all the command list ...')
         while True:
             isCommandValid = False
-            cm = input("\nCommand: ")
+            cm = input()
             cms = cm.split()
             if len(cms) == 0:
                 pass
