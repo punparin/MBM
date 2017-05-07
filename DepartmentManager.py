@@ -39,7 +39,7 @@ class DepartmentManager:
             print(err)
 
     def getDepartments(self):
-        print("\nLoading departments...")
+        print("Loading departments...")
         try:
             fileObject = open(self.departmentFileName, 'rb')
         except FileNotFoundError:
@@ -47,7 +47,6 @@ class DepartmentManager:
         try:
             while True:
                 obj = pickle.load(fileObject)
-                print("\n- " + str(obj))
                 self.departmentList.append(obj)
         except EOFError:
             fileObject.close()
@@ -68,9 +67,6 @@ class DepartmentManager:
         if dep is None:
             print(department, 'does not exist')
         else:
-            for temp in self.departmentList:
-                if temp.hasSubdepartment(dep.name):
-                    temp.removeSubdepartment(dep.name)
             self.departmentList.remove(dep)
             self.saveDepartments()
             print('Removed', department, 'successfully')
@@ -103,7 +99,7 @@ class DepartmentManager:
         if dep is not None:
             user = self.userManager.findByUsername(username)
             if user is not None:
-                dep.removeEmployee(user)
+                dep.removeEmployee(user.id)
                 self.saveDepartments()
                 print('Removed', username, 'from', department, 'successfully')
             else:
@@ -111,6 +107,28 @@ class DepartmentManager:
         else:
             print(department, 'does not exist')
 
-    def showDepartment(self):
+    def findEmployeePosition(self, department, username):
+        dep = self.searchDepartment(department)
+        if dep is not None:
+            user = self.userManager.findByUsername(username)
+            if user is not None:
+                pos = dep.findEmployeePosition(user.id)
+                if pos is not None:
+                    print(pos + ": " + username + " found")
+                else:
+                    print(username, 'does not exist in', department)
+            else:
+                print(username, 'does not exist')
+        else:
+            print(department, 'does not exist')
+
+    def showDepartment(self, department):
+        dep = self.searchDepartment(department)
+        if dep is not None:
+            print(dep)
+        else:
+            print(department, 'does not exist')
+
+    def showDepartmentList(self):
         for department in self.departmentList:
-            print('-', department)
+            print('\n-', department)

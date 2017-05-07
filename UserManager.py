@@ -50,7 +50,7 @@ class UserManager:
         for user in self.userList:
             if user.username == username:
                 user.isAdmin = False
-                print('demoted', username, 'successfully')
+                print('Demoted', username, 'successfully')
                 return
         print(username, 'does not exist')
 
@@ -61,11 +61,26 @@ class UserManager:
                 return user
         return None
 
+    def findByID(self, userID):
+        try:
+            userID = int(userID) - 1
+            try:
+                user = self.userList[userID]
+                if not user.isActivated:
+                    return None
+                else:
+                    return User
+            except IndexError:
+                return None
+        except ValueError:
+            return None
+
     def setStatus(self, userID, status):
-        user = self.findByID(userID)
-        if user is not None:
-            user.status = status
-            #notify all
+        if userID is not None:
+            user = self.findByID(userID)
+            if user is not None:
+                user.status = status
+                #notify all
 
     def showUserList(self):
         for user in self.userList:
@@ -96,7 +111,7 @@ class UserManager:
 
     # Get all users to self.userList
     def getUsers(self):
-        print("\nLoading users...")
+        print("Loading users...")
         self.userList = []
         try:
             fileObject = open(self.userListFileName, 'rb')
@@ -105,7 +120,6 @@ class UserManager:
         try:
             while True:
                 obj = pickle.load(fileObject)
-                print("- " + str(obj))
                 self.userList.append(obj)
         except EOFError:
             fileObject.close()

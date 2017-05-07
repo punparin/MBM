@@ -115,16 +115,20 @@ class UImanager(QMainWindow):
 
     # Recieve task and object after logged in
     def listen(self):
-        while True:
-            print('listening')
-            task = self.socket.recv(1024).decode('ascii')
-            if task == '':
-                break
-            try:
-                obj = pickle.loads(self.socket.recv(4096))
-                #do sth. with the object
-            except EOFError as e:
-                print(e)
+        try:
+            while True:
+                print('listening')
+                task = self.socket.recv(1024).decode('ascii')
+                if task == '':
+                    break
+                try:
+                    obj = pickle.loads(self.socket.recv(4096))
+                    #do sth. with the object
+                except EOFError as e:
+                    print(e)
+        except ConnectionResetError:
+            # Completely terminate connection when the client disconnects
+            print("The server is currently offline.")
 
     # Connect to the server
     def connect(self):
