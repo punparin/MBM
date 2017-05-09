@@ -18,7 +18,7 @@ class Server:
         try:
             self.socket.bind((self.host, self.port))
             self.socket.listen(self.maximumClient)
-            self.userManager = UserManager(self.socket)
+            self.userManager = UserManager()
             self.projectManager = ProjectManager(self.socket)
             #self.eventManager = EventManager(self.socket)
             self.departmentManager = DepartmentManager(self.userManager)
@@ -29,7 +29,8 @@ class Server:
             self.thread.start()
             self.getInformation()
             self.command()
-        except OSError:
+        except OSError as err:
+            print(err)
             print("\n!!! Server is already working !!!")
 
     # Get data from a secret file
@@ -52,7 +53,7 @@ class Server:
         print('Type \'cm\' to show all the command list ...')
         while True:
             isCommandValid = False
-            cm = input()
+            cm = input("\n")
             cms = cm.split()
             if len(cms) == 0:
                 pass
@@ -71,10 +72,10 @@ class Server:
                     print('\t- removeAdmin [username] : to demote an admin to be user')
                 elif cat == '2':
                     print('User:')
-                    print('\t- findUserByID [id] : to show information of a user by ID')
-                    print('\t- findUserByUsername [id] : to show information of a user by username')
+                    print('\t- findUser [username] : to show information of a user by username')
                     print('\t- createUser [username] [password] [email] : to register a new user')
                     print('\t- removeUser [username] : to remove a user')
+                    print('\t- removeUserList : tp remove all users')
                     print('\t- showUserList : to show all users information')
                 elif cat == '3':
                     print('Department:')
@@ -131,7 +132,7 @@ class Server:
                 pw = input("Password: ")
                 if pw == self.password:
                     print()
-                    self.departmentManager.addEmployee(cms[1], cms[2], cms[3])
+                    print(self.departmentManager.addEmployee(cms[1], cms[2], cms[3]))
                 else:
                     print('Invalid password')
                 isCommandValid = True
@@ -148,25 +149,16 @@ class Server:
                 pw = input("Password: ")
                 if pw == self.password:
                     print()
-                    self.departmentManager.removeDepartment(cms[1])
+                    print(self.departmentManager.removeDepartment(cms[1]))
                 else:
                     print('Invalid password')
                 isCommandValid = True
-            # findUserByUsername
-            elif cms[0] == 'findUserByUsername' and len(cms) == 2:
+            # findUser
+            elif cms[0] == 'findUser' and len(cms) == 2:
                 pw = input("Password: ")
                 if pw == self.password:
                     print()
                     self.userManager.findUserByUsername(cms[1])
-                else:
-                    print('Invalid password')
-                isCommandValid = True
-            # findUserByID
-            elif cms[0] == 'findUserByID' and len(cms) == 2:
-                pw = input("Password: ")
-                if pw == self.password:
-                    print()
-                    self.userManager.findUserByID(cms[1])
                 else:
                     print('Invalid password')
                 isCommandValid = True
@@ -188,6 +180,15 @@ class Server:
                 else:
                     print('Invalid password')
                 isCommandValid = True
+            # removeUserList
+            elif cms[0] == 'removeUserList' and len(cms) == 1:
+                pw = input("Password: ")
+                if pw == self.password:
+                    print()
+                    self.userManager.removeUserList()
+                else:
+                    print('Invalid password')
+                isCommandValid = True
             # showUserList
             elif cms[0] == 'showUserList' and len(cms) == 1:
                 pw = input("Password: ")
@@ -203,7 +204,7 @@ class Server:
                     pw = input("Password: ")
                     if pw == self.password:
                         print()
-                        self.departmentManager.addPosition(cms[1], cms[2])
+                        print(self.departmentManager.addPosition(cms[1], cms[2]))
                     else:
                         print('Invalid password')
                     isCommandValid = True
@@ -211,7 +212,7 @@ class Server:
                     pw = input("Password: ")
                     if pw == self.password:
                         print()
-                        self.departmentManager.addPosition(cms[1], cms[2], cms[3])
+                        print(self.departmentManager.addPosition(cms[1], cms[2], cms[3]))
                     else:
                         print('Invalid password')
                     isCommandValid = True
@@ -220,7 +221,7 @@ class Server:
                 pw = input("Password: ")
                 if pw == self.password:
                     print()
-                    self.departmentManager.removePosition(cms[1], cms[2])
+                    print(self.departmentManager.removePosition(cms[1], cms[2]))
                 else:
                     print('Invalid password')
                 isCommandValid = True
@@ -229,7 +230,7 @@ class Server:
                 pw = input("Password: ")
                 if pw == self.password:
                     print()
-                    self.departmentManager.removeEmployee(cms[1], cms[2])
+                    print(self.departmentManager.removeEmployee(cms[1], cms[2]))
                 else:
                     print('Invalid password')
                 isCommandValid = True
@@ -238,7 +239,7 @@ class Server:
                 pw = input("Password: ")
                 if pw == self.password:
                     print()
-                    self.departmentManager.showDepartment(cms[1])
+                    print(self.departmentManager.showDepartment(cms[1]))
                 else:
                     print('Invalid password')
                 isCommandValid = True
@@ -247,7 +248,7 @@ class Server:
                 pw = input("Password: ")
                 if pw == self.password:
                     print()
-                    self.departmentManager.findEmployeePosition(cms[1], cms[2])
+                    print(self.departmentManager.findEmployeePosition(cms[1], cms[2]))
                 else:
                     print('Invalid password')
                 isCommandValid = True
