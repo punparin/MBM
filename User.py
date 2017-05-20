@@ -4,7 +4,7 @@ class User:
         self.username = username
         self.password = password
         self.email = email
-        self.id = ""
+        self.id = None
 
         #user
         self.name = ""
@@ -22,9 +22,10 @@ class User:
 
         self.isAdmin = False
         self.status = "Offline"
-        self.isActivated = True
 
     def __str__(self):
+        if self.id is None:
+            return 'User: ' + self.username + " " + self.email
         return 'User: ' + format(self.id, '05d') + " " + self.username + " " + self.email
 
 
