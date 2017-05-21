@@ -1,4 +1,5 @@
 import socket
+import time
 from Handler import *
 from UserManager import *
 from ProjectManager import *
@@ -8,10 +9,11 @@ from DepartmentManager import *
 class Server:
     def __init__(self, port=9999, maximumClient = 10):
         print("Initializing Server...")
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        start = time.time()
         self.host = socket.gethostbyname(socket.gethostname())
         self.port = port
         self.maximumClient = maximumClient
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.logFileName = 'serverLog'
         self.constant = 'constant'
         self.password = None
@@ -24,6 +26,7 @@ class Server:
             self.departmentManager = DepartmentManager(self.userManager)
             print("\n--- Server is Online ---")
             print("IP:", self.host, "Port:", self.port)
+            print("Initial Runtime:", format((time.time() - start) / 1000, '.10f'), "sec")
             self.thread = threading.Thread(target=self.listen, args=[])
             self.thread.setDaemon(True)
             self.thread.start()

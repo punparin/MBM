@@ -53,7 +53,9 @@ class UserManager:
         if user is None:
             print(username, 'does not exist')
         else:
-            print('Demoted', username, 'successfully')
+            user.isAdmin = True
+            self.update(user)
+            print('Promoted', username, 'successfully')
 
     def delAdmin(self, username):
         user = self.findByUsername(username)
@@ -62,6 +64,7 @@ class UserManager:
         else:
             if user.isAdmin:
                 user.isAdmin = False
+                self.update(user)
                 print('Demoted', username, 'successfully')
             else:
                 print(username, 'is not an admin')
