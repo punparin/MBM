@@ -1,9 +1,12 @@
 from PySide.QtCore import *
 from PySide.QtGui import *
 from PySide.QtUiTools import *
-from User import *
+#from User import *
 import math
 import sys
+import datetime
+import calendar
+import time
 import ctypes
 
 class MainUI(QMainWindow):
@@ -14,6 +17,7 @@ class MainUI(QMainWindow):
         self.setWindowTitle("MBM v.0")
         self.parent = parent
         self.UIinit()
+        
 
     # init UI form (attribute)
     def UIinit(self):
@@ -41,7 +45,11 @@ class MainUI(QMainWindow):
         
         #CalendarImplementation
         self.monthLabel = form.findChild(QLabel, "monthLabel")
-        dateeT = QDate.currentDate()
+
+        #setCurrentTime
+        self.mo = datetime.datetime.now().month
+        self.ye = datetime.datetime.now().year
+        calendar.setfirstweekday(calendar.SUNDAY)
         
 
         #initDate
@@ -90,7 +98,8 @@ class MainUI(QMainWindow):
                
 
         #setTime
-        self.changeDate(dateeT.getDate())
+        self.changeDate()
+        
         #Button
         self.BacButton = form.findChild(QPushButton, "BackButton")
         self.BacButton.clicked.connect(self.BackButton)
@@ -140,47 +149,29 @@ class MainUI(QMainWindow):
         self.cancel_password_button.clicked.connect(self.backToProfilePage)
         '''
     def BackButton(self):
-        m = int(self.CurDate[1])
-        m -= 1
-        y = int(self.CurDate[0])
-        if(m < 1):
-            m = 12
-            y -= 1
-        self.changeDate((y,m,self.CurDate[2]))
+        self.mo -= 1
+        if(self.mo < 1):
+            self.mo = 12
+            self.ye -= 1
+        self.changeDate()
 
     def NextButton(self):
-        m = int(self.CurDate[1])
-        m += 1
-        y = int(self.CurDate[0])
-        if(m > 12):
-            m = 1
-            y += 1
-        self.changeDate((y,m,self.CurDate[2]))
-        
-    def changeDate(self,date):
+        self.mo += 1
+        if(self.mo > 12):
+            self.mo = 1
+            self.ye += 1
+        self.changeDate()
+    
+    def changeDate(self):
         month = ['January','February','March','April','May','June','July','August','September','October','November','December']
         week = ["Sat","Sun","Mon","Tue","Wed","Thu","Fri"]
         limit = 0
-        self.CurDate = date
-        
-        self.monthLabel.setText(str(month[self.CurDate[1]-1])+" "+str(self.CurDate[0]))
         count = 1
-        wek = self.calcalendar(1,int(self.CurDate[1]),int(self.CurDate[0]))
-        startDate = wek -1
-        if(startDate < 0):
-            startDate = 6
-        elif(startDate > 6):
-            startDate = 0
-        mon = self.CurDate[1]
-        if(mon == 2):
-            if(self.calFebruary(int(self.CurDate[0]))):
-                limit = 29
-            else:
-                limit = 28
-        elif(mon == 4 or mon == 6 or mon == 9 or mon == 11 ):
-            limit = 30
-        else:
-            limit = 31
+        dList,startDate,limit = self.calcalendar()
+        startDate += 1
+        #setMonth
+        self.monthLabel.setText(str(month[self.mo-1])+" "+str(self.ye))
+        
         for i in range(6):
             for j in range(7):
                 lab = 'L'+str(i)+str(j)
@@ -193,39 +184,14 @@ class MainUI(QMainWindow):
                         n.setText(str(""))
                 else:
                     n.setText(str(""))
-                
-    def calFebruary(self,Y): 
-        if(Y > 0 and type(Y) == int):
-            if(0 == (Y % 400)):
-                checkLeap = True
-            else:
-                if ((0 == (Y % 4)) and (not (0 == (Y % 100)))):
-                     checkLeap = True
-                else:
-                    checkLeap = False
-            return checkLeap           
-        else:
-            print("Wrong Type")
-    def calcalendar(self,day,month,year):
-        FebVar = 28
-        if(month == 1):
-            month = 13
-            year -= 1
-        if(month == 2):
-            if(self.calFebruary(year)):
-                FebVar = 29
-            month = 14
-            year -= 1
-        if(day > FebVar and month == 14):
-            print("no this day")
-        else:
-            q = day
-            m = month
-            k = year % 100
-            j = math.floor(year / 100)
-            h = q + math.floor(13*(m+1)/5) + k + math.floor(k/4) + math.floor(j/4) + 5*j
-            h = h % 7
-            return h
+
+    def calcalendar(self):
+        dayNum =  calendar.monthrange(self.ye,self.mo)
+        stdate = dayNum[0]
+        limit = dayNum[1]
+        d = calendar.monthcalendar(self.ye,self.mo)
+        #return d -> tuple(Firstweekday,monthrange)
+        return d,stdate,limit
 
     def mainPageSlot(self):
         print("test")
