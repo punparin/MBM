@@ -6469,7 +6469,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_6" native="true">
+      <widget class="QWidget" name="w1" native="true">
        <property name="geometry">
         <rect>
          <x>110</x>
@@ -7357,7 +7357,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_8" native="true">
+      <widget class="QWidget" name="w8" native="true">
        <property name="geometry">
         <rect>
          <x>110</x>
@@ -7798,7 +7798,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_9" native="true">
+      <widget class="QWidget" name="w15" native="true">
        <property name="geometry">
         <rect>
          <x>110</x>
@@ -8239,7 +8239,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_10" native="true">
+      <widget class="QWidget" name="w22" native="true">
        <property name="geometry">
         <rect>
          <x>110</x>
@@ -8680,7 +8680,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_11" native="true">
+      <widget class="QWidget" name="w29" native="true">
        <property name="geometry">
         <rect>
          <x>110</x>
@@ -9121,7 +9121,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_12" native="true">
+      <widget class="QWidget" name="w36" native="true">
        <property name="geometry">
         <rect>
          <x>110</x>
@@ -9562,7 +9562,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_13" native="true">
+      <widget class="QWidget" name="w2" native="true">
        <property name="geometry">
         <rect>
          <x>230</x>
@@ -10003,7 +10003,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_14" native="true">
+      <widget class="QWidget" name="w9" native="true">
        <property name="geometry">
         <rect>
          <x>230</x>
@@ -10444,7 +10444,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_15" native="true">
+      <widget class="QWidget" name="w16" native="true">
        <property name="geometry">
         <rect>
          <x>230</x>
@@ -10885,7 +10885,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_16" native="true">
+      <widget class="QWidget" name="w23" native="true">
        <property name="geometry">
         <rect>
          <x>230</x>
@@ -11326,7 +11326,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_17" native="true">
+      <widget class="QWidget" name="w30" native="true">
        <property name="geometry">
         <rect>
          <x>230</x>
@@ -11767,7 +11767,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_18" native="true">
+      <widget class="QWidget" name="w37" native="true">
        <property name="geometry">
         <rect>
          <x>230</x>
@@ -12208,7 +12208,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_19" native="true">
+      <widget class="QWidget" name="w3" native="true">
        <property name="geometry">
         <rect>
          <x>350</x>
@@ -12649,7 +12649,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_20" native="true">
+      <widget class="QWidget" name="w10" native="true">
        <property name="geometry">
         <rect>
          <x>350</x>
@@ -13090,7 +13090,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_23" native="true">
+      <widget class="QWidget" name="w31" native="true">
        <property name="geometry">
         <rect>
          <x>350</x>
@@ -13531,7 +13531,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_24" native="true">
+      <widget class="QWidget" name="w38" native="true">
        <property name="geometry">
         <rect>
          <x>350</x>
@@ -13972,7 +13972,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_25" native="true">
+      <widget class="QWidget" name="w4" native="true">
        <property name="geometry">
         <rect>
          <x>470</x>
@@ -14413,7 +14413,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_26" native="true">
+      <widget class="QWidget" name="w11" native="true">
        <property name="geometry">
         <rect>
          <x>470</x>
@@ -14854,7 +14854,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_27" native="true">
+      <widget class="QWidget" name="w18" native="true">
        <property name="geometry">
         <rect>
          <x>470</x>
@@ -15295,7 +15295,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_28" native="true">
+      <widget class="QWidget" name="w25" native="true">
        <property name="geometry">
         <rect>
          <x>470</x>
@@ -15736,7 +15736,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_29" native="true">
+      <widget class="QWidget" name="w32" native="true">
        <property name="geometry">
         <rect>
          <x>470</x>
@@ -16177,7 +16177,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_30" native="true">
+      <widget class="QWidget" name="w39" native="true">
        <property name="geometry">
         <rect>
          <x>470</x>
@@ -16618,7 +16618,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_31" native="true">
+      <widget class="QWidget" name="w5" native="true">
        <property name="geometry">
         <rect>
          <x>590</x>
@@ -17059,7 +17059,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_32" native="true">
+      <widget class="QWidget" name="w12" native="true">
        <property name="geometry">
         <rect>
          <x>590</x>
@@ -17500,7 +17500,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_33" native="true">
+      <widget class="QWidget" name="w19" native="true">
        <property name="geometry">
         <rect>
          <x>590</x>
@@ -17941,7 +17941,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_34" native="true">
+      <widget class="QWidget" name="w26" native="true">
        <property name="geometry">
         <rect>
          <x>590</x>
@@ -18382,7 +18382,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_35" native="true">
+      <widget class="QWidget" name="w33" native="true">
        <property name="geometry">
         <rect>
          <x>589</x>
@@ -18823,7 +18823,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_36" native="true">
+      <widget class="QWidget" name="w40" native="true">
        <property name="geometry">
         <rect>
          <x>589</x>
@@ -19264,7 +19264,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_37" native="true">
+      <widget class="QWidget" name="w6" native="true">
        <property name="geometry">
         <rect>
          <x>710</x>
@@ -19705,7 +19705,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_38" native="true">
+      <widget class="QWidget" name="w13" native="true">
        <property name="geometry">
         <rect>
          <x>710</x>
@@ -20146,7 +20146,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_39" native="true">
+      <widget class="QWidget" name="w20" native="true">
        <property name="geometry">
         <rect>
          <x>710</x>
@@ -20583,11 +20583,11 @@ QWidget {background-image: url(Images/widget.png) }</string>
          </rect>
         </property>
         <property name="text">
-         <string>21</string>
+         <string>20</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_40" native="true">
+      <widget class="QWidget" name="w27" native="true">
        <property name="geometry">
         <rect>
          <x>710</x>
@@ -21028,7 +21028,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_41" native="true">
+      <widget class="QWidget" name="w34" native="true">
        <property name="geometry">
         <rect>
          <x>709</x>
@@ -21469,7 +21469,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_42" native="true">
+      <widget class="QWidget" name="w41" native="true">
        <property name="geometry">
         <rect>
          <x>709</x>
@@ -21910,7 +21910,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_43" native="true">
+      <widget class="QWidget" name="w7" native="true">
        <property name="geometry">
         <rect>
          <x>830</x>
@@ -22351,7 +22351,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_44" native="true">
+      <widget class="QWidget" name="w14" native="true">
        <property name="geometry">
         <rect>
          <x>830</x>
@@ -22792,7 +22792,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_45" native="true">
+      <widget class="QWidget" name="w21" native="true">
        <property name="geometry">
         <rect>
          <x>830</x>
@@ -23233,7 +23233,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_46" native="true">
+      <widget class="QWidget" name="w28" native="true">
        <property name="geometry">
         <rect>
          <x>830</x>
@@ -23674,7 +23674,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_47" native="true">
+      <widget class="QWidget" name="w35" native="true">
        <property name="geometry">
         <rect>
          <x>829</x>
@@ -24115,7 +24115,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_48" native="true">
+      <widget class="QWidget" name="w42" native="true">
        <property name="geometry">
         <rect>
          <x>829</x>
@@ -24600,7 +24600,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         <string notr="true">-&gt;</string>
        </property>
       </widget>
-      <widget class="QWidget" name="widget_22" native="true">
+      <widget class="QWidget" name="w24" native="true">
        <property name="geometry">
         <rect>
          <x>350</x>
@@ -25041,7 +25041,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_21" native="true">
+      <widget class="QWidget" name="w17" native="true">
        <property name="geometry">
         <rect>
          <x>350</x>
@@ -26367,49 +26367,49 @@ QWidget {background-image: url(Images/widget.png) }</string>
       <zorder>widget_3</zorder>
       <zorder>widget_4</zorder>
       <zorder>widget_5</zorder>
-      <zorder>widget_6</zorder>
+      <zorder>w1</zorder>
       <zorder>widget_7</zorder>
-      <zorder>widget_8</zorder>
-      <zorder>widget_9</zorder>
-      <zorder>widget_10</zorder>
-      <zorder>widget_11</zorder>
-      <zorder>widget_12</zorder>
-      <zorder>widget_13</zorder>
-      <zorder>widget_14</zorder>
-      <zorder>widget_15</zorder>
-      <zorder>widget_16</zorder>
-      <zorder>widget_17</zorder>
-      <zorder>widget_18</zorder>
-      <zorder>widget_19</zorder>
-      <zorder>widget_20</zorder>
-      <zorder>widget_23</zorder>
-      <zorder>widget_24</zorder>
-      <zorder>widget_25</zorder>
-      <zorder>widget_26</zorder>
-      <zorder>widget_27</zorder>
-      <zorder>widget_28</zorder>
-      <zorder>widget_29</zorder>
-      <zorder>widget_30</zorder>
-      <zorder>widget_31</zorder>
-      <zorder>widget_32</zorder>
-      <zorder>widget_33</zorder>
-      <zorder>widget_34</zorder>
-      <zorder>widget_35</zorder>
-      <zorder>widget_36</zorder>
-      <zorder>widget_37</zorder>
-      <zorder>widget_38</zorder>
-      <zorder>widget_39</zorder>
-      <zorder>widget_40</zorder>
-      <zorder>widget_41</zorder>
-      <zorder>widget_42</zorder>
-      <zorder>widget_43</zorder>
-      <zorder>widget_44</zorder>
-      <zorder>widget_45</zorder>
-      <zorder>widget_46</zorder>
-      <zorder>widget_47</zorder>
-      <zorder>widget_48</zorder>
-      <zorder>widget_22</zorder>
-      <zorder>widget_21</zorder>
+      <zorder>w8</zorder>
+      <zorder>w15</zorder>
+      <zorder>w22</zorder>
+      <zorder>w29</zorder>
+      <zorder>w36</zorder>
+      <zorder>w2</zorder>
+      <zorder>w9</zorder>
+      <zorder>w16</zorder>
+      <zorder>w23</zorder>
+      <zorder>w30</zorder>
+      <zorder>w37</zorder>
+      <zorder>w3</zorder>
+      <zorder>w10</zorder>
+      <zorder>w31</zorder>
+      <zorder>w38</zorder>
+      <zorder>w4</zorder>
+      <zorder>w11</zorder>
+      <zorder>w18</zorder>
+      <zorder>w25</zorder>
+      <zorder>w32</zorder>
+      <zorder>w39</zorder>
+      <zorder>w5</zorder>
+      <zorder>w12</zorder>
+      <zorder>w19</zorder>
+      <zorder>w26</zorder>
+      <zorder>w33</zorder>
+      <zorder>w40</zorder>
+      <zorder>w6</zorder>
+      <zorder>w13</zorder>
+      <zorder>w20</zorder>
+      <zorder>w27</zorder>
+      <zorder>w34</zorder>
+      <zorder>w41</zorder>
+      <zorder>w7</zorder>
+      <zorder>w14</zorder>
+      <zorder>w21</zorder>
+      <zorder>w28</zorder>
+      <zorder>w35</zorder>
+      <zorder>w42</zorder>
+      <zorder>w24</zorder>
+      <zorder>w17</zorder>
       <zorder>widget_49</zorder>
       <zorder>BackButton</zorder>
       <zorder>NextButton</zorder>
