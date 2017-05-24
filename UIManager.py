@@ -35,9 +35,11 @@ class UImanager(QMainWindow):
         self.login_widget = LoginUI(self)
         self.main_widget = MainUI(self)
         self.register_widget = RegisterUI(self)
-        self.central_widget.addWidget(self.login_widget)
-        self.central_widget.addWidget(self.main_widget)
+        self.week_widget = WeekUI(self)
+        self.central_widget.addWidget(self.login_widget) 
+        self.central_widget.addWidget(self.main_widget) 
         self.central_widget.addWidget(self.register_widget)
+        self.central_widget.addWidget(self.week_widget)
 
         # Init socket part
         self.isServerOnline = False
