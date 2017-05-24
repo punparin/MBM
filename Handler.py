@@ -40,6 +40,7 @@ class Handler(threading.Thread):
         except ConnectionResetError:
             # Completely terminate connection when the client disconnects
             self.clientSocket.close()
+            self.currentUserID = None
             print(self.address, "disconnected")
             self.userManager.setStatus(self.currentUserID, "Offline")
 
