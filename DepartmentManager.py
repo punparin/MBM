@@ -1,4 +1,5 @@
 import pickle
+import io
 from Department import *
 
 class DepartmentManager:
@@ -50,6 +51,8 @@ class DepartmentManager:
                 self.departmentList.append(obj)
         except EOFError:
             fileObject.close()
+        except (AttributeError, io.UnsupportedOperation):
+            fileObject.close()
 
     def saveDepartment(self, department):
         fileObject = open(self.departmentFileName, 'ab')
@@ -87,6 +90,8 @@ class DepartmentManager:
             user = self.userManager.findByUsername(username)
             if user is not None:
                 dep.addEmployee(position, user)
+                user.position = position
+                self.userManager.saveUsers()
                 self.saveDepartments()
                 print('Added', username, 'to', department, 'successfully')
             else:
@@ -100,6 +105,8 @@ class DepartmentManager:
             user = self.userManager.findByUsername(username)
             if user is not None:
                 dep.removeEmployee(user.id)
+                user.position = ""
+                self.userManager.saveUsers()
                 self.saveDepartments()
                 print('Removed', username, 'from', department, 'successfully')
             else:
