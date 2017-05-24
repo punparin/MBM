@@ -152,6 +152,7 @@ class UserManager:
             return "User: " + user.username + " logged in fail"
         elif user.username == registeredUser.username and user.password == registeredUser.password:
             print("User:", user.username, "logged in successfully")
+            return registeredUser
         else:
             print("User:", user.username, "logged in fail")
             return "User: " + user.username + " logged in fail"
