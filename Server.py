@@ -53,7 +53,11 @@ class Server:
 
     # Recieving command from user
     def command(self):
-        print('Type \'cm\' to show all the command list ...')
+        isSafeMode = False
+        pwd = ""
+        while pwd != self.password:
+            pwd = input("Password: ")
+        print('\nType \'cm\' to show all the command list ...')
         while True:
             isCommandValid = False
             cm = input("\n")
@@ -71,6 +75,7 @@ class Server:
                     print('Server:')
                     print('\t- stop : to terminate the server')
                     print("\t- changePassword : to change the server's password")
+                    print('\t- safeMode: to lock all commands')
                     print('\t- addAdmin [username] : to promote a user to be admin')
                     print('\t- removeAdmin [username] : to demote an admin to be user')
                 elif cat == '2':
@@ -92,30 +97,22 @@ class Server:
                     print('\t- removeEmployee [department] [username] : to remove an employee from a department')
                     print('\t- findEmployeePosition [department] [username] : to find a current position of a user')
                 isCommandValid = True
+            # stop
             elif cms[0] == 'stop':
-                pw = input("Password: ")
-                if pw == self.password:
-                    break
-                else:
-                    print('Invalid password')
-                isCommandValid = True
+                break
+            # safeMode
+            elif cms[0] == 'safeMode':
+                isSafeMode = True
+                break
             # addAdmin
             elif cms[0] == 'addAdmin' and len(cms) == 2:
-                pw = input("Password: ")
-                if pw == self.password:
-                    print()
-                    self.userManager.addAdmin(cms[1])
-                else:
-                    print('Invalid password')
+                print()
+                self.userManager.addAdmin(cms[1])
                 isCommandValid = True
             # delAdmin
             elif cms[0] == 'removeAdmin' and len(cms) == 2:
-                pw = input("Password: ")
-                if pw == self.password:
-                    print()
-                    self.userManager.delAdmin(cms[1])
-                else:
-                    print('Invalid password')
+                print()
+                self.userManager.delAdmin(cms[1])
                 isCommandValid = True
             # changePassword
             elif cms[0] == 'changePassword':
@@ -123,140 +120,82 @@ class Server:
                 isCommandValid = True
             # addDepartment
             elif cms[0] == 'addDepartment' and len(cms) == 2:
-                pw = input("Password: ")
-                if pw == self.password:
-                    print()
-                    self.departmentManager.addDepartment(cms[1])
-                else:
-                    print('Invalid password')
+                print()
+                self.departmentManager.addDepartment(cms[1])
                 isCommandValid = True
             # addEmployee
             elif cms[0] == 'addEmployee' and len(cms) == 4:
-                pw = input("Password: ")
-                if pw == self.password:
-                    print()
-                    print(self.departmentManager.addEmployee(cms[1], cms[2], cms[3]))
-                else:
-                    print('Invalid password')
+                print()
+                self.departmentManager.addEmployee(cms[1], cms[2], cms[3])
                 isCommandValid = True
             # showDepartmentList
             elif cms[0] == 'showDepartmentList':
-                pw = input("Password: ")
-                if pw == self.password:
-                    self.departmentManager.showDepartmentList()
-                else:
-                    print('Invalid password')
+                self.departmentManager.showDepartmentList()
                 isCommandValid = True
             # removeDepartment
             elif cms[0] == 'removeDepartment' and len(cms) == 2:
-                pw = input("Password: ")
-                if pw == self.password:
-                    print()
-                    print(self.departmentManager.removeDepartment(cms[1]))
-                else:
-                    print('Invalid password')
+                print()
+                self.departmentManager.removeDepartment(cms[1])
                 isCommandValid = True
             # findUser
             elif cms[0] == 'findUser' and len(cms) == 2:
-                pw = input("Password: ")
-                if pw == self.password:
-                    print()
-                    self.userManager.findUserByUsername(cms[1])
-                else:
-                    print('Invalid password')
+                print()
+                self.userManager.findUserByUsername(cms[1])
                 isCommandValid = True
             # createUser
             elif cms[0] == 'createUser' and len(cms) == 4:
-                pw = input("Password: ")
-                if pw == self.password:
-                    print()
-                    self.userManager.registerUser(User(cms[1], cms[2], cms[3]))
-                else:
-                    print('Invalid password')
+                print()
+                self.userManager.registerUser(User(cms[1], cms[2], cms[3]))
                 isCommandValid = True
             # removeUser
             elif cms[0] == 'removeUser' and len(cms) == 2:
-                pw = input("Password: ")
-                if pw == self.password:
-                    print()
-                    self.userManager.removeUser(cms[1])
-                else:
-                    print('Invalid password')
+                print()
+                self.userManager.removeUser(cms[1])
                 isCommandValid = True
             # removeUserList
             elif cms[0] == 'removeUserList' and len(cms) == 1:
-                pw = input("Password: ")
-                if pw == self.password:
-                    print()
-                    self.userManager.removeUserList()
-                else:
-                    print('Invalid password')
+                print()
+                self.userManager.removeUserList()
                 isCommandValid = True
             # showUserList
             elif cms[0] == 'showUserList' and len(cms) == 1:
-                pw = input("Password: ")
-                if pw == self.password:
-                    print()
-                    self.userManager.showUserList()
-                else:
-                    print('Invalid password')
+                print()
+                self.userManager.showUserList()
                 isCommandValid = True
             # addPosition
             elif cms[0] == 'addPosition':
                 if len(cms) == 3:
-                    pw = input("Password: ")
-                    if pw == self.password:
-                        print()
-                        print(self.departmentManager.addPosition(cms[1], cms[2]))
-                    else:
-                        print('Invalid password')
+                    print()
+                    self.departmentManager.addPosition(cms[1], cms[2])
                     isCommandValid = True
                 elif len(cms) == 4:
-                    pw = input("Password: ")
-                    if pw == self.password:
-                        print()
-                        print(self.departmentManager.addPosition(cms[1], cms[2], cms[3]))
-                    else:
-                        print('Invalid password')
+                    print()
+                    self.departmentManager.addPosition(cms[1], cms[2], cms[3])
                     isCommandValid = True
             # removePosition
             elif cms[0] == 'removePosition' and len(cms) == 3:
-                pw = input("Password: ")
-                if pw == self.password:
-                    print()
-                    print(self.departmentManager.removePosition(cms[1], cms[2]))
-                else:
-                    print('Invalid password')
+                print()
+                self.departmentManager.removePosition(cms[1], cms[2])
                 isCommandValid = True
             # removeEmployee
             elif cms[0] == 'removeEmployee' and len(cms) == 3:
-                pw = input("Password: ")
-                if pw == self.password:
-                    print()
-                    print(self.departmentManager.removeEmployee(cms[1], cms[2]))
-                else:
-                    print('Invalid password')
+                print()
+                self.departmentManager.removeEmployee(cms[1], cms[2])
                 isCommandValid = True
             # showDepartment
             elif cms[0] == 'showDepartment' and len(cms) == 2:
-                pw = input("Password: ")
-                if pw == self.password:
-                    print()
-                    print(self.departmentManager.showDepartment(cms[1]))
-                else:
-                    print('Invalid password')
+                print()
+                self.departmentManager.showDepartment(cms[1])
                 isCommandValid = True
             # findEmployeePosition
             elif cms[0] == 'findEmployeePosition' and len(cms) == 3:
-                pw = input("Password: ")
-                if pw == self.password:
-                    print()
-                    print(self.departmentManager.findEmployeePosition(cms[1], cms[2]))
-                else:
-                    print('Invalid password')
+                print()
+                self.departmentManager.findEmployeePosition(cms[1], cms[2])
                 isCommandValid = True
             if not isCommandValid:
                 print('Invalid Command')
+        if isSafeMode:
+            self.command()
 
     def changePassword(self):
         currentPassword = input("Current Password: ")
