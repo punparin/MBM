@@ -67,6 +67,8 @@ class UImanager(QMainWindow):
                 pass
             if self.state == "online":
                 self.centralWidget().setCurrentWidget(self.main_widget)
+                if(self.user.isAdmin == True):
+                    self.main_widget.menu.addItems(["System"])
                 palette = QPalette()
                 palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/background2.png")))
                 self.setPalette(palette)

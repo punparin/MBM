@@ -10,7 +10,7 @@ class DepartmentManager:
         self.getDepartments()
 
     # Identify task for the exact function
-    def work(self, task, obj):
+    def work(self, task, obj = None):
         processedObj = None
         if task == 'getInitialInfo':
             processedObj = self.getInitialInfo()
