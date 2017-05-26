@@ -120,10 +120,21 @@ class UImanager(QMainWindow):
                 print('listening')
                 task = self.socket.recv(1024).decode('ascii')
                 if task == '':
-                    break
+                    pass
                 try:
                     obj = pickle.loads(self.socket.recv(4096))
-                    #do sth. with the object
+                    if task == 'getInitialInfo':
+                        pass
+                        # obj in this case is a Department instance
+                        # Department --> Position --> [employeeID, employeeUsername, employeeStatus]
+                        # implemented using Tree
+                        # see how to traversal it in DepartmentManager.getInitialInfo()
+                    elif task == 'getUserInfo':
+                        pass
+                        # obj in this case is a User instance without password
+                    elif task == 'getUserStatus':
+                        pass
+                        # obj in this case is the status of the user
                 except EOFError as e:
                     print(e)
         except ConnectionResetError:
