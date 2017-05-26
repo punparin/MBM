@@ -86,15 +86,6 @@ class MainUI(QMainWindow):
         self.permission_tabel.resizeColumnsToContents()
         self.permission_tabel.resizeRowsToContents()
 
-        self.test_box = QPushButton("TEST")
-        self.permission_tabel.setCellWidget(0,0,self.test_box)
-        print("pass add button to table")
-
-        #Department Section
-        
-        
-        #Add department section
-
     def mainPageSlot(self):
         print("test")
 
@@ -162,6 +153,9 @@ class MainUI(QMainWindow):
             self.subWidget.setCurrentIndex(2)
         elif self.menu.currentText() == "System":
             self.subWidget.setCurrentIndex(5)
+            self.parent.send("getInitialInfo", None)
+            #self.test_box = QPushButton("TEST")
+            #self.permission_tabel.setCellWidget(0, 0, self.test_box)
 
     def passwordValidation(self, password):
         isDigit = False

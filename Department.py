@@ -14,21 +14,21 @@ class Department:
     def addEmployee(self, position, employee):
         pos = self.searchPosition(position)
         if pos is None:
-            raise InvalidArgument(position, "does not exist")
+            raise InvalidArgument(position + " does not exist")
         else:
             pos = pos.name
-            pos.insertUser(employee)
+            pos.insertUser(employee.id, employee.username)
 
     def removeEmployee(self, employeeID):
         if self.positionTree is None:
-            raise InvalidArgument(employeeID, "does not exist in", self.name)
+            raise InvalidArgument(str(employeeID) + " does not exist in " + self.name)
         for pre, fill, node in RenderTree(self.positionTree):
             try:
                 node.name.removeUser(employeeID)
                 return
             except UserNotFound:
                  pass
-        raise InvalidArgument(employeeID, "does not exist in", self.name)
+        raise InvalidArgument(str(employeeID) + " does not exist in " + self.name)
 
     def findEmployeePosition(self, employeeID):
         if self.positionTree is None:
@@ -49,7 +49,7 @@ class Department:
     def addPosition(self, position, parent):
         pos = self.searchPosition(position)
         if pos is not None:
-            raise InvalidArgument(position, "has already been created")
+            raise InvalidArgument(position + " has already been created")
         elif self.positionTree is None:
             newPos = Position(position)
             self.positionTree = Node(newPos)
@@ -58,7 +58,7 @@ class Department:
         else:
             par = self.searchPosition(parent)
             if par is None:
-                raise InvalidArgument(parent, "does not exist")
+                raise InvalidArgument(parent + " does not exist")
             else:
                 newPos = Position(position)
                 Node(newPos, par)
@@ -66,7 +66,7 @@ class Department:
     def removePosition(self, position):
         pos = self.searchPosition(position)
         if pos is None:
-            raise InvalidArgument(position, "does not exist")
+            raise InvalidArgument(position + " does not exist")
         if pos.parent is None:
             self.positionTree = None
         else:

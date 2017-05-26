@@ -1,24 +1,30 @@
 import pickle
+import io
 from User import *
 
 class UserManager:
-    def __init__(self, clientSocket):
+    def __init__(self):
         self.userListFileName = "userList"
         self.latestUserIDFileName = "constantID"
-        self.userList = []
+        self.userList = {}
         self.latestUserID = self.getLatestUserID()
-        self.clientSocket = clientSocket
         self.getUsers()
 
     # Identify task for the exact function
-    def work(self, task, user):
+    def work(self, task, obj):
         processedObj = None
         if task == 'register':
-            processedObj = self.registerUser(user)
+            processedObj = self.registerUser(obj)
         elif task == 'logIn':
-            processedObj = self.logIn(user)
+            processedObj = self.logIn(obj)
         elif task == 'updateProfile':
-            self.update(user)
+            self.update(obj)
+        elif task == 'getUserInfo':
+            processedObj = self.getUserInfo(obj)
+        elif task == 'getUserStatus':
+            processedObj = self.getUserStatus(obj)
+        elif task == 'updateStatus':
+            self.updateStatus(obj)
         return processedObj
 
     def getLatestUserID(self):
@@ -38,66 +44,89 @@ class UserManager:
         pickle.dump(self.latestUserID, fileObject)
         fileObject.close()
 
+    def removeUserList(self):
+        fileObject = open(self.userListFileName, 'wb')
+        fileObject.close()
+        self.latestUserID = 0
+        fileObject = open(self.latestUserIDFileName, 'wb')
+        pickle.dump(self.latestUserID, fileObject)
+        fileObject.close()
+        self.userList = {}
+        print('Cleared successfully')
+
+    def getUserInfo(self, username):
+        user = self.findByUsername(username)
+        if user is None:
+            return None
+        else:
+            user = user.dummy()
+            return user
+
+    def getUserStatus(self, username):
+        user = self.findByUsername(username)
+        if user is None:
+            return None
+        else:
+            return user.status
+
+    def updateStatus(self, obj):
+        username, status = obj
+        user = self.findByUsername(username)
+        if user is None:
+            return None
+        else:
+            user.status = status
+
     def addAdmin(self, username):
-        for user in self.userList:
-            if user.username == username:
-                user.isAdmin = True
-                print('Promoted', username, 'successfully')
-                return
-        print(username, 'does not exist')
+        user = self.findByUsername(username)
+        if user is None:
+            print(username, 'does not exist')
+        else:
+            user.isAdmin = True
+            self.update(user)
+            print('Promoted', username, 'successfully')
 
     def delAdmin(self, username):
-        for user in self.userList:
-            if user.username == username:
+        user = self.findByUsername(username)
+        if user is None:
+            print(username, 'does not exist')
+        else:
+            if user.isAdmin:
                 user.isAdmin = False
+                self.update(user)
                 print('Demoted', username, 'successfully')
-                return
-        print(username, 'does not exist')
+            else:
+                print(username, 'is not an admin')
 
-    # Search using brute-force approach
     def findByUsername(self, username):
-        for user in self.userList:
-            if user.username == username:
-                return user
-        return None
+        try:
+            return self.userList[username]
+        except KeyError:
+            return None
 
-    def setStatus(self, userID, status):
-        user = self.findByID(userID)
-        if user is not None:
+    def setStatus(self, username, status):
+        user = self.findByUsername(username)
+        if user is None:
+            pass
+        else:
             user.status = status
-            #notify all
+            # notify all
 
     def showUserList(self):
-        for user in self.userList:
-            if user.isActivated:
-                print(user)
+        for username in self.userList:
+            print(self.userList[username])
 
     def findUserByUsername(self, username):
         user = self.findByUsername(username)
-        if user is not None and user.isActivated:
+        if user is not None:
             print(user)
         else:
             print(username, "not found")
 
-    # Search by Index
-    def findUserByID(self, id):
-        try:
-            id = int(id) - 1
-            try:
-                user = self.userList[id]
-                if not user.isActivated:
-                    print("Invalid ID1")
-                else:
-                    print(user)
-            except IndexError:
-                print("Invalid ID2")
-        except ValueError:
-            print("Invalid ID3")
-
     # Get all users to self.userList
     def getUsers(self):
         print("Loading users...")
-        self.userList = []
+        self.userList = {}
         try:
             fileObject = open(self.userListFileName, 'rb')
         except FileNotFoundError:
@@ -105,56 +134,62 @@ class UserManager:
         try:
             while True:
                 obj = pickle.load(fileObject)
-                self.userList.append(obj)
+                obj.status = "Offline"
+                self.userList[obj.username] = obj
         except EOFError:
+            fileObject.close()
+        except (AttributeError, io.UnsupportedOperation):
             fileObject.close()
 
     # Register new user
     def registerUser(self, user):
-        for registeredUser in self.userList:
+        for username in self.userList:
+            registeredUser = self.userList[username]
             if user.username == registeredUser.username:
-                print(user.username + " is not available")
-                return user.username + " is not available"
+                print(user.username + " is unavailable")
+                return user.username + " is unavailable"
             if user.email == registeredUser.email:
-                print(user.email + " is not available")
-                return user.email + " is not available"
+                print(user.email + " is unavailable")
+                return user.email + " is unavailable"
         credential = self.credentialValidation(user.username, user.password, user.email)
         if credential is True:
             self.latestUserID += 1
-            user = User(user.username, user.password, user.email)
+            user = User(user.username.lower(), user.password, user.email.lower())
             user.id = self.latestUserID
+            self.userList[user.username] = user
             self.saveUser(user)
-            self.userList.append(user)
             self.saveLatestUserID()
             print("Created User:", user.username, "successfully")
             return True
         else:
             print("Created User:", user.username, "failed")
-            return "Your " + credential + " is not valid"
+            return "Your " + credential + " is invalid"
 
     def removeUser(self, username):
         user = self.findByUsername(username)
         if user is not None:
-            user.isActivated = False
+            del self.userList[username]
             self.saveUsers()
             print("Removed", username, "successfully")
         else:
-            print(username, "not found")
+            print(username, "does not exist")
 
     # Log in user
     def logIn(self, user):
-        for registeredUser in self.userList:
-            if user.username == registeredUser.username and user.password == registeredUser.password:
-                print("User:", user.username, "logged in successfully")
-                return registeredUser
-        print("User:", user.username, "logged in failed")
-        return "User: " + user.username + " logged in failed"
+        registeredUser = self.findByUsername(user.username)
+        if registeredUser is None:
+            print("User:", user.username, "logged in fail")
+            return "User: " + user.username + " logged in fail"
+        elif user.username == registeredUser.username and user.password == registeredUser.password:
+            print("User:", user.username, "logged in successfully")
+            return registeredUser
+        else:
+            print("User:", user.username, "logged in fail")
+            return "User: " + user.username + " logged in fail"
 
     #update user
     def update(self, user):
-        for i in range(len(self.userList)):
-            if user.username == self.userList[i].username:
-                self.userList[i] = user
+        self.userList[user.username] = user
         self.saveUsers()
 
     def saveUser(self, user):
@@ -164,8 +199,8 @@ class UserManager:
 
     def saveUsers(self):
         fileObject = open(self.userListFileName, 'wb')
-        for registeredUser in self.userList:
-            pickle.dump(registeredUser, fileObject)
+        for username in self.userList:
+            pickle.dump(self.userList[username], fileObject)
         fileObject.close()
 
     # Check whether the credentials are valid
@@ -178,12 +213,9 @@ class UserManager:
             if alp.isdigit():
                 isDigit = True
             if alp.isupper():
-                isCapitalized= True
+                isCapitalized = True
         if not (isDigit and isCapitalized):
             return "password"
-        for user in self.userList:
-            if username == user.username or email == user.email:
-                return "username"
         return True
 
 

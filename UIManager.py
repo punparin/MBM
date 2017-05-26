@@ -2,6 +2,7 @@ from LoginUI import *
 from RegisterUI import *
 from MainUI import *
 from PySide.QtGui import *
+from anytree import Node, RenderTree
 from User import *
 import socket
 import pickle
@@ -111,22 +112,46 @@ class UImanager(QMainWindow):
                     print(e)
             # Start listening for the server
             self.thread.start()
+            self.send('getInitialInfo')
         except ConnectionResetError:
             # Completely terminate connection when the client disconnects
             print("The server is currently offline.")
 
     # Recieve task and object after logged in
     def listen(self):
-        while True:
-            print('listening')
-            task = self.socket.recv(1024).decode('ascii')
-            if task == '':
-                break
-            try:
-                obj = pickle.loads(self.socket.recv(4096))
-                #do sth. with the object
-            except EOFError as e:
-                print(e)
+        try:
+            while True:
+                print('listening')
+                task = self.socket.recv(1024).decode('ascii')
+                if task == '':
+                    pass
+                try:
+                    obj = pickle.loads(self.socket.recv(4096))
+                    if task == 'getInitialInfo':
+                        for department in obj:
+                            print("Department: " + department.name)
+                            print("Position:")
+                            for pre, fill, node in RenderTree(department.positionTree):
+                                print(node.name)
+                                if node.name.employeeList is not None:
+                                    for userID, username, status in node.name.employeeList:
+                                        print(userID, username, status)
+
+                        # obj in this case is a Department instance
+                        # Department --> Position --> [employeeID, employeeUsername, employeeStatus]
+                        # implemented using Tree
+                        # see how to traversal it in DepartmentManager.getInitialInfo()
+                    elif task == 'getUserInfo':
+                        pass
+                        # obj in this case is a User instance without password
+                    elif task == 'getUserStatus':
+                        pass
+                        # obj in this case is the status of the user
+                except EOFError as e:
+                    print(e)
+        except ConnectionResetError:
+            # Completely terminate connection when the client disconnects
+            print("The server is currently offline.")
 
     # Connect to the server
     def connect(self):
@@ -139,7 +164,7 @@ class UImanager(QMainWindow):
             print("The server is currently offline.")
 
     # Send task and object
-    def send(self, task, obj):
+    def send(self, task, obj = None):
         self.socket.send(task.encode('ascii'))
         obj = pickle.dumps(obj)
         self.socket.send(obj)

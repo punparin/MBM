@@ -1,4 +1,5 @@
 import pickle
+import io
 from Department import *
 
 class DepartmentManager:
@@ -7,6 +8,13 @@ class DepartmentManager:
         self.userManager = userManager
         self.departmentList = []
         self.getDepartments()
+
+    # Identify task for the exact function
+    def work(self, task, obj = None):
+        processedObj = None
+        if task == 'getInitialInfo':
+            processedObj = self.getInitialInfo()
+        return processedObj
 
     def searchDepartment(self, department):
         for dep in self.departmentList:
@@ -25,6 +33,19 @@ class DepartmentManager:
             self.saveDepartments()
         except InvalidArgument as err:
             print(err)
+
+    def getInitialInfo(self):
+        initialInfo = self.departmentList
+        for department in initialInfo:
+            if department.positionTree is not None:
+                for pre, fill, node in RenderTree(department.positionTree):
+                    newEmployeeList = []
+                    for id in node.name.employeeList:
+                        username = node.name.employeeList[id]
+                        user = self.userManager.findByUsername(username)
+                        newEmployeeList.append([id, username, user.status])
+                    node.name.employeeList = newEmployeeList
+        return initialInfo
 
     def removePosition(self, department, position):
         dep = self.searchDepartment(department)
@@ -49,6 +70,8 @@ class DepartmentManager:
                 obj = pickle.load(fileObject)
                 self.departmentList.append(obj)
         except EOFError:
+            fileObject.close()
+        except (AttributeError, io.UnsupportedOperation):
             fileObject.close()
 
     def saveDepartment(self, department):
@@ -87,6 +110,8 @@ class DepartmentManager:
             user = self.userManager.findByUsername(username)
             if user is not None:
                 dep.addEmployee(position, user)
+                user.position = position
+                self.userManager.saveUsers()
                 self.saveDepartments()
                 print('Added', username, 'to', department, 'successfully')
             else:
@@ -100,6 +125,8 @@ class DepartmentManager:
             user = self.userManager.findByUsername(username)
             if user is not None:
                 dep.removeEmployee(user.id)
+                user.position = ""
+                self.userManager.saveUsers()
                 self.saveDepartments()
                 print('Removed', username, 'from', department, 'successfully')
             else:
@@ -121,6 +148,12 @@ class DepartmentManager:
                 print(username, 'does not exist')
         else:
             print(department, 'does not exist')
+
+    def removeDepartmentList(self):
+        fileObject = open(self.departmentFileName, 'wb')
+        fileObject.close()
+        self.departmentList = []
+        print('Cleared successfully')
 
     def showDepartment(self, department):
         dep = self.searchDepartment(department)
