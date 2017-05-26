@@ -953,7 +953,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
     <enum>QFrame::WinPanel</enum>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>5</number>
    </property>
    <widget class="QWidget" name="main_page">
     <property name="styleSheet">
@@ -1714,6 +1714,193 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
        </item>
       </layout>
      </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="admin_page">
+    <property name="styleSheet">
+     <string notr="true">QWidget#admin_page {background-image: url(Images/widget.png) }</string>
+    </property>
+    <widget class="QLabel" name="label_22">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>30</y>
+       <width>891</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
+     </property>
+     <property name="text">
+      <string>System Manager</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QTabWidget" name="SELECT_MENU">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>90</y>
+       <width>1211</width>
+       <height>701</height>
+      </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="tabPosition">
+      <enum>QTabWidget::North</enum>
+     </property>
+     <property name="tabShape">
+      <enum>QTabWidget::Triangular</enum>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <property name="movable">
+      <bool>false</bool>
+     </property>
+     <widget class="QWidget" name="add_admin">
+      <attribute name="title">
+       <string>User Manager</string>
+      </attribute>
+      <widget class="QScrollArea" name="Permission">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>1211</width>
+         <height>671</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <widget class="QWidget" name="scrollAreaWidgetContents_9">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>1209</width>
+          <height>669</height>
+         </rect>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <item row="0" column="0">
+          <widget class="QTableWidget" name="Permission_table">
+           <column>
+            <property name="text">
+             <string>Position</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Use Project</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Use Event</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Create Project</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Create Event</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Join Project</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Join Event</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="add_department">
+      <attribute name="title">
+       <string>Department</string>
+      </attribute>
+      <widget class="QTreeWidget" name="treeWidget">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>1211</width>
+         <height>671</height>
+        </rect>
+       </property>
+       <column>
+        <property name="text">
+         <string>Department 1</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Department 2</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Department 3</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Department 4</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Department 5</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string/>
+        </property>
+       </column>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="widget">
+      <attribute name="title">
+       <string>Position</string>
+      </attribute>
+     </widget>
+    </widget>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="geometry">
+      <rect>
+       <x>1080</x>
+       <y>800</y>
+       <width>141</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>BACK</string>
+     </property>
     </widget>
    </widget>
   </widget>
