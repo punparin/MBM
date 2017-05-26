@@ -218,7 +218,7 @@ class Server:
             while True:
                 clientSocket, address = self.socket.accept()
                 print("Got a connection from %s" % str(address))
-                thread = Handler(self.userManager, self.projectManager, clientSocket, address)
+                thread = Handler(self.userManager, self.projectManager, self.departmentManager, clientSocket, address)
                 thread.setDaemon(True)
                 thread.start()
         except OSError:

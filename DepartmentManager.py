@@ -35,7 +35,16 @@ class DepartmentManager:
             print(err)
 
     def getInitialInfo(self):
-        pass
+        initialInfo = self.departmentList
+        for department in initialInfo:
+            if department.positionTree is not None:
+                for pre, fill, node in RenderTree(department.positionTree):
+                    newEmployeeList = []
+                    for id in node.name.employeeList:
+                        username = node.name.employeeList[id]
+                        user = self.userManager.findByUsername(username)
+                        newEmployeeList.append([id, username, user.status])
+                    node.name.employeeList = newEmployeeList
 
     def removePosition(self, department, position):
         dep = self.searchDepartment(department)
