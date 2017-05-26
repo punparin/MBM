@@ -21,7 +21,7 @@ class Handler(threading.Thread):
             while True:
                 task = self.clientSocket.recv(1024).decode('ascii')
                 if task == '':
-                    pickle.loads(self.clientSocket.recv())
+                    pickle.loads(self.clientSocket.recv(1024))
                     break
                 try:
                     obj = pickle.loads(self.clientSocket.recv(4096))
