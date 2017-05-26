@@ -11,7 +11,7 @@ class Server:
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.host = socket.gethostbyname(socket.gethostname())
         self.port = port
-        self.maximumClient = maximumClient
+        self.maximumClient = maximumClient 
         self.logFileName = 'serverLog'
         self.constant = 'constant'
         self.password = None

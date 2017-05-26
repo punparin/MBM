@@ -32,9 +32,12 @@ class MainUI(QMainWindow):
             self.setCentralWidget(form)
 
         self.setCentralWidget(form)
+
+        #set Permission access
         self.profile = form.findChild(QLabel, "profile")
         self.menu = form.findChild(QComboBox, "comboBox")
         self.menu.activated[str].connect(self.changePage)
+        
 
         #init Subwidget
         self.subWidget = form.findChild(QStackedWidget, "stackedWidget")
@@ -75,6 +78,22 @@ class MainUI(QMainWindow):
 
         self.confirm_password_button.clicked.connect(self.confirm_password)
         self.cancel_password_button.clicked.connect(self.backToProfilePage)
+
+        #Permission Table component
+        self.permission_tabel = form.findChild(QTableWidget, "Permission_table")
+        self.permission_tabel.setColumnCount(7)
+        self.permission_tabel.setRowCount(5)
+        self.permission_tabel.resizeColumnsToContents()
+        self.permission_tabel.resizeRowsToContents()
+
+        self.test_box = QPushButton("TEST")
+        self.permission_tabel.setCellWidget(0,0,self.test_box)
+        print("pass add button to table")
+
+        #Department Section
+        
+        
+        #Add department section
 
     def mainPageSlot(self):
         print("test")
@@ -133,14 +152,16 @@ class MainUI(QMainWindow):
         self.subWidget.setCurrentIndex(1)
 
     def changePage(self):
-        if(self.menu.currentText() == "Main Page"):
+        if self.menu.currentText() == "Main Page":
             self.subWidget.setCurrentIndex(0)
-        elif(self.menu.currentText() == "Edit Profile"):
+        elif self.menu.currentText() == "Edit Profile":
             print(self.parent.user)
             self.subWidget.setCurrentIndex(1)
             self.loadProfile()
-        elif (self.menu.currentText() == "Settings"):
+        elif self.menu.currentText() == "Settings":
             self.subWidget.setCurrentIndex(2)
+        elif self.menu.currentText() == "System":
+            self.subWidget.setCurrentIndex(5)
 
     def passwordValidation(self, password):
         isDigit = False

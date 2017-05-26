@@ -469,7 +469,7 @@ QComboBox QAbstractItemView {
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>Images/profile.png</pixmap>
+    <pixmap>../../.designer/backup/Images/profile.png</pixmap>
    </property>
   </widget>
   <widget class="QComboBox" name="comboBox">
@@ -1100,7 +1100,7 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>Images/profile.png</pixmap>
+      <pixmap>../../.designer/backup/Images/profile.png</pixmap>
      </property>
     </widget>
     <widget class="QPushButton" name="upload_button">
@@ -1742,6 +1742,9 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
     </widget>
    </widget>
    <widget class="QWidget" name="admin_page">
+    <property name="styleSheet">
+     <string notr="true">QWidget#admin_page {background-image: url(Images/widget.png) }</string>
+    </property>
     <widget class="QLabel" name="label_22">
      <property name="geometry">
       <rect>
@@ -1793,16 +1796,16 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
       <enum>QTabWidget::Triangular</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <property name="movable">
       <bool>false</bool>
      </property>
      <widget class="QWidget" name="add_admin">
       <attribute name="title">
-       <string>User Permission</string>
+       <string>User Manager</string>
       </attribute>
-      <widget class="QScrollArea" name="ADD_ADMIN">
+      <widget class="QScrollArea" name="Permission">
        <property name="geometry">
         <rect>
          <x>0</x>
@@ -1831,105 +1834,42 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_2">
          <item row="0" column="0">
-          <widget class="QLabel" name="label_27">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>USER</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QLabel" name="label_30">
-           <property name="text">
-            <string>ADMIN</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2" rowspan="5">
-          <widget class="QScrollArea" name="scrollArea_9">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="widgetResizable">
-            <bool>false</bool>
-           </property>
-           <widget class="QWidget" name="scrollAreaWidgetContents_11">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>0</y>
-              <width>504</width>
-              <height>608</height>
-             </rect>
+          <widget class="QTableWidget" name="Permission_table">
+           <column>
+            <property name="text">
+             <string>Position</string>
             </property>
-           </widget>
-          </widget>
-         </item>
-         <item row="4" column="1">
-          <widget class="QPushButton" name="pushButton_10">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>ADD  ADMIN</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="1">
-          <widget class="QPushButton" name="pushButton_9">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>DELETE  ADMIN</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0" rowspan="5">
-          <widget class="QScrollArea" name="scrollArea_10">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="verticalScrollBarPolicy">
-            <enum>Qt::ScrollBarAsNeeded</enum>
-           </property>
-           <property name="widgetResizable">
-            <bool>false</bool>
-           </property>
-           <widget class="QWidget" name="scrollAreaWidgetContents_12">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>0</y>
-              <width>505</width>
-              <height>608</height>
-             </rect>
+           </column>
+           <column>
+            <property name="text">
+             <string>Use Project</string>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout"/>
-           </widget>
+           </column>
+           <column>
+            <property name="text">
+             <string>Use Event</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Create Project</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Create Event</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Join Project</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Join Event</string>
+            </property>
+           </column>
           </widget>
          </item>
         </layout>
@@ -1939,6 +1879,51 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
      <widget class="QWidget" name="add_department">
       <attribute name="title">
        <string>Department</string>
+      </attribute>
+      <widget class="QTreeWidget" name="treeWidget">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>1211</width>
+         <height>671</height>
+        </rect>
+       </property>
+       <column>
+        <property name="text">
+         <string>Department 1</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Department 2</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Department 3</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Department 4</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Department 5</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string/>
+        </property>
+       </column>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="widget">
+      <attribute name="title">
+       <string>Position</string>
       </attribute>
      </widget>
     </widget>
