@@ -21,7 +21,7 @@ class UserManager:
             self.update(obj)
         elif task == 'getUserInfo':
             processedObj = self.getUserInfo(obj)
-        elif task == 'getUserInfo':
+        elif task == 'getUserStatus':
             processedObj = self.getUserStatus(obj)
         elif task == 'updateStatus':
             self.updateStatus(obj)
