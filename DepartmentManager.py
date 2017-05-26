@@ -9,6 +9,13 @@ class DepartmentManager:
         self.departmentList = []
         self.getDepartments()
 
+    # Identify task for the exact function
+    def work(self, task, obj):
+        processedObj = None
+        if task == 'getInitialInfo':
+            processedObj = self.getInitialInfo()
+        return processedObj
+
     def searchDepartment(self, department):
         for dep in self.departmentList:
             if dep.name == department:
@@ -26,6 +33,9 @@ class DepartmentManager:
             self.saveDepartments()
         except InvalidArgument as err:
             print(err)
+
+    def getInitialInfo(self):
+        pass
 
     def removePosition(self, department, position):
         dep = self.searchDepartment(department)
@@ -128,6 +138,12 @@ class DepartmentManager:
                 print(username, 'does not exist')
         else:
             print(department, 'does not exist')
+
+    def removeDepartmentList(self):
+        fileObject = open(self.departmentFileName, 'wb')
+        fileObject.close()
+        self.departmentList = []
+        print('Cleared successfully')
 
     def showDepartment(self, department):
         dep = self.searchDepartment(department)

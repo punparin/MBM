@@ -11,14 +11,20 @@ class UserManager:
         self.getUsers()
 
     # Identify task for the exact function
-    def work(self, task, user):
+    def work(self, task, obj):
         processedObj = None
         if task == 'register':
-            processedObj = self.registerUser(user)
+            processedObj = self.registerUser(obj)
         elif task == 'logIn':
-            processedObj = self.logIn(user)
+            processedObj = self.logIn(obj)
         elif task == 'updateProfile':
-            self.update(user)
+            self.update(obj)
+        elif task == 'getUserInfo':
+            processedObj = self.getUserInfo(obj)
+        elif task == 'getUserInfo':
+            processedObj = self.getUserStatus(obj)
+        elif task == 'updateStatus':
+            self.updateStatus(obj)
         return processedObj
 
     def getLatestUserID(self):
@@ -47,6 +53,29 @@ class UserManager:
         fileObject.close()
         self.userList = {}
         print('Cleared successfully')
+
+    def getUserInfo(self, username):
+        user = self.findByUsername(username)
+        if user is None:
+            return None
+        else:
+            user = user.dummy()
+            return user
+
+    def getUserStatus(self, username):
+        user = self.findByUsername(username)
+        if user is None:
+            return None
+        else:
+            return user.status
+
+    def updateStatus(self, obj):
+        username, status = obj
+        user = self.findByUsername(username)
+        if user is None:
+            return None
+        else:
+            user.status = status
 
     def addAdmin(self, username):
         user = self.findByUsername(username)
@@ -78,7 +107,7 @@ class UserManager:
     def setStatus(self, username, status):
         user = self.findByUsername(username)
         if user is None:
-            print(username, 'is not an admin')
+            pass
         else:
             user.status = status
             # notify all
@@ -105,6 +134,7 @@ class UserManager:
         try:
             while True:
                 obj = pickle.load(fileObject)
+                obj.status = "Offline"
                 self.userList[obj.username] = obj
         except EOFError:
             fileObject.close()

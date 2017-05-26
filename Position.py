@@ -19,12 +19,13 @@ class Position:
         except KeyError:
             return False
 
-    def insertUser(self, user):
+    def insertUser(self, userID, username):
+        print(userID, username)
         try:
-            user = self.employeeList[user.id]
+            self.employeeList[userID]
             raise UserAlreadyExist()
         except KeyError:
-            self.employeeList[user.id] = user
+            self.employeeList[userID] = username
 
     def removeUser(self, userID):
         try:
@@ -37,6 +38,6 @@ class Position:
 
     def show(self, pre):
         s = self.name
-        for user in self.employeeList:
-            s += '\n\t\t' + ' ' * len(str(pre)) + '- ' + str(user)
+        for key in self.employeeList:
+            s += '\n\t\t' + ' ' * len(str(pre)) + '- ' + format(key, '05d') + ": " + self.employeeList[key]
         return s

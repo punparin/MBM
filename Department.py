@@ -17,7 +17,7 @@ class Department:
             raise InvalidArgument(position + " does not exist")
         else:
             pos = pos.name
-            pos.insertUser(employee)
+            pos.insertUser(employee.id, employee.username)
 
     def removeEmployee(self, employeeID):
         if self.positionTree is None:
