@@ -45,6 +45,7 @@ class DepartmentManager:
                         user = self.userManager.findByUsername(username)
                         newEmployeeList.append([id, username, user.status])
                     node.name.employeeList = newEmployeeList
+        return initialInfo
 
     def removePosition(self, department, position):
         dep = self.searchDepartment(department)
