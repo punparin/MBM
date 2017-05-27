@@ -150,10 +150,12 @@ class UserManager:
         credential = self.credentialValidation(user.username, user.password, user.email)
         if credential is True:
             self.latestUserID += 1
-            user = User(user.username.lower(), user.password, user.email.lower())
-            user.id = self.latestUserID
-            self.userList[user.username] = user
-            self.saveUser(user)
+            newUser = User(user.username.lower(), user.password, user.email.lower())
+            newUser.name = user.name
+            newUser.last_name = user.last_name
+            newUser.id = self.latestUserID
+            self.userList[newUser.username] = newUser
+            self.saveUser(newUser)
             self.saveLatestUserID()
             print("Created User:", user.username, "successfully")
             return True
