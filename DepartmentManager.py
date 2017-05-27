@@ -44,7 +44,7 @@ class DepartmentManager:
                     for id in node.name.employeeList:
                         username = node.name.employeeList[id]
                         user = self.userManager.findByUsername(username)
-                        newEmployeeList[id] = [username, user.status]
+                        newEmployeeList[id] = user.dummy()
                     node.name.employeeList = newEmployeeList
         return initialInfo
 

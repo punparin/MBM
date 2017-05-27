@@ -59,7 +59,7 @@ class UserManager:
         if user is None:
             return None
         else:
-            user = user.dummy()
+            user = user.deepcopy()
             return user
 
     def getUserStatus(self, username):
