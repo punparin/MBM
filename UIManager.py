@@ -1,6 +1,7 @@
 from LoginUI import *
 from RegisterUI import *
 from MainUI import *
+from ProfileUI import *
 from PySide.QtCore import *
 from PySide.QtGui import *
 from anytree import Node, RenderTree
@@ -37,9 +38,11 @@ class UImanager(QMainWindow):
         self.login_widget = LoginUI(self)
         self.main_widget = MainUI(self)
         self.register_widget = RegisterUI(self)
+        self.profile_widget = ProfileUI(self)
         self.central_widget.addWidget(self.login_widget)
         self.central_widget.addWidget(self.main_widget)
         self.central_widget.addWidget(self.register_widget)
+        self.central_widget.addWidget(self.profile_widget)
 
         # Init socket part
         self.isServerOnline = False
@@ -60,6 +63,7 @@ class UImanager(QMainWindow):
 
         # Client Attribute
         self.departmentList = None
+        self.interest_user = None
 
     # Change page signal (send from log in UI page)
     def changePageLoginSection(self, signal = None, user = None):
@@ -87,6 +91,24 @@ class UImanager(QMainWindow):
             self.centralWidget().setCurrentWidget(self.login_widget)
         elif signal == "back":
             self.centralWidget().setCurrentWidget(self.login_widget)
+
+    # Change Page signal (send from Main UI page)
+    def changePageMainSection(self, signal=None, user=None):
+        if signal == "see_profile":
+            self.centralWidget().setCurrentWidget(self.profile_widget)
+            self.profile_widget.loadProfile(self.interest_user)
+            palette = QPalette()
+            palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/profile_background.png")))
+            self.setPalette(palette)
+
+    # Change Page signal (send from Profile UI page)
+    def changePageProfileSection(self, signal=None, user=None):
+        if signal == "back":
+            self.centralWidget().setCurrentWidget(self.main_widget)
+            palette = QPalette()
+            palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/background2.png")))
+            self.setPalette(palette)
+
 
     # Recieve task and object before logged in
     def waitingForUser(self):
@@ -140,7 +162,7 @@ class UImanager(QMainWindow):
                         # implemented using Tree
                         # see how to traversal it in DepartmentManager.getInitialInfo()
                     elif task == 'getUserInfo':
-                        user = obj
+                        self.interest_user = obj
                         # obj in this case is a User instance without password
                     elif task == 'updateStatus':
                         username, status = obj
