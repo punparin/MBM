@@ -110,11 +110,14 @@ class DepartmentManager:
         if dep is not None:
             user = self.userManager.findByUsername(username)
             if user is not None:
-                dep.addEmployee(position, user)
-                user.position = position
-                self.userManager.saveUsers()
-                self.saveDepartments()
-                print('Added', username, 'to', department, 'successfully')
+                try:
+                    dep.addEmployee(position, user)
+                    user.position.append(position)
+                    self.userManager.saveUsers()
+                    self.saveDepartments()
+                    print('Added', username, 'to', department, 'successfully')
+                except InvalidArgument:
+                    print(position, 'does not exist')
             else:
                 print(username, 'does not exist')
         else:
