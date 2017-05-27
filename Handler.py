@@ -14,6 +14,7 @@ class Handler(threading.Thread):
         self.projectManagerTasks = ['create', 'search', 'updateProject']
         self.departmentManagerTasks = ['getInitialInfo']
         self.clientSocket.send("Connected Successfully".encode('ascii'))
+        self.userManager.clientSocketList.append(self.clientSocket)
 
     # Constantly recieve data from the client
     def run(self):
@@ -40,6 +41,7 @@ class Handler(threading.Thread):
                     pass
         except ConnectionResetError:
             # Completely terminate connection when the client disconnects
+            self.userManager.clientSocketList.remove(self.clientSocket)
             self.clientSocket.close()
             self.currentUserID = None
             print(self.address, "disconnected")
