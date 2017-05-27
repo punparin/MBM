@@ -21,12 +21,12 @@ class MainUI(QMainWindow):
         #init mainWidget
         user32 = ctypes.windll.user32
         screensize = user32.GetSystemMetrics(1)
-        form_name = "mainForm(" + str(screensize) + ")" + ".ui"
+        self.form_name = "mainForm(" + str(screensize) + ")" + ".ui"
         form = None
 
         try:
             loader = QUiLoader()
-            form = loader.load(form_name, None)
+            form = loader.load(self.form_name, None)
             self.setCentralWidget(form)
         except:
             loader = QUiLoader()
@@ -39,7 +39,6 @@ class MainUI(QMainWindow):
         self.profile = form.findChild(QLabel, "profile")
         self.menu = form.findChild(QComboBox, "comboBox")
         self.menu.activated[str].connect(self.changePage)
-        
 
         #init Subwidget
         self.subWidget = form.findChild(QStackedWidget, "stackedWidget")
@@ -158,8 +157,12 @@ class MainUI(QMainWindow):
     def chatOpenClose(self):
         if self.isChatOpen == False:
             self.isChatOpen = True
-            self.list_user.move(1690, 660)
-            self.chat_button.move(1690,620)
+            if self.form_name == "mainForm(1440).ui":
+                self.list_user.move(1690, 660)
+                self.chat_button.move(1690,620)
+            else:
+                self.list_user.move(1450, 300)
+                self.chat_button.move(1450,260)
             self.parent.send("getInitialInfo", None)
             if self.parent.departmentList is not None:
                 for department in self.parent.departmentList:
@@ -179,7 +182,10 @@ class MainUI(QMainWindow):
                 self.online_user.clear()
                 self.isChatOpen = False
                 self.list_user.move(-999, -999)
-                self.chat_button.move(1690, 1400)
+                if self.form_name == "mainForm(1440).ui":
+                    self.chat_button.move(1690, 1400)
+                else:
+                    self.chat_button.move(1450, 1040)
                 self.chatOpenClose()
 
         else:
@@ -189,8 +195,10 @@ class MainUI(QMainWindow):
             self.online_user.clear()
             self.isChatOpen = False
             self.list_user.move(-999, -999)
-            self.chat_button.move(1690, 1400)
-
+            if self.form_name == "mainForm(1440).ui":
+                self.chat_button.move(1690, 1400)
+            else:
+                self.chat_button.move(1450, 1040)
         self.user_index = self.online_user + self.offline_user
         for i in range(len(self.user_index)):
             user = self.user_index[i]
