@@ -2,11 +2,11 @@ import threading
 from UserManager import *
 
 class Handler(threading.Thread):
-    def __init__(self, userManager, projectManager, departmentManager, clientSocket, address):
+    def __init__(self, userManager, departmentManager, clientSocket, address):
         threading.Thread.__init__(self)
         self.clientSocket = clientSocket
         self.userManager = userManager
-        self.projectManager = projectManager
+        #self.projectManager = projectManager
         self.departmentManager = departmentManager
         self.address = address
         self.currentUserID = None

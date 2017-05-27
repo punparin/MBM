@@ -1,6 +1,7 @@
 from LoginUI import *
 from RegisterUI import *
 from MainUI import *
+from PySide.QtCore import *
 from PySide.QtGui import *
 from anytree import Node, RenderTree
 from User import *
@@ -56,6 +57,9 @@ class UImanager(QMainWindow):
 
         self.thread = threading.Thread(target=self.listen, args=[])
         self.thread.setDaemon(True)
+
+        # Client Attribute
+        self.departmentList = None
 
     # Change page signal (send from log in UI page)
     def changePageLoginSection(self, signal = None, user = None):
@@ -128,15 +132,7 @@ class UImanager(QMainWindow):
                 try:
                     obj = pickle.loads(self.socket.recv(4096))
                     if task == 'getInitialInfo':
-                        for department in obj:
-                            print("Department: " + department.name)
-                            print("Position:")
-                            for pre, fill, node in RenderTree(department.positionTree):
-                                print(node.name)
-                                if node.name.employeeList is not None:
-                                    for userID, username, status in node.name.employeeList:
-                                        print(userID, username, status)
-
+                        self.departmentList = obj
                         # obj in this case is a Department instance
                         # Department --> Position --> [employeeID, employeeUsername, employeeStatus]
                         # implemented using Tree

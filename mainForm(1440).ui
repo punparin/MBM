@@ -1904,7 +1904,7 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
     </widget>
    </widget>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="all_user">
    <property name="geometry">
     <rect>
      <x>1880</x>

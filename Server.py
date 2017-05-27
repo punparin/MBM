@@ -21,7 +21,7 @@ class Server:
             self.socket.bind((self.host, self.port))
             self.socket.listen(self.maximumClient)
             self.userManager = UserManager()
-            self.projectManager = ProjectManager(self.socket)
+            #self.projectManager = ProjectManager(self.socket)
             #self.eventManager = EventManager(self.socket)
             self.departmentManager = DepartmentManager(self.userManager)
             print("\n--- Server is Online ---")
@@ -218,7 +218,7 @@ class Server:
             while True:
                 clientSocket, address = self.socket.accept()
                 print("Got a connection from %s" % str(address))
-                thread = Handler(self.userManager, self.projectManager, self.departmentManager, clientSocket, address)
+                thread = Handler(self.userManager, self.departmentManager, clientSocket, address)
                 thread.setDaemon(True)
                 thread.start()
         except OSError:

@@ -1,6 +1,7 @@
 from PySide.QtCore import *
 from PySide.QtGui import *
 from PySide.QtUiTools import *
+from anytree import Node, RenderTree
 from User import *
 import sys
 import ctypes
@@ -85,6 +86,10 @@ class MainUI(QMainWindow):
         self.permission_tabel.setRowCount(5)
         self.permission_tabel.resizeColumnsToContents()
         self.permission_tabel.resizeRowsToContents()
+        self.permission_list = []
+
+        #chatSystem
+        #self.list_user = form.findChild(QListWidget, "list_user")
 
     def mainPageSlot(self):
         print("test")
@@ -154,8 +159,23 @@ class MainUI(QMainWindow):
         elif self.menu.currentText() == "System":
             self.subWidget.setCurrentIndex(5)
             self.parent.send("getInitialInfo", None)
-            #self.test_box = QPushButton("TEST")
-            #self.permission_tabel.setCellWidget(0, 0, self.test_box)
+            if self.parent.departmentList is not None:
+                row = 0
+                for department in self.parent.departmentList:
+                    for pre, fill, node in RenderTree(department.positionTree):
+                        permission_list =  node.name.getPerMissionList()
+                        for col in range(7):
+                            if col == 0:
+                                self.permission_tabel.setCellWidget(row, col, QLabel(node.name.name))
+                            else:
+                                self.box = QCheckBox()
+                                if permission_list[col-1] == True:
+                                    self.box.setCheckState(Qt.Checked)
+                                self.permission_tabel.setCellWidget(row, col, self.box)
+                                self.permission_list.append(self.box)
+                        row += 1
+            else:
+                self.subWidget.setCurrentIndex(5)
 
     def passwordValidation(self, password):
         isDigit = False
