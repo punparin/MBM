@@ -16,7 +16,7 @@ class UImanager(QMainWindow):
         #Main UI set up
         QMainWindow.__init__(self, None)
         self.setMinimumSize(1280, 720)
-        self.setWindowTitle("MBM v.0")
+        self.setWindowTitle("MBM")
         palette = QPalette()
         palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/background.png")))
         self.setPalette(palette)
