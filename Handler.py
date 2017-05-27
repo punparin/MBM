@@ -9,7 +9,7 @@ class Handler(threading.Thread):
         #self.projectManager = projectManager
         self.departmentManager = departmentManager
         self.address = address
-        self.currentUserID = None
+        self.currentUsername = None
         self.userManagerTasks = ['logIn', 'register', 'updateProfile', 'getUserInfo', 'updateStatus']
         self.projectManagerTasks = ['create', 'search', 'updateProject']
         self.departmentManagerTasks = ['getInitialInfo']
@@ -30,7 +30,7 @@ class Handler(threading.Thread):
                     if task in self.userManagerTasks:
                         obj = self.userManager.work(task, obj)
                         if task == 'logIn' and type(obj) == User:
-                            self.currentUserID = obj.id
+                            self.currentUsername = obj.username
                         if obj is not None:
                             self.send(task, obj)
                     elif task in self.departmentManagerTasks:
@@ -43,9 +43,9 @@ class Handler(threading.Thread):
             # Completely terminate connection when the client disconnects
             self.userManager.clientSocketList.remove(self.clientSocket)
             self.clientSocket.close()
-            self.currentUserID = None
             print(self.address, "disconnected")
-            self.userManager.setStatus(self.currentUserID, "Offline")
+            self.userManager.setStatus(self.currentUsername, "Offline")
+            self.currentUsername = None
 
     # Send task and object to the client
     def send(self, task, obj):

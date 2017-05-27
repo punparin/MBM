@@ -40,4 +40,4 @@ class User:
     def __str__(self):
         if self.id is None:
             return 'User: ' + self.username + " " + self.email
-        return 'User: ' + format(self.id, '05d') + " " + self.username + " " + self.email + str(self.position)
+        return 'User: ' + format(self.id, '05d') + " " + self.username + " " + self.email

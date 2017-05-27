@@ -8,10 +8,10 @@ departmentManager = DepartmentManager(userManager)
 
 def createUser(username):
     global curNum
-    p = Personal
+    p = Personal()
     user = User(username + str(curNum), 'Admin1234', username + str(curNum) + '@gmail.com')
-    user.name = p.name
-    user.last_name = p.surname
+    user.name = p.name()
+    user.last_name = p.surname()
     user.id = curNum
     curNum += 1
     return user
@@ -66,6 +66,4 @@ if __name__ == "__main__":
     createAdmin()
     generateFakeUser('test', 7)
     createDepartment()
-    userManager.getUserInfo('punparin')
-    userManager.getUserStatus('punparin')
     generateFakeUser('admin', 3)
