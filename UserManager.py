@@ -8,6 +8,7 @@ class UserManager:
         self.latestUserIDFileName = "constantID"
         self.userList = {}
         self.latestUserID = self.getLatestUserID()
+        self.clientSocketList = []
         self.getUsers()
 
     # Identify task for the exact function
@@ -59,7 +60,7 @@ class UserManager:
         if user is None:
             return None
         else:
-            user = user.dummy()
+            user = user.deepcopy()
             return user
 
     def getUserStatus(self, username):
@@ -111,6 +112,10 @@ class UserManager:
         else:
             user.status = status
             # notify all
+            for clientSocket in self.clientSocketList:
+                clientSocket.send('updateStatus'.encode('ascii'))
+                obj = pickle.dumps([username, status])
+                clientSocket.send(obj)
 
     def showUserList(self):
         for username in self.userList:

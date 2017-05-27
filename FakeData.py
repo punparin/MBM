@@ -1,4 +1,5 @@
 from UserManager import *
+from elizabeth import *
 from DepartmentManager import *
 
 curNum = 1
@@ -7,7 +8,10 @@ departmentManager = DepartmentManager(userManager)
 
 def createUser(username):
     global curNum
+    p = Personal
     user = User(username + str(curNum), 'Admin1234', username + str(curNum) + '@gmail.com')
+    user.name = p.name
+    user.last_name = p.surname
     user.id = curNum
     curNum += 1
     return user
@@ -25,10 +29,14 @@ def removeDepartmentList():
 
 def createPunparin():
     user = User('punparin', 'Pun1234', 'punparin@gmail.com')
+    user.name = 'Parin'
+    user.last_name = 'Kobboon'
     userManager.registerUser(user)
 
 def createAdmin():
     user = User('admin', 'Admin1234', 'admin@gmail.com')
+    user.name = 'Admin'
+    user.last_name = 'Eiei'
     userManager.registerUser(user)
 
 def createDepartment():

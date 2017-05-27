@@ -37,7 +37,6 @@ class DepartmentManager:
 
     def getInitialInfo(self):
         initialInfo = copy.deepcopy(self.departmentList)
-        print(initialInfo == self.departmentList)
         for department in initialInfo:
             if department.positionTree is not None:
                 for pre, fill, node in RenderTree(department.positionTree):
@@ -45,7 +44,7 @@ class DepartmentManager:
                     for id in node.name.employeeList:
                         username = node.name.employeeList[id]
                         user = self.userManager.findByUsername(username)
-                        newEmployeeList[id] = [username, user.status]
+                        newEmployeeList[id] = user.dummy()
                     node.name.employeeList = newEmployeeList
         return initialInfo
 
@@ -111,11 +110,14 @@ class DepartmentManager:
         if dep is not None:
             user = self.userManager.findByUsername(username)
             if user is not None:
-                dep.addEmployee(position, user)
-                user.position = position
-                self.userManager.saveUsers()
-                self.saveDepartments()
-                print('Added', username, 'to', department, 'successfully')
+                try:
+                    dep.addEmployee(position, user)
+                    user.position.append(position)
+                    self.userManager.saveUsers()
+                    self.saveDepartments()
+                    print('Added', username, 'to', department, 'successfully')
+                except InvalidArgument:
+                    print(position, 'does not exist')
             else:
                 print(username, 'does not exist')
         else:

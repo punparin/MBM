@@ -81,7 +81,7 @@ class Server:
                 elif cat == '2':
                     print('User:')
                     print('\t- findUser [username] : to show information of a user by username')
-                    print('\t- createUser [username] [password] [email] : to register a new user')
+                    print('\t- registerUser [username] [name] [lastname] [password] [email] : to register a new user')
                     print('\t- removeUser [username] : to remove a user')
                     print('\t- removeUserList : tp remove all users')
                     print('\t- showUserList : to show all users information')
@@ -142,10 +142,13 @@ class Server:
                 print()
                 self.userManager.findUserByUsername(cms[1])
                 isCommandValid = True
-            # createUser
-            elif cms[0] == 'createUser' and len(cms) == 4:
+            # registerUser
+            elif cms[0] == 'registerUser' and len(cms) == 6:
                 print()
-                self.userManager.registerUser(User(cms[1], cms[2], cms[3]))
+                user = User(cms[1], cms[4], cms[5])
+                user.name = cms[2]
+                user.lastname = cms[3]
+                self.userManager.registerUser(user)
                 isCommandValid = True
             # removeUser
             elif cms[0] == 'removeUser' and len(cms) == 2:
