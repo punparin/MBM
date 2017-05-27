@@ -10,7 +10,7 @@ class Handler(threading.Thread):
         self.departmentManager = departmentManager
         self.address = address
         self.currentUserID = None
-        self.userManagerTasks = ['logIn', 'register', 'updateProfile', 'getUserInfo', 'getUserStatus', 'updateStatus']
+        self.userManagerTasks = ['logIn', 'register', 'updateProfile', 'getUserInfo', 'updateStatus']
         self.projectManagerTasks = ['create', 'search', 'updateProject']
         self.departmentManagerTasks = ['getInitialInfo']
         self.clientSocket.send("Connected Successfully".encode('ascii'))

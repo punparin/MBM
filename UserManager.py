@@ -22,8 +22,6 @@ class UserManager:
             self.update(obj)
         elif task == 'getUserInfo':
             processedObj = self.getUserInfo(obj)
-        elif task == 'getUserStatus':
-            processedObj = self.getUserStatus(obj)
         elif task == 'updateStatus':
             self.updateStatus(obj)
         return processedObj
@@ -62,13 +60,6 @@ class UserManager:
         else:
             user = user.deepcopy()
             return user
-
-    def getUserStatus(self, username):
-        user = self.findByUsername(username)
-        if user is None:
-            return None
-        else:
-            return user.status
 
     def updateStatus(self, obj):
         username, status = obj

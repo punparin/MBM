@@ -140,11 +140,10 @@ class UImanager(QMainWindow):
                         # implemented using Tree
                         # see how to traversal it in DepartmentManager.getInitialInfo()
                     elif task == 'getUserInfo':
-                        pass
+                        user = obj
                         # obj in this case is a User instance without password
-                    elif task == 'getUserStatus':
-                        pass
-                        # obj in this case is the status of the user
+                    elif task == 'updateStatus':
+                        username, status = obj
                 except EOFError as e:
                     print(e)
         except ConnectionResetError:
