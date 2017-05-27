@@ -454,6 +454,8 @@ QComboBox QAbstractItemView {
     selection-background-color: rgb(137, 190, 255);
 }
 
+QWidget#list_user {background-image: url(Images/chat_background.png) }
+
 </string>
   </property>
   <widget class="QLabel" name="profile">
@@ -1904,13 +1906,13 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
     </widget>
    </widget>
   </widget>
-  <widget class="QPushButton" name="all_user">
+  <widget class="QPushButton" name="chat_button">
    <property name="geometry">
     <rect>
-     <x>1880</x>
-     <y>1340</y>
-     <width>231</width>
-     <height>61</height>
+     <x>1690</x>
+     <y>1400</y>
+     <width>471</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="cursor">
@@ -1918,6 +1920,26 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
    </property>
    <property name="text">
     <string>Message [Chat]</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="list_user">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>1690</x>
+     <y>660</y>
+     <width>471</width>
+     <height>781</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;
+</string>
    </property>
   </widget>
  </widget>

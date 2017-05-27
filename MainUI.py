@@ -5,6 +5,7 @@ from anytree import Node, RenderTree
 from User import *
 import sys
 import ctypes
+import time
 
 class MainUI(QMainWindow):
     def __init__(self , parent = None):
@@ -89,7 +90,11 @@ class MainUI(QMainWindow):
         self.permission_list = []
 
         #chatSystem
-        #self.list_user = form.findChild(QListWidget, "list_user")
+        self.chat_button = form.findChild(QPushButton, "chat_button")
+        self.list_user = form.findChild(QListWidget, "list_user")
+        self.chat_button.clicked.connect(self.chatOpenClose)
+        self.isChatOpen = False
+        self.list_user.move(-999, -999)
 
     def mainPageSlot(self):
         print("test")
@@ -146,6 +151,37 @@ class MainUI(QMainWindow):
 
     def backToProfilePage(self):
         self.subWidget.setCurrentIndex(1)
+
+    def chatOpenClose(self):
+        if self.isChatOpen == False:
+            self.isChatOpen = True
+            self.list_user.move(1690, 660)
+            self.chat_button.move(1690,620)
+            '''
+            for i in range(5):
+                self.list_user.addItem(QListWidgetItem("TEST USER ONLINE"))
+                row = self.list_user.item(i)
+                row.setForeground(QBrush(Qt.green))
+            '''
+            self.parent.send("getInitialInfo", None)
+            if self.parent.departmentList is not None:
+                for department in self.parent.departmentList:
+                    for pre, fill, node in RenderTree(department.positionTree):
+                        if node.name.employeeList is not None:
+                            for userID in node.name.employeeList:
+                                username, status = node.name.employeeList[userID]
+                                print(str(username) + "   " + str(status))
+                                print("---------------------------------")
+            else:
+                self.isChatOpen = False
+                self.list_user.move(-999, -999)
+                self.chat_button.move(1690, 1400)
+                self.chatOpenClose()
+
+        else:
+            self.isChatOpen = False
+            self.list_user.move(-999, -999)
+            self.chat_button.move(1690, 1400)
 
     def changePage(self):
         if self.menu.currentText() == "Main Page":

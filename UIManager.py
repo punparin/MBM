@@ -60,6 +60,8 @@ class UImanager(QMainWindow):
 
         # Client Attribute
         self.departmentList = None
+        self.online_user = []
+        self.offline_user = []
 
     # Change page signal (send from log in UI page)
     def changePageLoginSection(self, signal = None, user = None):
