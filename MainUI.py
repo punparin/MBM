@@ -95,6 +95,9 @@ class MainUI(QMainWindow):
         self.chat_button.clicked.connect(self.chatOpenClose)
         self.isChatOpen = False
         self.list_user.move(-999, -999)
+        self.online_user = []
+        self.offline_user = []
+        self.user_index = []
 
     def mainPageSlot(self):
         print("test")
@@ -157,31 +160,47 @@ class MainUI(QMainWindow):
             self.isChatOpen = True
             self.list_user.move(1690, 660)
             self.chat_button.move(1690,620)
-            '''
-            for i in range(5):
-                self.list_user.addItem(QListWidgetItem("TEST USER ONLINE"))
-                row = self.list_user.item(i)
-                row.setForeground(QBrush(Qt.green))
-            '''
             self.parent.send("getInitialInfo", None)
             if self.parent.departmentList is not None:
                 for department in self.parent.departmentList:
                     for pre, fill, node in RenderTree(department.positionTree):
                         if node.name.employeeList is not None:
                             for userID in node.name.employeeList:
-                                username, status = node.name.employeeList[userID]
-                                print(str(username) + "   " + str(status))
-                                print("---------------------------------")
+                                user = node.name.employeeList[userID]
+                                #print(user.name + " " + user.last_name + " " + user.status)
+                                if user.status == 'Online':
+                                    self.online_user.append(user)
+                                else:
+                                    self.offline_user.append(user)
             else:
+                self.list_user.clear()
+                self.user_index.clear()
+                self.offline_user.clear()
+                self.online_user.clear()
                 self.isChatOpen = False
                 self.list_user.move(-999, -999)
                 self.chat_button.move(1690, 1400)
                 self.chatOpenClose()
 
         else:
+            self.list_user.clear()
+            self.user_index.clear()
+            self.offline_user.clear()
+            self.online_user.clear()
             self.isChatOpen = False
             self.list_user.move(-999, -999)
             self.chat_button.move(1690, 1400)
+
+        self.user_index = self.online_user + self.offline_user
+        for i in range(len(self.user_index)):
+            user = self.user_index[i]
+            self.list_user.addItem(QListWidgetItem(user.name + " " + user.last_name + "\t[" + user.status+"]"))
+            if user.status == 'Online':
+                row = self.list_user.item(i)
+                row.setForeground(QBrush(Qt.green))
+            else:
+                row = self.list_user.item(i)
+                row.setForeground(QBrush(Qt.red))
 
     def changePage(self):
         if self.menu.currentText() == "Main Page":

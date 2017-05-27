@@ -60,8 +60,6 @@ class UImanager(QMainWindow):
 
         # Client Attribute
         self.departmentList = None
-        self.online_user = []
-        self.offline_user = []
 
     # Change page signal (send from log in UI page)
     def changePageLoginSection(self, signal = None, user = None):
@@ -104,8 +102,10 @@ class UImanager(QMainWindow):
                     # check if the user logged in successfully
                     if task == 'logIn' and type(obj) == User:
                         self.user = obj
+                        self.user.status = "Online"
                         print("Initialize user successfully")
                         self.state = "online"
+                        self.send("updateStatus",self.user)
                         break
                     # check if the user registered successfully
                     elif task == 'register' and obj is True:

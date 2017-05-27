@@ -62,12 +62,12 @@ class UserManager:
             return user
 
     def updateStatus(self, obj):
-        username, status = obj
+        username = obj.username
         user = self.findByUsername(username)
         if user is None:
             return None
         else:
-            user.status = status
+            user.status = obj.status
 
     def addAdmin(self, username):
         user = self.findByUsername(username)

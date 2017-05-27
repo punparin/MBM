@@ -33,8 +33,9 @@ class User:
         user = User(self.username)
         user.id = self.id
         user.name = self.name
-        user.last_name = self.lastname
+        user.last_name = self.last_name
         user.status = self.status
+        return user
 
     def __str__(self):
         if self.id is None:
