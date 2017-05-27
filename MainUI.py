@@ -83,7 +83,7 @@ class MainUI(QMainWindow):
         #Permission Table component
         self.permission_tabel = form.findChild(QTableWidget, "Permission_table")
         self.permission_tabel.setColumnCount(7)
-        self.permission_tabel.setRowCount(5)
+        self.permission_tabel.setRowCount(0)
         self.permission_tabel.resizeColumnsToContents()
         self.permission_tabel.resizeRowsToContents()
         self.permission_list = []
@@ -166,6 +166,7 @@ class MainUI(QMainWindow):
                         permission_list =  node.name.getPerMissionList()
                         for col in range(7):
                             if col == 0:
+                                self.permission_tabel.setRowCount(row+1)
                                 self.permission_tabel.setCellWidget(row, col, QLabel(node.name.name))
                             else:
                                 self.box = QCheckBox()
