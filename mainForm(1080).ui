@@ -454,13 +454,15 @@ QComboBox QAbstractItemView {
     selection-background-color: rgb(137, 190, 255);
 }
 
+QWidget#list_user {background-image: url(Images/chat_background.png) }
+
 </string>
   </property>
   <widget class="QLabel" name="profile">
    <property name="geometry">
     <rect>
      <x>1670</x>
-     <y>50</y>
+     <y>40</y>
      <width>101</width>
      <height>131</height>
     </rect>
@@ -469,7 +471,7 @@ QComboBox QAbstractItemView {
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>../../.designer/backup/Images/profile.png</pixmap>
+    <pixmap>Images/profile.png</pixmap>
    </property>
   </widget>
   <widget class="QComboBox" name="comboBox">
@@ -479,7 +481,7 @@ QComboBox QAbstractItemView {
    <property name="geometry">
     <rect>
      <x>1640</x>
-     <y>180</y>
+     <y>170</y>
      <width>161</width>
      <height>41</height>
     </rect>
@@ -939,10 +941,10 @@ QComboBox QAbstractItemView {
   <widget class="QStackedWidget" name="stackedWidget">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>80</y>
-     <width>1311</width>
-     <height>871</height>
+     <x>180</x>
+     <y>130</y>
+     <width>1241</width>
+     <height>851</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -987,14 +989,8 @@ QWidget {background-image: url(Images/widget.png) }</string>
      <property name="toolTip">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
-     <property name="tabShape">
-      <enum>QTabWidget::Triangular</enum>
-     </property>
      <property name="currentIndex">
       <number>0</number>
-     </property>
-     <property name="elideMode">
-      <enum>Qt::ElideNone</enum>
      </property>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
@@ -1100,7 +1096,7 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>../../.designer/backup/Images/profile.png</pixmap>
+      <pixmap>Images/profile.png</pixmap>
      </property>
     </widget>
     <widget class="QPushButton" name="upload_button">
@@ -1543,25 +1539,6 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
-    <widget class="QPushButton" name="admin_button">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>800</y>
-       <width>233</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="text">
-      <string>System Manager</string>
-     </property>
-    </widget>
    </widget>
    <widget class="QWidget" name="change_password">
     <property name="styleSheet">
@@ -1748,7 +1725,7 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
     <widget class="QLabel" name="label_22">
      <property name="geometry">
       <rect>
-       <x>210</x>
+       <x>190</x>
        <y>30</y>
        <width>891</width>
        <height>61</height>
@@ -1764,23 +1741,10 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_2">
-     <property name="geometry">
-      <rect>
-       <x>1150</x>
-       <y>810</y>
-       <width>141</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>BACK</string>
-     </property>
-    </widget>
     <widget class="QTabWidget" name="SELECT_MENU">
      <property name="geometry">
       <rect>
-       <x>50</x>
+       <x>10</x>
        <y>90</y>
        <width>1211</width>
        <height>701</height>
@@ -1796,7 +1760,7 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
       <enum>QTabWidget::Triangular</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="movable">
       <bool>false</bool>
@@ -1823,7 +1787,7 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
        <property name="widgetResizable">
         <bool>true</bool>
        </property>
-       <widget class="QWidget" name="scrollAreaWidgetContents_8">
+       <widget class="QWidget" name="scrollAreaWidgetContents_9">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -1832,7 +1796,7 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
           <height>669</height>
          </rect>
         </property>
-        <layout class="QGridLayout" name="gridLayout_2">
+        <layout class="QGridLayout" name="gridLayout_3">
          <item row="0" column="0">
           <widget class="QTableWidget" name="Permission_table">
            <column>
@@ -1927,22 +1891,58 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
       </attribute>
      </widget>
     </widget>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="geometry">
+      <rect>
+       <x>1080</x>
+       <y>800</y>
+       <width>141</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>BACK</string>
+     </property>
+    </widget>
    </widget>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="chat_button">
    <property name="geometry">
     <rect>
-     <x>1610</x>
-     <y>980</y>
-     <width>233</width>
-     <height>61</height>
+     <x>1450</x>
+     <y>1040</y>
+     <width>471</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
+   <property name="styleSheet">
+    <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+   </property>
    <property name="text">
     <string>Message [Chat]</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="list_user">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>1450</x>
+     <y>300</y>
+     <width>471</width>
+     <height>781</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;
+</string>
    </property>
   </widget>
  </widget>
