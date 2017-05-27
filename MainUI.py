@@ -1,9 +1,11 @@
 from PySide.QtCore import *
 from PySide.QtGui import *
 from PySide.QtUiTools import *
+from anytree import Node, RenderTree
 from User import *
 import sys
 import ctypes
+import time
 
 class MainUI(QMainWindow):
     def __init__(self , parent = None):
@@ -82,9 +84,17 @@ class MainUI(QMainWindow):
         #Permission Table component
         self.permission_tabel = form.findChild(QTableWidget, "Permission_table")
         self.permission_tabel.setColumnCount(7)
-        self.permission_tabel.setRowCount(5)
+        self.permission_tabel.setRowCount(0)
         self.permission_tabel.resizeColumnsToContents()
         self.permission_tabel.resizeRowsToContents()
+        self.permission_list = []
+
+        #chatSystem
+        self.chat_button = form.findChild(QPushButton, "chat_button")
+        self.list_user = form.findChild(QListWidget, "list_user")
+        self.chat_button.clicked.connect(self.chatOpenClose)
+        self.isChatOpen = False
+        self.list_user.move(-999, -999)
 
     def mainPageSlot(self):
         print("test")
@@ -142,6 +152,37 @@ class MainUI(QMainWindow):
     def backToProfilePage(self):
         self.subWidget.setCurrentIndex(1)
 
+    def chatOpenClose(self):
+        if self.isChatOpen == False:
+            self.isChatOpen = True
+            self.list_user.move(1690, 660)
+            self.chat_button.move(1690,620)
+            '''
+            for i in range(5):
+                self.list_user.addItem(QListWidgetItem("TEST USER ONLINE"))
+                row = self.list_user.item(i)
+                row.setForeground(QBrush(Qt.green))
+            '''
+            self.parent.send("getInitialInfo", None)
+            if self.parent.departmentList is not None:
+                for department in self.parent.departmentList:
+                    for pre, fill, node in RenderTree(department.positionTree):
+                        if node.name.employeeList is not None:
+                            for userID in node.name.employeeList:
+                                username, status = node.name.employeeList[userID]
+                                print(str(username) + "   " + str(status))
+                                print("---------------------------------")
+            else:
+                self.isChatOpen = False
+                self.list_user.move(-999, -999)
+                self.chat_button.move(1690, 1400)
+                self.chatOpenClose()
+
+        else:
+            self.isChatOpen = False
+            self.list_user.move(-999, -999)
+            self.chat_button.move(1690, 1400)
+
     def changePage(self):
         if self.menu.currentText() == "Main Page":
             self.subWidget.setCurrentIndex(0)
@@ -154,8 +195,24 @@ class MainUI(QMainWindow):
         elif self.menu.currentText() == "System":
             self.subWidget.setCurrentIndex(5)
             self.parent.send("getInitialInfo", None)
-            #self.test_box = QPushButton("TEST")
-            #self.permission_tabel.setCellWidget(0, 0, self.test_box)
+            if self.parent.departmentList is not None:
+                row = 0
+                for department in self.parent.departmentList:
+                    for pre, fill, node in RenderTree(department.positionTree):
+                        permission_list =  node.name.getPerMissionList()
+                        for col in range(7):
+                            if col == 0:
+                                self.permission_tabel.setRowCount(row+1)
+                                self.permission_tabel.setCellWidget(row, col, QLabel(node.name.name))
+                            else:
+                                self.box = QCheckBox()
+                                if permission_list[col-1] == True:
+                                    self.box.setCheckState(Qt.Checked)
+                                self.permission_tabel.setCellWidget(row, col, self.box)
+                                self.permission_list.append(self.box)
+                        row += 1
+            else:
+                self.subWidget.setCurrentIndex(5)
 
     def passwordValidation(self, password):
         isDigit = False
