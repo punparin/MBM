@@ -12,9 +12,9 @@ def createUser(username):
     curNum += 1
     return user
 
-def generateFakeUser(n):
+def generateFakeUser(title, n):
     for i in range(n):
-        user = createUser('test')
+        user = createUser(title)
         userManager.registerUser(user)
 
 def removeUserList():
@@ -27,21 +27,37 @@ def createPunparin():
     user = User('punparin', 'Pun1234', 'punparin@gmail.com')
     userManager.registerUser(user)
 
+def createAdmin():
+    user = User('admin', 'Admin1234', 'admin@gmail.com')
+    userManager.registerUser(user)
+
 def createDepartment():
     departmentManager.addDepartment('Dev')
     departmentManager.addPosition('Dev', 'Manager')
     departmentManager.addPosition('Dev', 'SeniorDev', 'Manager')
     departmentManager.addPosition('Dev', 'JuniorDev', 'SeniorDev')
+    departmentManager.addPosition('Dev', 'SeniorTester', 'Manager')
+    departmentManager.addPosition('Dev', 'JuniorTester', 'SeniorTester')
     departmentManager.addEmployee('Dev', 'Manager', 'punparin')
     departmentManager.addEmployee('Dev', 'SeniorDev', 'test1')
     departmentManager.addEmployee('Dev', 'JuniorDev', 'test2')
+    departmentManager.addEmployee('Dev', 'SeniorDev', 'test3')
+    departmentManager.addEmployee('Dev', 'JuniorDev', 'test4')
+    departmentManager.addDepartment('HR')
+    departmentManager.addPosition('HR', 'Manager')
+    departmentManager.addPosition('HR', 'SeniorHR', 'Manager')
+    departmentManager.addPosition('HR', 'JuniorHR', 'SeniorHR')
+    departmentManager.addEmployee('HR', 'Manager', 'test5')
+    departmentManager.addEmployee('HR', 'SeniorHR', 'test6')
+    departmentManager.addEmployee('HR', 'JuniorHR', 'test7')
 
 if __name__ == "__main__":
     removeUserList()
     removeDepartmentList()
     createPunparin()
-    generateFakeUser(2)
+    createAdmin()
+    generateFakeUser('test', 7)
     createDepartment()
     userManager.getUserInfo('punparin')
     userManager.getUserStatus('punparin')
-    departmentManager.getInitialInfo()
+    generateFakeUser('admin', 3)

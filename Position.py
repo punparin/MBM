@@ -23,7 +23,6 @@ class Position:
             return False
 
     def insertUser(self, userID, username):
-        print(userID, username)
         try:
             self.employeeList[userID]
             raise UserAlreadyExist()
