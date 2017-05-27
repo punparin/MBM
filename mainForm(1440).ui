@@ -1918,6 +1918,9 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
+   <property name="styleSheet">
+    <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+   </property>
    <property name="text">
     <string>Message [Chat]</string>
    </property>

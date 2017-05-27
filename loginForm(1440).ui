@@ -94,7 +94,7 @@ QComboBox QAbstractItemView {
        <string/>
       </property>
       <property name="text">
-       <string/>
+       <string>admin</string>
       </property>
       <property name="frame">
        <bool>true</bool>
@@ -116,7 +116,7 @@ QComboBox QAbstractItemView {
     <item row="1" column="0" colspan="2">
      <widget class="QLineEdit" name="lineEdit_2">
       <property name="text">
-       <string/>
+       <string>Admin123</string>
       </property>
       <property name="frame">
        <bool>true</bool>
@@ -125,7 +125,7 @@ QComboBox QAbstractItemView {
        <enum>QLineEdit::Password</enum>
       </property>
       <property name="cursorPosition">
-       <number>0</number>
+       <number>8</number>
       </property>
       <property name="placeholderText">
        <string>password .....</string>
