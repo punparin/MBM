@@ -1,5 +1,6 @@
 import pickle
 import io
+import copy
 from Department import *
 
 class DepartmentManager:
@@ -35,7 +36,8 @@ class DepartmentManager:
             print(err)
 
     def getInitialInfo(self):
-        initialInfo = self.departmentList
+        initialInfo = copy.deepcopy(self.departmentList)
+        print(initialInfo == self.departmentList)
         for department in initialInfo:
             if department.positionTree is not None:
                 for pre, fill, node in RenderTree(department.positionTree):
