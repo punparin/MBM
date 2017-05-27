@@ -15,7 +15,7 @@ class UImanager(QMainWindow):
         #Main UI set up
         QMainWindow.__init__(self, None)
         self.setMinimumSize(1280, 720)
-        self.setWindowTitle("MBM v.0")
+        self.setWindowTitle("MBM")
         palette = QPalette()
         palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/background.png")))
         self.setPalette(palette)
@@ -134,8 +134,9 @@ class UImanager(QMainWindow):
                             for pre, fill, node in RenderTree(department.positionTree):
                                 print(node.name)
                                 if node.name.employeeList is not None:
-                                    for userID, username, status in node.name.employeeList:
-                                        print(userID, username, status)
+                                    for userID  in node.name.employeeList:
+                                        username, status = node.name.employeeList[userID]
+                                        print(userID, node.name.employeeList[userID])
 
                         # obj in this case is a Department instance
                         # Department --> Position --> [employeeID, employeeUsername, employeeStatus]
