@@ -1,10 +1,13 @@
 import abc
 
 class Work(metaclass = abc.ABCMeta):
-    def __init__(self, title, info):
+    def __init__(self, title, department, info):
         self.title = title
+        self.department = department
         self.contributorList = []
         self.info = info
+        self.isDone = False
+        self.progress = 0
 
     @abc.abstractmethod
     def changeTitle(self, title):
@@ -28,4 +31,8 @@ class Work(metaclass = abc.ABCMeta):
 
     @abc.abstractmethod
     def updateProgress(self, progress):
+        pass
+
+    @abc.abstractmethod
+    def setDone(self):
         pass

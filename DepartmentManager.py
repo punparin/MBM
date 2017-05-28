@@ -60,6 +60,14 @@ class DepartmentManager:
         except InvalidArgument as err:
             print(err)
 
+    def searchPosition(self, department, position):
+        dep = self.searchDepartment(department)
+        if dep is None:
+            print(department, 'does not exist')
+            return
+        else:
+            return dep.searchPosition(position)
+
     def getDepartments(self):
         print("Loading departments...")
         try:
@@ -112,7 +120,7 @@ class DepartmentManager:
             if user is not None:
                 try:
                     dep.addEmployee(position, user)
-                    user.position.append(position)
+                    user.position[department] = position
                     self.userManager.saveUsers()
                     self.saveDepartments()
                     print('Added', username, 'to', department, 'successfully')
@@ -140,24 +148,37 @@ class DepartmentManager:
 
     def findEmployeePosition(self, department, username):
         dep = self.searchDepartment(department)
+        s = ""
         if dep is not None:
             user = self.userManager.findByUsername(username)
             if user is not None:
                 pos = dep.findEmployeePosition(user.id)
                 if pos is not None:
                     print(pos + ": " + username + " found")
+                    return True
                 else:
                     print(username, 'does not exist in', department)
+                    return False
             else:
                 print(username, 'does not exist')
+                return False
         else:
             print(department, 'does not exist')
+            return False
 
     def removeDepartmentList(self):
         fileObject = open(self.departmentFileName, 'wb')
         fileObject.close()
         self.departmentList = []
         print('Cleared successfully')
+
+    def getUserPermission(self, username):
+        user = self.userManager.findByUsername(username)
+        permission = copy.deepcopy(user.position)
+        for dep in permission:
+            pos = self.searchPosition(dep, permission[dep])
+            permission[dep] = pos.getPerMissions()
+        return permission
 
     def showDepartment(self, department):
         dep = self.searchDepartment(department)
