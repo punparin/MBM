@@ -97,6 +97,7 @@ class MainUI(QMainWindow):
         self.online_user = []
         self.offline_user = []
         self.user_index = []
+        self.allPosition = []
 
         self.chat_button.clicked.connect(self.chatOpenClose)
         self.status_box.activated[str].connect(self.changeStatus)
@@ -196,9 +197,13 @@ class MainUI(QMainWindow):
                                     self.online_user.append(user)
                                 else:
                                     self.offline_user.append(user)
+                        self.allPosition.append(node.name.name)
+                        self.user_index.append(node.name.name)
+                        self.user_index += (self.online_user + self.offline_user)
             else:
                 self.list_user.clear()
                 self.user_index.clear()
+                self.allPosition.clear()
                 self.offline_user.clear()
                 self.online_user.clear()
                 self.isChatOpen = False
@@ -210,11 +215,10 @@ class MainUI(QMainWindow):
                 else:
                     self.chat_button.move(1450, 1040)
                     self.status_box.move(1810, 1050)
-                self.chatOpenClose()
-
         else:
             self.list_user.clear()
             self.user_index.clear()
+            self.allPosition.clear()
             self.offline_user.clear()
             self.online_user.clear()
             self.isChatOpen = False
@@ -225,22 +229,56 @@ class MainUI(QMainWindow):
             else:
                 self.chat_button.move(1450, 1040)
                 self.status_box.move(1810, 1050)
-        self.user_index = self.online_user + self.offline_user
+
+        #add item to All User List Box
         for i in range(len(self.user_index)):
             user = self.user_index[i]
-            self.list_user.addItem(QListWidgetItem(user.name + " " + user.last_name + "\t[" + user.status+"]"))
-            if user.status == 'Online':
+            if(user in self.allPosition):
+                self.list_user.addItem(QListWidgetItem(user))
                 row = self.list_user.item(i)
-                row.setForeground(QBrush(Qt.green))
-            elif user.status == 'Offline':
-                row = self.list_user.item(i)
-                row.setForeground(QBrush(Qt.red))
-            elif user.status == 'Busy':
-                row = self.list_user.item(i)
-                row.setForeground(QBrush(Qt.red))
-            elif user.status == 'Away':
-                row = self.list_user.item(i)
-                row.setForeground(QBrush(Qt.yellow))
+                row.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
+            else:
+                self.list_user.addItem(QListWidgetItem("\t" + user.name + " " + user.last_name + "\t[" + user.status+"]"))
+                if user.status == 'Online':
+                    row = self.list_user.item(i)
+                    row.setForeground(QBrush(Qt.green))
+                elif user.status == 'Offline':
+                    row = self.list_user.item(i)
+                    row.setForeground(QBrush(Qt.red))
+                elif user.status == 'Busy':
+                    row = self.list_user.item(i)
+                    row.setForeground(QBrush(Qt.red))
+                elif user.status == 'Away':
+                    row = self.list_user.item(i)
+                    row.setForeground(QBrush(Qt.yellow))
+
+    def updateAlluser(self, username, status):
+        index = 0
+        user = None
+        for i in range(len(self.user_index)):
+            if self.user_index[i] not in self.allPosition:
+                if self.user_index[i].username == username:
+                    index = i
+                    user = self.user_index[i]
+                    break
+        if index == 0:
+            return
+        if status == 'Online':
+            row = self.list_user.item(index)
+            row.setText("\t" + user.name + " " + user.last_name + "\t[Online]")
+            row.setForeground(QBrush(Qt.green))
+        elif status == 'Offline':
+            row = self.list_user.item(index)
+            row.setText("\t" + user.name + " " + user.last_name + "\t[Offline]")
+            row.setForeground(QBrush(Qt.red))
+        elif status == 'Busy':
+            row = self.list_user.item(index)
+            row.setText("\t" + user.name + " " + user.last_name + "\t[Busy]")
+            row.setForeground(QBrush(Qt.red))
+        elif status == 'Away':
+            row = self.list_user.item(index)
+            row.setText("\t" + user.name + " " + user.last_name + "\t[Away]")
+            row.setForeground(QBrush(Qt.yellow))
 
     def changePage(self):
         if self.menu.currentText() == "Main Page":
@@ -275,6 +313,8 @@ class MainUI(QMainWindow):
 
     def selectProfile(self , item = None):
         user = self.user_index[self.list_user.currentRow()]
+        if user in self.allPosition:
+            return
         self.parent.send("getUserInfo",user.username)
         self.parent.changePageMainSection("see_profile", None)
 
@@ -292,6 +332,8 @@ class MainUI(QMainWindow):
         self.exitChat()
         self.isChatting = True
         user = self.user_index[self.list_user.currentRow()]
+        if user in self.allPosition:
+            return
         if self.form_name == "mainForm(1440).ui":
             self.chat_box.move(1220, 660)
             self.chat_title.move(1220, 620)

@@ -164,7 +164,10 @@ class UImanager(QMainWindow):
                         # obj in this case is a User instance without password
                     elif task == 'updateStatus':
                         username, status = obj
-                        print(username, status)
+                        if self.main_widget.isChatOpen == True and username != self.user.username:
+                            self.main_widget.updateAlluser(username,status)
+                        else:
+                            self.send("getInitialInfo", None)
                     elif task == 'recieveChat':
                         # chat is Chat instance
                         self.currentChat = obj
