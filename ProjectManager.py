@@ -76,8 +76,8 @@ class ProjectManager:
             print("Project: ", project.title, "Project Not Found")
             return None
 
-    # Add a contibutor to a project
-    def addContributor(self, projectTitle, username):
+    # Add a member to a project
+    def addMember(self, projectTitle, username):
         project = self.searchProject(projectTitle)
         if project is not None:
             permission = self.departmentManager.getUserPermission(username)
@@ -94,6 +94,7 @@ class ProjectManager:
             if project.title == self.projectList[i].title:
                 self.projectList[i] = project
         self.saveProjects()
+        # notify All to getInitialProject
 
     # Save project
     def saveProject(self, project):

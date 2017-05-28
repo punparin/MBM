@@ -112,6 +112,7 @@ class DepartmentManager:
         self.departmentList.append(dep)
         self.saveDepartment(dep)
         print('Created', department, 'successfully')
+        # notify All to getInitialInfo
 
     def addEmployee(self, department, position, username):
         dep = self.searchDepartment(department)
@@ -130,6 +131,7 @@ class DepartmentManager:
                 print(username, 'does not exist')
         else:
             print(department, 'does not exist')
+        # notify All to getInitialInfo
 
     def removeEmployee(self, department, username):
         dep = self.searchDepartment(department)
@@ -145,6 +147,7 @@ class DepartmentManager:
                 print(username, 'does not exist')
         else:
             print(department, 'does not exist')
+        # notify All to getInitialInfo
 
     def findEmployeePosition(self, department, username):
         dep = self.searchDepartment(department)
@@ -171,6 +174,7 @@ class DepartmentManager:
         fileObject.close()
         self.departmentList = []
         print('Cleared successfully')
+        # notify All to getInitialInfo
 
     def getUserPermission(self, username):
         user = self.userManager.findByUsername(username)
