@@ -12,6 +12,9 @@ class Position:
         self.canJoinEvent = True
         self.canJoinProject = True
 
+    def getPerMissionList(self):
+        return [self.canUseProject, self.canUseEvent, self.canCreateProject, self.canCreateEvent, self.canJoinEvent, self.canJoinProject]
+
     def getPerMissions(self):
         permission = {}
         permission['canUseProject'] = self.canUseProject

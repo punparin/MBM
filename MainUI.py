@@ -91,13 +91,16 @@ class MainUI(QMainWindow):
         #chatSystem
         self.chat_button = form.findChild(QPushButton, "chat_button")
         self.list_user = form.findChild(QListWidget, "list_user")
+        self.status_box = form.findChild(QComboBox, "status_box")
         self.isChatOpen = False
         self.list_user.move(-999, -999)
         self.online_user = []
         self.offline_user = []
         self.user_index = []
+
         self.chat_button.clicked.connect(self.chatOpenClose)
         self.list_user.itemDoubleClicked.connect(self.selectProfile)
+        self.status_box.activated[str].connect(self.changeStatus)
 
     def saveProfile(self):
         self.parent.user.name = (self.name_line.text())
@@ -155,9 +158,11 @@ class MainUI(QMainWindow):
             if self.form_name == "mainForm(1440).ui":
                 self.list_user.move(1690, 660)
                 self.chat_button.move(1690,620)
+                self.status_box.move(2050, 630)
             else:
                 self.list_user.move(1450, 300)
                 self.chat_button.move(1450,260)
+                self.status_box.move(1810, 270)
             self.parent.send("getInitialInfo", None)
             if self.parent.departmentList is not None:
                 for department in self.parent.departmentList:
@@ -177,10 +182,13 @@ class MainUI(QMainWindow):
                 self.online_user.clear()
                 self.isChatOpen = False
                 self.list_user.move(-999, -999)
+                self.status_box.move(-999, -999)
                 if self.form_name == "mainForm(1440).ui":
                     self.chat_button.move(1690, 1400)
+                    self.status_box.move(2050, 1410)
                 else:
                     self.chat_button.move(1450, 1040)
+                    self.status_box.move(1810, 1050)
                 self.chatOpenClose()
 
         else:
@@ -192,8 +200,10 @@ class MainUI(QMainWindow):
             self.list_user.move(-999, -999)
             if self.form_name == "mainForm(1440).ui":
                 self.chat_button.move(1690, 1400)
+                self.status_box.move(2050, 1410)
             else:
                 self.chat_button.move(1450, 1040)
+                self.status_box.move(1810, 1050)
         self.user_index = self.online_user + self.offline_user
         for i in range(len(self.user_index)):
             user = self.user_index[i]
@@ -201,9 +211,15 @@ class MainUI(QMainWindow):
             if user.status == 'Online':
                 row = self.list_user.item(i)
                 row.setForeground(QBrush(Qt.green))
-            else:
+            elif user.status == 'Offline':
                 row = self.list_user.item(i)
                 row.setForeground(QBrush(Qt.red))
+            elif user.status == 'Busy':
+                row = self.list_user.item(i)
+                row.setForeground(QBrush(Qt.red))
+            elif user.status == 'Away':
+                row = self.list_user.item(i)
+                row.setForeground(QBrush(Qt.yellow))
 
     def changePage(self):
         if self.menu.currentText() == "Main Page":
@@ -240,6 +256,18 @@ class MainUI(QMainWindow):
         user = self.user_index[self.list_user.currentRow()]
         self.parent.send("getUserInfo",user.username)
         self.parent.changePageMainSection("see_profile", None)
+
+    def changeStatus(self):
+        self.parent.user.status = self.status_box.currentText()
+        if self.status_box.currentText() == 'Online':
+            self.status_box.setStyleSheet("background-color:rgb(171, 255, 156);")
+        elif self.status_box.currentText() == 'Busy':
+            self.status_box.setStyleSheet("background-color:rgb(255, 116, 116);")
+        elif self.status_box.currentText() == 'Away':
+            self.status_box.setStyleSheet("background-color:rgb(255, 250, 174);")
+        self.parent.send("updateStatus", self.parent.user)
+        for i in range(6):
+            self.chatOpenClose()
 
     def passwordValidation(self, password):
         isDigit = False
