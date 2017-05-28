@@ -1,22 +1,22 @@
 import pickle
+import io
 from Project import *
 
 class ProjectManager:
-    def __init__(self, clientSocket):
+    def __init__(self):
         self.projectListFileName = "projectList"
-        self.projectList = []
-        self.clientSocket = clientSocket
+        self.projectList = {}
         self.getProjects()
 
     # Identify task for the exact function
-    def work(self, task, project):
+    def work(self, task, obj):
         processedObj = None
         if task == 'create':
-            processedObj = self.createProject(project)
+            processedObj = self.createProject(obj)
         elif task == 'search':
-            processedObj = self.searchProject(project)
+            processedObj = self.searchProject(obj)
         elif task == 'updateProject':
-            self.update(project)
+            self.update(obj)
         return processedObj
 
     # Get all users to self.userList
@@ -24,15 +24,17 @@ class ProjectManager:
         print("Loading projects...")
         self.projectList = []
         try:
-            file_object = open(self.projectListFileName, 'rb')
+            fileObject = open(self.projectListFileName, 'rb')
         except FileNotFoundError:
-            file_object = open(self.projectListFileName, 'ab')
+            fileObject = open(self.projectListFileName, 'ab')
         try:
             while True:
-                obj = pickle.load(file_object)
-                self.projectList.append(obj)
+                obj = pickle.load(fileObject)
+                self.projectList[obj.title] = obj
         except EOFError:
-            pass
+            fileObject.close()
+        except (AttributeError, io.UnsupportedOperation):
+            fileObject.close()
 
     # Create a new project
     def createProject(self, project):
@@ -49,14 +51,22 @@ class ProjectManager:
         print("Created Event:", project.title, "successfully")
         return True
 
+    # Find a project by its title
+    def findByTitle(self, title):
+        try:
+            return self.projectList[title]
+        except KeyError:
+            return None
+
     # Search for a project
-    def searchProject(self, project):
-        for createdProject in self.projectList:
-            if project.title == createdProject.title:
-                print("Project: ", project.title, "Project Found")
-                return createdProject
-        print("Project: ", project.title, "Project Not Found")
-        return "Project: ", project.title, "Project Not Found"
+    def searchProject(self, projectTitle):
+        project = self.findByTitle(projectTitle)
+        if project is not None:
+            print("Project: ", project.title, "Project Found")
+            return project
+        else:
+            print("Project: ", project.title, "Project Not Found")
+            return None
 
     # Update project
     def update(self, project):
@@ -66,13 +76,14 @@ class ProjectManager:
         self.saveProjects()
 
     # Save project
-    def saveProjects(self):
-        fileObject = open(self.projectListFileName, 'wb')
-        for createdProject in self.projectList:
-            pickle.dump(createdProject, fileObject)
+    def saveProject(self, project):
+        fileObject = open(self.projectListFileName, 'ab')
+        pickle.dump(project, fileObject)
         fileObject.close()
 
-
-
-
-
+    # Save all projects
+    def saveProjects(self):
+        fileObject = open(self.projectListFileName, 'wb')
+        for title in self.projectList:
+            pickle.dump(self.projectList[title], fileObject)
+        fileObject.close()
