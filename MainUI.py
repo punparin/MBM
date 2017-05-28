@@ -92,6 +92,7 @@ class MainUI(QMainWindow):
         self.status_box = form.findChild(QComboBox, "status_box")
         self.isChatOpen = False
         self.isChatting = False
+        self.isRequesting = False
         self.list_user.move(-999, -999)
         self.online_user = []
         self.offline_user = []
@@ -179,14 +180,16 @@ class MainUI(QMainWindow):
                 self.list_user.move(1450, 300)
                 self.chat_button.move(1450,260)
                 self.status_box.move(1810, 270)
-            self.parent.send("getInitialInfo", None)
+            if self.isRequesting == False:
+                self.parent.send("getInitialInfo", None)
+                self.isRequesting = True
             if self.parent.departmentList is not None:
+                self.isRequesting = False
                 for department in self.parent.departmentList:
                     for pre, fill, node in RenderTree(department.positionTree):
                         if node.name.employeeList is not None:
                             for userID in node.name.employeeList:
                                 user = node.name.employeeList[userID]
-                                #print(user.name + " " + user.last_name + " " + user.status)
                                 if user.status == 'Online':
                                     self.online_user.append(user)
                                 else:
@@ -289,7 +292,6 @@ class MainUI(QMainWindow):
         self.exitChat()
         self.isChatting = True
         user = self.user_index[self.list_user.currentRow()]
-        self.parent.send("getUserInfo", user.username)
         if self.form_name == "mainForm(1440).ui":
             self.chat_box.move(1220, 660)
             self.chat_title.move(1220, 620)
@@ -302,7 +304,11 @@ class MainUI(QMainWindow):
             self.message.move(980, 1050)
             self.send_button.move(1350, 1050)
             self.exit_button.move(1390, 270)
+        if self.isRequesting == False:
+            self.parent.send("getUserInfo", user.username)
+            self.isRequesting = True
         if self.parent.interest_user != None and self.parent.interest_user.username == user.username:
+            self.isRequesting = False
             self.chat_title.setText(self.parent.interest_user.name + " " + self.parent.interest_user.last_name)
         else:
             self.openChat(None)
