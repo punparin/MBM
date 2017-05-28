@@ -4,11 +4,10 @@ class UserAlreadyExists(Exception) : pass
 class InvalidArgument(Exception) : pass
 
 class Project(Work):
-    def __init__(self, title, info = None):
-        super().__init__()
-        self.title = title
-        self.info = info
-        self.progress = 0
+    def __init__(self, title, department, info = None):
+        super().__init__(title, department, info)
+        self.tasks = []
+        self.leader = ""
 
     def changeTitle(self, title):
         self.title = title
@@ -17,6 +16,10 @@ class Project(Work):
         if self.findContributor(username):
             raise UserAlreadyExists()
         self.contributorList.append(username)
+
+    def addLeader(self, username):
+        if self.findContributor(username):
+            self.leader = username
 
     def findContributor(self, username):
         return username in self.contributorList
@@ -32,3 +35,10 @@ class Project(Work):
 
     def updateProgress(self, progress):
         self.progress = progress
+
+    def setDone(self):
+        self.isDone = True
+
+    def addTask(self, task):
+        if task not in self.tasks:
+            self.tasks.append(task)

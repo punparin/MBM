@@ -3,8 +3,9 @@ import io
 from Project import *
 
 class ProjectManager:
-    def __init__(self):
+    def __init__(self, departmentManager):
         self.projectListFileName = "projectList"
+        self.departmentManager = departmentManager
         self.projectList = {}
         self.getProjects()
 
@@ -41,15 +42,22 @@ class ProjectManager:
         for createdProject in self.projectList:
             if project.title == createdProject.title:
                 print(project.title + " is not available")
-                return project.title + " is not available"
-
+                return False
         project = Project(project.title)
         fileObject = open(self.projectListFileName, 'ab')
         pickle.dump(project, fileObject)
         fileObject.close()
-        self.projectList.append(project)
-        print("Created Event:", project.title, "successfully")
+        self.projectList[project.title] = project
+        print("Created Project:", project.title, "successfully")
         return True
+
+    # Remove a project
+    def removeProject(self, projectTitle):
+        project = self.findByTitle(projectTitle)
+        try:
+            del self.projectList[projectTitle]
+        except KeyError:
+            return 'not found'
 
     # Find a project by its title
     def findByTitle(self, title):
@@ -67,6 +75,18 @@ class ProjectManager:
         else:
             print("Project: ", project.title, "Project Not Found")
             return None
+
+    # Add a contibutor to a project
+    def addContributor(self, projectTitle, username):
+        project = self.searchProject(projectTitle)
+        if project is not None:
+            permission = self.departmentManager.getUserPermission(username)
+            try:
+                permission = permission[project.department]
+                if permission['canCreateProject']:
+                    project.addContributor(username)
+            except KeyError:
+                return False
 
     # Update project
     def update(self, project):

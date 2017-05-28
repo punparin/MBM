@@ -12,8 +12,15 @@ class Position:
         self.canJoinEvent = True
         self.canJoinProject = True
 
-    def getPerMissionList(self):
-        return [self.canUseProject,self.canUseEvent ,self.canCreateProject, self.canCreateEvent, self.canJoinEvent, self.canJoinProject]
+    def getPerMissions(self):
+        permission = {}
+        permission['canUseProject'] = self.canUseProject
+        permission['canUseEvent'] = self.canUseEvent
+        permission['canCreateProject'] = self.canCreateProject
+        permission['canCreateEvent'] = self.canCreateEvent
+        permission['canJoinEvent'] = self.canJoinEvent
+        permission['canJoinProject'] = self.canJoinProject
+        return permission
 
     def hasUser(self, userID):
         try:
