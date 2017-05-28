@@ -215,7 +215,3 @@ class UserManager:
         if not (isDigit and isCapitalized):
             return "password"
         return True
-
-
-
-

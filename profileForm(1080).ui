@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>2160</width>
-    <height>1440</height>
+    <width>1920</width>
+    <height>1080</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -68,8 +68,8 @@ QWidget#profile_pic{background-image: url(Images/widget.png) }</string>
   <widget class="QLabel" name="page_label">
    <property name="geometry">
     <rect>
-     <x>820</x>
-     <y>90</y>
+     <x>620</x>
+     <y>50</y>
      <width>611</width>
      <height>91</height>
     </rect>
@@ -81,8 +81,8 @@ QWidget#profile_pic{background-image: url(Images/widget.png) }</string>
   <widget class="QPushButton" name="back_button">
    <property name="geometry">
     <rect>
-     <x>1950</x>
-     <y>80</y>
+     <x>1690</x>
+     <y>50</y>
      <width>171</width>
      <height>51</height>
     </rect>
@@ -100,8 +100,8 @@ QWidget#profile_pic{background-image: url(Images/widget.png) }</string>
   <widget class="QPushButton" name="message_button">
    <property name="geometry">
     <rect>
-     <x>1740</x>
-     <y>80</y>
+     <x>1460</x>
+     <y>50</y>
      <width>171</width>
      <height>51</height>
     </rect>
@@ -119,8 +119,8 @@ QWidget#profile_pic{background-image: url(Images/widget.png) }</string>
   <widget class="QScrollArea" name="detail_area">
    <property name="geometry">
     <rect>
-     <x>820</x>
-     <y>310</y>
+     <x>620</x>
+     <y>190</y>
      <width>1071</width>
      <height>851</height>
     </rect>
@@ -428,8 +428,8 @@ QWidget#profile_pic{background-image: url(Images/widget.png) }</string>
   <widget class="QLabel" name="profile_pic">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>90</y>
+     <x>200</x>
+     <y>50</y>
      <width>101</width>
      <height>131</height>
     </rect>
@@ -444,8 +444,8 @@ QWidget#profile_pic{background-image: url(Images/widget.png) }</string>
   <widget class="QListWidget" name="working">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>380</y>
+     <x>30</x>
+     <y>300</y>
      <width>471</width>
      <height>341</height>
     </rect>
@@ -454,8 +454,8 @@ QWidget#profile_pic{background-image: url(Images/widget.png) }</string>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>90</x>
-     <y>330</y>
+     <x>0</x>
+     <y>250</y>
      <width>511</width>
      <height>31</height>
     </rect>
@@ -467,8 +467,8 @@ QWidget#profile_pic{background-image: url(Images/widget.png) }</string>
   <widget class="QLabel" name="join_label">
    <property name="geometry">
     <rect>
-     <x>90</x>
-     <y>770</y>
+     <x>0</x>
+     <y>660</y>
      <width>511</width>
      <height>31</height>
     </rect>
@@ -480,8 +480,8 @@ QWidget#profile_pic{background-image: url(Images/widget.png) }</string>
   <widget class="QListWidget" name="joining">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>820</y>
+     <x>30</x>
+     <y>710</y>
      <width>471</width>
      <height>341</height>
     </rect>
