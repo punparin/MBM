@@ -68,6 +68,25 @@ class UserManager:
             return None
         else:
             user.status = obj.status
+            for username in self.clientSocketList:
+                if user.username != username:
+                    print("status", username)
+                    self.clientSocketList[username].send('updateStatus'.encode('ascii'))
+                    obj = pickle.dumps([user.username, user.status])
+                    self.clientSocketList[username].send(obj)
+
+    def setStatus(self, username, status):
+        user = self.findByUsername(username)
+        if user is None:
+            return None
+        else:
+            user.status = status
+            for username in self.clientSocketList:
+                if user.username != username:
+                    print("status", username)
+                    self.clientSocketList[username].send('updateStatus'.encode('ascii'))
+                    obj = pickle.dumps([user.username, user.status])
+                    self.clientSocketList[username].send(obj)
 
     def addAdmin(self, username):
         user = self.findByUsername(username)
@@ -95,18 +114,6 @@ class UserManager:
             return self.userList[username]
         except KeyError:
             return None
-
-    def setStatus(self, username, status):
-        user = self.findByUsername(username)
-        if user is None:
-            pass
-        else:
-            user.status = status
-            # notify all
-            for username in self.clientSocketList:
-                self.clientSocketList[username].send('updateStatus'.encode('ascii'))
-                obj = pickle.dumps([username, status])
-                self.clientSocketList[username].send(obj)
 
     def showUserList(self):
         for username in self.userList:
