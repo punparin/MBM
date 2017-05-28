@@ -158,10 +158,6 @@ class UImanager(QMainWindow):
                     obj = pickle.loads(self.socket.recv(4096))
                     if task == 'getInitialInfo':
                         self.departmentList = obj
-                        # obj in this case is a Department instance
-                        # Department --> Position --> [employeeID, employeeUsername, employeeStatus]
-                        # implemented using Tree
-                        # see how to traversal it in DepartmentManager.getInitialInfo()
                     elif task == 'getUserInfo':
                         self.interest_user = obj
                         # obj in this case is a User instance without password
