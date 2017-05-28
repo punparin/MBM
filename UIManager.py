@@ -6,6 +6,7 @@ from PySide.QtCore import *
 from PySide.QtGui import *
 from anytree import Node, RenderTree
 from User import *
+from Chat import *
 import socket
 import pickle
 import sys
@@ -166,6 +167,9 @@ class UImanager(QMainWindow):
                         # obj in this case is a User instance without password
                     elif task == 'updateStatus':
                         username, status = obj
+                    elif task == 'recieveChat':
+                        # chat is Chat instance
+                        chat = obj
                 except EOFError as e:
                     print(e)
         except ConnectionResetError:

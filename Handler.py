@@ -2,19 +2,20 @@ import threading
 from UserManager import *
 
 class Handler(threading.Thread):
-    def __init__(self, userManager, departmentManager, clientSocket, address):
+    def __init__(self, userManager, chatManager, departmentManager, clientSocket, address):
         threading.Thread.__init__(self)
         self.clientSocket = clientSocket
         self.userManager = userManager
         #self.projectManager = projectManager
+        self.chatManager = chatManager
         self.departmentManager = departmentManager
         self.address = address
         self.currentUsername = None
         self.userManagerTasks = ['logIn', 'register', 'updateProfile', 'getUserInfo', 'updateStatus']
         self.projectManagerTasks = ['create', 'search', 'updateProject']
         self.departmentManagerTasks = ['getInitialInfo']
+        self.chatManagerTasks = ['sendChat']
         self.clientSocket.send("Connected Successfully".encode('ascii'))
-        self.userManager.clientSocketList.append(self.clientSocket)
 
     # Constantly recieve data from the client
     def run(self):
@@ -31,21 +32,30 @@ class Handler(threading.Thread):
                         obj = self.userManager.work(task, obj)
                         if task == 'logIn' and type(obj) == User:
                             self.currentUsername = obj.username
+                            self.userManager.clientSocketList[obj.username] = self.clientSocket
                         if obj is not None:
                             self.send(task, obj)
                     elif task in self.departmentManagerTasks:
                         obj = self.departmentManager.work(task, obj)
                         if obj is not None:
                             self.send(task, obj)
+                    elif task in self.chatManagerTasks:
+                        obj = self.chatManager.work(task, obj)
+                        if obj is not None:
+                            self.send(task, obj)
                 except EOFError:
                     pass
         except ConnectionResetError:
             # Completely terminate connection when the client disconnects
-            self.userManager.clientSocketList.remove(self.clientSocket)
-            self.clientSocket.close()
-            print(self.address, "disconnected")
-            self.userManager.setStatus(self.currentUsername, "Offline")
-            self.currentUsername = None
+            if self.currentUsername is None:
+                self.clientSocket.close()
+                print(self.address, "disconnected")
+            else:
+                del self.userManager.clientSocketList[self.currentUsername]
+                self.userManager.setStatus(self.currentUsername, "Offline")
+                self.currentUsername = None
+                self.clientSocket.close()
+                print(self.address, "disconnected")
 
     # Send task and object to the client
     def send(self, task, obj):
