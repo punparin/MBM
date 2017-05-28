@@ -65,6 +65,7 @@ class UImanager(QMainWindow):
         # Client Attribute
         self.departmentList = None
         self.interest_user = None
+        self.currentChat = None
 
     # Change page signal (send from log in UI page)
     def changePageLoginSection(self, signal = None, user = None):
@@ -165,7 +166,13 @@ class UImanager(QMainWindow):
                         username, status = obj
                     elif task == 'recieveChat':
                         # chat is Chat instance
-                        chat = obj
+                        self.currentChat = obj
+                        if self.main_widget.isChatting == True:
+                            self.main_widget.recieveMessage(self.currentChat)
+                            self.main_widget.openChat(None)
+                        else:
+                            self.main_widget.recieveMessage(self.currentChat)
+
                 except EOFError as e:
                     print(e)
         except ConnectionResetError:
