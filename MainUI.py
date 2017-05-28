@@ -197,8 +197,8 @@ class MainUI(QMainWindow):
                                     self.online_user.append(user)
                                 else:
                                     self.offline_user.append(user)
-                        self.allPosition.append(node.name.name)
-                        self.user_index.append(node.name.name)
+                        self.allPosition.append(department.name + " : " + node.name.name)
+                        self.user_index.append(department.name + " : " + node.name.name)
                         self.user_index += (self.online_user + self.offline_user)
             else:
                 self.list_user.clear()
