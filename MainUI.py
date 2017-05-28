@@ -91,18 +91,13 @@ class MainUI(QMainWindow):
         #chatSystem
         self.chat_button = form.findChild(QPushButton, "chat_button")
         self.list_user = form.findChild(QListWidget, "list_user")
-        self.chat_button.clicked.connect(self.chatOpenClose)
         self.isChatOpen = False
         self.list_user.move(-999, -999)
         self.online_user = []
         self.offline_user = []
         self.user_index = []
-
-    def mainPageSlot(self):
-        print("test")
-
-    def settingSlot(self):
-        print("test")
+        self.chat_button.clicked.connect(self.chatOpenClose)
+        self.list_user.itemDoubleClicked.connect(self.selectProfile)
 
     def saveProfile(self):
         self.parent.user.name = (self.name_line.text())
@@ -240,6 +235,11 @@ class MainUI(QMainWindow):
                         row += 1
             else:
                 self.subWidget.setCurrentIndex(5)
+
+    def selectProfile(self , item = None):
+        user = self.user_index[self.list_user.currentRow()]
+        self.parent.send("getUserInfo",user.username)
+        self.parent.changePageMainSection("see_profile", None)
 
     def passwordValidation(self, password):
         isDigit = False
