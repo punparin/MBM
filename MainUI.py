@@ -226,6 +226,8 @@ class MainUI(QMainWindow):
                 self.chat_button.move(1450, 1040)
                 self.status_box.move(1810, 1050)
         self.user_index = self.online_user + self.offline_user
+
+        #add item to All User List Box
         for i in range(len(self.user_index)):
             user = self.user_index[i]
             self.list_user.addItem(QListWidgetItem(user.name + " " + user.last_name + "\t[" + user.status+"]"))
