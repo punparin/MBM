@@ -190,6 +190,8 @@ class MainUI(QMainWindow):
                         if node.name.employeeList is not None:
                             for userID in node.name.employeeList:
                                 user = node.name.employeeList[userID]
+                                if user.username == self.parent.user.username:
+                                    continue
                                 if user.status == 'Online':
                                     self.online_user.append(user)
                                 else:
@@ -285,8 +287,6 @@ class MainUI(QMainWindow):
         elif self.status_box.currentText() == 'Away':
             self.status_box.setStyleSheet("background-color:rgb(255, 250, 174);")
         self.parent.send("updateStatus", self.parent.user)
-        for i in range(6):
-            self.chatOpenClose()
 
     def openChat(self, item = None):
         self.exitChat()
@@ -312,6 +312,19 @@ class MainUI(QMainWindow):
             self.chat_title.setText(self.parent.interest_user.name + " " + self.parent.interest_user.last_name)
         else:
             self.openChat(None)
+        try:
+            path = "chatData\\" + self.parent.user.username + self.parent.interest_user.username + ".txt"
+            file = open(path, "r")
+            for line in file:
+                self.chat_box.addItem(QListWidgetItem(line))
+        except:
+            path = "chatData\\" + self.parent.user.username + self.parent.interest_user.username + ".txt"
+            file = open(path, "a")
+            file.close()
+
+    def updateChat(self):
+        print("Chat Update")
+        self.chat_box.clear()
         try:
             path = "chatData\\" + self.parent.user.username + self.parent.interest_user.username + ".txt"
             file = open(path, "r")
