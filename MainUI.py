@@ -97,6 +97,7 @@ class MainUI(QMainWindow):
         self.online_user = []
         self.offline_user = []
         self.user_index = []
+        self.allDepartment = []
         self.allPosition = []
 
         self.chat_button.clicked.connect(self.chatOpenClose)
@@ -197,8 +198,10 @@ class MainUI(QMainWindow):
                                     self.online_user.append(user)
                                 else:
                                     self.offline_user.append(user)
-                        self.allPosition.append(department.name + " : " + node.name.name)
-                        self.user_index.append(department.name + " : " + node.name.name)
+                        self.allDepartment.append(department.name)
+                        self.allPosition.append(node.name.name)
+                        self.user_index.append(department.name)
+                        self.user_index.append(node.name.name)
                         self.user_index += (self.online_user + self.offline_user)
             else:
                 self.list_user.clear()
@@ -233,10 +236,14 @@ class MainUI(QMainWindow):
         #add item to All User List Box
         for i in range(len(self.user_index)):
             user = self.user_index[i]
-            if(user in self.allPosition):
+            if(user in self.allDepartment):
                 self.list_user.addItem(QListWidgetItem(user))
                 row = self.list_user.item(i)
                 row.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
+            elif(user in self.allPosition):
+                user = "      • " + user
+                self.list_user.addItem(QListWidgetItem(user))
+                row = self.list_user.item(i)
             else:
                 self.list_user.addItem(QListWidgetItem("\t" + user.name + " " + user.last_name + "\t[" + user.status+"]"))
                 if user.status == 'Online':
@@ -313,7 +320,7 @@ class MainUI(QMainWindow):
 
     def selectProfile(self , item = None):
         user = self.user_index[self.list_user.currentRow()]
-        if user in self.allPosition:
+        if user in self.allDepartment or user in self.allPosition:
             return
         self.parent.send("getUserInfo",user.username)
         self.parent.changePageMainSection("see_profile", None)
@@ -332,7 +339,7 @@ class MainUI(QMainWindow):
         self.exitChat()
         self.isChatting = True
         user = self.user_index[self.list_user.currentRow()]
-        if user in self.allPosition:
+        if user in self.allDepartment or user in self.allPosition:
             return
         if self.form_name == "mainForm(1440).ui":
             self.chat_box.move(1220, 660)
