@@ -152,7 +152,7 @@ class UImanager(QMainWindow):
         try:
             while True:
                 print('listening')
-                task = self.socket.recv(4096).decode('ascii')
+                task = self.socket.recv(1024).decode('ascii')
                 if task == '':
                     pass
                 try:

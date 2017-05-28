@@ -43,6 +43,7 @@ class Handler(threading.Thread):
                         obj = self.chatManager.work(task, obj)
                         if obj is not None:
                             self.send(task, obj)
+                            print('wtf')
                 except EOFError:
                     pass
         except ConnectionResetError:
