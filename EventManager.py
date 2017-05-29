@@ -126,9 +126,9 @@ class EventManager:
 
     # Update event
     def update(self, event):
-        for i in range(len(self.eventList)):
-            if event.title == self.eventList[i].title:
-                self.eventList[i] = event
+        for title in self.eventList:
+            if event.title == self.eventList[title].title:
+                self.eventList[title] = event
         self.saveEvents()
         # notify all to getInitialEvent
         self.notifyAll(event)

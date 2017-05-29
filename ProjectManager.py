@@ -127,9 +127,9 @@ class ProjectManager:
 
     # Update project
     def update(self, project):
-        for i in range(len(self.projectList)):
-            if project.title == self.projectList[i].title:
-                self.projectList[i] = project
+        for title in self.projectList:
+            if project.title == self.projectList[title].title:
+                self.projectList[title] = project
         self.saveProjects()
         # notify all to getInitialProject
         self.notifyAll(project)
