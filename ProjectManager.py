@@ -15,7 +15,7 @@ class ProjectManager:
     def work(self, task, obj):
         processedObj = None
         if task == 'createProject':
-            processedObj = self.createProject(obj)
+            self.createProject(obj)
         elif task == 'searchProject':
             processedObj = self.searchProject(obj)
         elif task == 'updateProject':
@@ -50,21 +50,21 @@ class ProjectManager:
     def createProject(self, project):
         for createdProject in self.projectList:
             if project.title == createdProject.title:
-                print(project.title + " is not available")
-                return False
+                return
         project = Project(project.title)
         fileObject = open(self.projectListFileName, 'ab')
         pickle.dump(project, fileObject)
         fileObject.close()
         self.projectList[project.title] = project
-        print("Created Project:", project.title, "successfully")
-        return True
+        self.saveProject(project)
 
     # Remove a project
     def removeProject(self, projectTitle):
         project = self.findByTitle(projectTitle)
         try:
             del self.projectList[projectTitle]
+            self.saveProjects()
+            self.notifyAll()
         except KeyError:
             return 'not found'
 
@@ -85,6 +85,7 @@ class ProjectManager:
             print("Project: ", project.title, "Project Not Found")
             return None
 
+    '''
     # Add a member to a project
     def addMember(self, projectTitle, username):
         project = self.searchProject(projectTitle)
@@ -94,6 +95,7 @@ class ProjectManager:
                 permission = permission[project.department]
                 if permission['canCreateProject']:
                     project.addContributor(username)
+                    self.update(project)
             except KeyError:
                 return False
 
@@ -103,8 +105,10 @@ class ProjectManager:
         if project is not None:
             try:
                 project.removeMember(username)
+                self.update(project)
             except InvalidArgument:
                 return False
+    '''
 
     # notify All to getInitialProject
     def notifyAll(self):
