@@ -76,13 +76,71 @@ class WorkUI(QMainWindow):
 
         #signal slot
         self.back_button.clicked.connect(self.back)
+        self.edit_desciption.clicked.connect(self.editDesciption)
 
+        #used attribute
+        self.task_list = []
+        self.all_user = []
+        self.userInWork = []
+
+    def editDesciption(self):
+        self.parent.interest_work.description = self.description.text()
+        self.parent.send('updateProject', self.parent.interest_work)
 
     def loadWork(self, work):
+        self.task_list.clear()
+        self.all_user.clear()
+        doneLt = []
+        notDoneLt =[]
+        userLt = []
         if type(work) == type(Project(None,None)):
+            #all text and title
             self.work_title.setText(work.title)
             self.create_date.setDate(QDate(int(work.createdDate[2]),int(work.createdDate[1]),int(work.createdDate[0])))
             self.due_date.setDate(QDate(int(work.dueDate[2]),int(work.dueDate[1]),int(work.dueDate[0])))
+            self.description.setText(work.description)
+            self.status_label.setText(work.status)
+            #status label
+            if work.status == "In Process":
+                self.status_label.setStyleSheet("font: 75 14pt \"MS UI Gothic\"; background-color : ; color : green;")
+            else:
+                self.status_label.setStyleSheet("font: 75 14pt \"MS UI Gothic\"; background-color : ; color : red;")
+            #task widget
+            for task in work.taskList:
+                if task[1] == "Done":
+                    doneLt.append(task)
+                else:
+                    notDoneLt.append(task)
+            self.task_list = doneLt + notDoneLt
+            for i in range(len(self.task_list)):
+                self.task_widget.addItem(QListWidgetItem(self.task_list[i][0]))
+                if self.task_list[i][1] == 'Online':
+                    row = self.list_user.item(i)
+                    row.setForeground(QBrush(Qt.green))
+                else:
+                    row = self.list_user.item(i)
+                    row.setForeground(QBrush(Qt.black))
+
+            #commnet Widget
+            for line in work.textList:
+                self.task_widget.addItem(QListWidgetItem(str(line)))
+
+            #user_Widget:
+            if self.parent.departmentList is not None:
+                self.isRequesting = False
+                for department in self.parent.departmentList:
+                    for pre, fill, node in RenderTree(department.positionTree):
+                        if node.name.employeeList is not None:
+                            for userID in node.name.employeeList:
+                                user = node.name.employeeList[userID]
+                                self.all_user.append(user)
+            for user in work.memberList:
+                for all in self.all_user:
+                    if user == all.username:
+                        self.userInWork.append(all)
+            for user in self.userInWork:
+                self.task_widget.addItem(QListWidgetItem(user.name + " " + user.last_name))
+
 
     def back(self):
         self.parent.changePageWorkSection("back")

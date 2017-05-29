@@ -180,6 +180,7 @@ class MainUI(QMainWindow):
             project.dueDate = self.duedate_edit.date().toString("dd.MM.yyyy").split('.')
             project.leader = user.username
             project.createdDate = QDate.currentDate().toString("dd.MM.yyyy").split('.')
+            project.status = "In Process"
             self.parent.send('createProject',project)
             self.parent.interest_work = project
             self.parent.changePageMainSection("see_work")
@@ -188,8 +189,9 @@ class MainUI(QMainWindow):
 
     def openProject(self, item = None):
         project = self.allProject[self.projectWidget.currentRow()]
-        self.parent.interest_work = project
-        self.parent.changePageMainSection("see_work")
+        if type(project) != str:
+            self.parent.interest_work = project
+            self.parent.changePageMainSection("see_work")
 
     def eventChange(self,index):
         if self.parent.projectList == None:
@@ -206,7 +208,7 @@ class MainUI(QMainWindow):
     def createWork(self):
         self.subWidget.setCurrentIndex(4)
         createdDate = QDate.currentDate().toString("dd.MM.yyyy").split('.')
-        self.duedate_edit.setDate(QDate(int(createdDate.createdDate[2]),int(createdDate.createdDate[1]),int(createdDate.createdDate[0])))
+        self.duedate_edit.setDate(QDate(int(createdDate[2]),int(createdDate[1]),int(createdDate[0])))
         for department in self.parent.departmentList:
             for pre, fill, node in RenderTree(department.positionTree):
                 if node.name.employeeList is not None:

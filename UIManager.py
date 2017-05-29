@@ -111,7 +111,8 @@ class UImanager(QMainWindow):
             self.work_widget.loadWork(self.interest_work)
             self.centralWidget().setCurrentWidget(self.work_widget)
             palette = QPalette()
-            palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/profile_background.png")))
+            palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/work_widget.png")))
+            self.setPalette(palette)
 
     # Change Page signal (send from Profile UI page)
     def changePageProfileSection(self, signal=None, user=None):
@@ -121,7 +122,7 @@ class UImanager(QMainWindow):
             palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/background2.png")))
             self.setPalette(palette)
 
-        # Change Page signal (send from Profile UI page)
+    # Change Page signal (send from Work UI page)
     def changePageWorkSection(self, signal=None, user=None):
         if signal == "back":
             self.main_widget.updateWork()
@@ -199,9 +200,12 @@ class UImanager(QMainWindow):
                             self.main_widget.recieveMessage(self.currentChat)
                     elif task == 'getInitialProject':
                         # projectList is a tuple {} which contains project.title as a key and project itself as a value
-                        projectList = obj
+                        self.projectList = obj
+                        self.main_widget.updateWork()
                     elif task == 'updateProject':
                         project = obj
+                        if self.interest_work != None and self.interest_work.title == obj.title:
+                            self.work_widget.loadWork(obj)
                 except EOFError as e:
                     print(e)
         except ConnectionResetError:
