@@ -1024,7 +1024,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
       <attribute name="title">
        <string>Project List</string>
       </attribute>
-      <widget class="QListView" name="projectList">
+      <widget class="QListWidget" name="projectWidget">
        <property name="geometry">
         <rect>
          <x>0</x>
@@ -1039,7 +1039,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
       <attribute name="title">
        <string>Event List</string>
       </attribute>
-      <widget class="QListView" name="listView_2">
+      <widget class="QListWidget" name="eventWidget">
        <property name="geometry">
         <rect>
          <x>0</x>

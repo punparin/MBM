@@ -122,13 +122,15 @@ class UImanager(QMainWindow):
             self.setPalette(palette)
 
         # Change Page signal (send from Profile UI page)
-        def changePageWorkSection(self, signal=None, user=None):
-            if signal == "back":
-                self.centralWidget().setCurrentWidget(self.main_widget)
-                self.main_widget.backToProfilePage()
-                palette = QPalette()
-                palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/background2.png")))
-                self.setPalette(palette)
+    def changePageWorkSection(self, signal=None, user=None):
+        if signal == "back":
+            self.main_widget.updateWork()
+            self.centralWidget().setCurrentWidget(self.main_widget)
+            self.main_widget.backToMainPage()
+            self.main_widget.tab_widget.setCurrentIndex(1)
+            palette = QPalette()
+            palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/background2.png")))
+            self.setPalette(palette)
 
 
     # Recieve task and object before logged in
