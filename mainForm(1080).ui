@@ -955,7 +955,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
     <enum>QFrame::WinPanel</enum>
    </property>
    <property name="currentIndex">
-    <number>4</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="main_page">
     <property name="styleSheet">
@@ -977,7 +977,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
       <string>Company name</string>
      </property>
     </widget>
-    <widget class="QTabWidget" name="tabWidget">
+    <widget class="QTabWidget" name="eventList">
      <property name="geometry">
       <rect>
        <x>50</x>
@@ -990,7 +990,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
@@ -1041,9 +1041,6 @@ QWidget {background-image: url(Images/widget.png) }</string>
       </widget>
      </widget>
     </widget>
-    <zorder>label</zorder>
-    <zorder>tabWidget</zorder>
-    <zorder>chat_title</zorder>
    </widget>
    <widget class="QWidget" name="edit_profile">
     <property name="styleSheet">
