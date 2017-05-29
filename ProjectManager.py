@@ -1,10 +1,12 @@
 import pickle
 import io
+import copy
 from Project import *
 
 class ProjectManager:
-    def __init__(self, departmentManager):
+    def __init__(self, userManager, departmentManager):
         self.projectListFileName = "projectList"
+        self.userManager = userManager
         self.departmentManager = departmentManager
         self.projectList = {}
         self.getProjects()
@@ -12,13 +14,20 @@ class ProjectManager:
     # Identify task for the exact function
     def work(self, task, obj):
         processedObj = None
-        if task == 'create':
-            processedObj = self.createProject(obj)
-        elif task == 'search':
+        if task == 'createProject':
+            self.createProject(obj)
+        elif task == 'searchProject':
             processedObj = self.searchProject(obj)
         elif task == 'updateProject':
             self.update(obj)
+        elif task == 'removeProject':
+            self.removeProject(obj)
+        elif task == 'getInitialProject':
+            processedObj = self.getInitialProject()
         return processedObj
+
+    def getInitialProject(self):
+        return self.projectList
 
     # Get all users to self.userList
     def getProjects(self):
@@ -41,21 +50,21 @@ class ProjectManager:
     def createProject(self, project):
         for createdProject in self.projectList:
             if project.title == createdProject.title:
-                print(project.title + " is not available")
-                return False
+                return
         project = Project(project.title)
         fileObject = open(self.projectListFileName, 'ab')
         pickle.dump(project, fileObject)
         fileObject.close()
         self.projectList[project.title] = project
-        print("Created Project:", project.title, "successfully")
-        return True
+        self.saveProject(project)
 
     # Remove a project
     def removeProject(self, projectTitle):
         project = self.findByTitle(projectTitle)
         try:
             del self.projectList[projectTitle]
+            self.saveProjects()
+            self.notifyAll()
         except KeyError:
             return 'not found'
 
@@ -76,6 +85,7 @@ class ProjectManager:
             print("Project: ", project.title, "Project Not Found")
             return None
 
+    '''
     # Add a member to a project
     def addMember(self, projectTitle, username):
         project = self.searchProject(projectTitle)
@@ -85,8 +95,31 @@ class ProjectManager:
                 permission = permission[project.department]
                 if permission['canCreateProject']:
                     project.addContributor(username)
+                    self.update(project)
             except KeyError:
                 return False
+
+    # Remove a member from a project
+    def removeMember(self, projectTitle, username):
+        project = self.searchProject(projectTitle)
+        if project is not None:
+            try:
+                project.removeMember(username)
+                self.update(project)
+            except InvalidArgument:
+                return False
+    '''
+
+    # notify All to getInitialProject
+    def notifyAll(self):
+        for username in self.userManager.clientSocketList:
+            try:
+                clientSocket = self.userManager.clientSocketList[username]
+                clientSocket.send('getInitialProject'.encode('ascii'))
+                obj = pickle.dumps(self.getInitialProject())
+                self.clientSocket.send(obj)
+            except KeyError:
+                pass
 
     # Update project
     def update(self, project):
@@ -94,7 +127,8 @@ class ProjectManager:
             if project.title == self.projectList[i].title:
                 self.projectList[i] = project
         self.saveProjects()
-        # notify All to getInitialProject
+        # notify all to getInitialProject
+        self.notifyAll()
 
     # Save project
     def saveProject(self, project):

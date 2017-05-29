@@ -25,7 +25,7 @@ class User:
         self.status = "Offline"
 
     def deepcopy(self):
-        user = copy.copy(self)
+        user = copy.deepcopy(self)
         user.password = ""
         return user
 
