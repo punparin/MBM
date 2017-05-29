@@ -199,9 +199,9 @@ class UImanager(QMainWindow):
                             self.main_widget.recieveMessage(self.currentChat)
                     elif task == 'getInitialProject':
                         # projectList is a tuple {} which contains project.title as a key and project itself as a value
-                        self.projectList = obj
-                        self.main_widget.updateWork()
-
+                        projectList = obj
+                    elif task == 'updateProject':
+                        project = obj
                 except EOFError as e:
                     print(e)
         except ConnectionResetError:

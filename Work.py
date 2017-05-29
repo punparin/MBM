@@ -9,8 +9,7 @@ class Work(metaclass = abc.ABCMeta):
         self.textList = []
         self.attachmentList = []
         self.status = "Not Started"
-        self.createdDate = None
-        self.progress = 0
+        self.createdDate = ""
         self.dueDate = None
 
     @abc.abstractmethod
@@ -35,10 +34,6 @@ class Work(metaclass = abc.ABCMeta):
 
     @abc.abstractmethod
     def addLeader(self, username):
-        pass
-
-    @abc.abstractmethod
-    def updateProgress(self, progress):
         pass
 
     @abc.abstractmethod

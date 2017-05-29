@@ -8,6 +8,7 @@ class Project(Work):
     def __init__(self, title, leaderUsername):
         super().__init__(title, leaderUsername)
         self.taskList = []
+        self.progress = 0
         self.getCreatedDate()
 
     def getCreatedDate(self):

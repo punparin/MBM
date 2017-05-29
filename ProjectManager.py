@@ -111,13 +111,17 @@ class ProjectManager:
     '''
 
     # notify All to getInitialProject
-    def notifyAll(self):
+    def notifyAll(self, project = None):
         for username in self.userManager.clientSocketList:
             try:
                 clientSocket = self.userManager.clientSocketList[username]
-                clientSocket.send('getInitialProject'.encode('ascii'))
-                obj = pickle.dumps(self.getInitialProject())
-                clientSocket.send(obj)
+                if project is None:
+                    clientSocket.send('getInitialProject'.encode('ascii'))
+                    obj = pickle.dumps(self.getInitialProject())
+                else:
+                    clientSocket.send('updateProject'.encode('ascii'))
+                    obj = pickle.dumps(project)
+                self.clientSocket.send(obj)
             except KeyError:
                 pass
 
@@ -129,7 +133,7 @@ class ProjectManager:
                 self.projectList[i] = project
         self.saveProjects()
         # notify all to getInitialProject
-        self.notifyAll()
+        self.notifyAll(project)
 
     # Save project
     def saveProject(self, project):
