@@ -84,31 +84,6 @@ class EventManager:
             print("Event: ", event.title, "Project Not Found")
             return None
 
-    '''
-    # Add a member to a project
-    def addMember(self, projectTitle, username):
-        project = self.searchProject(projectTitle)
-        if project is not None:
-            permission = self.departmentManager.getUserPermission(username)
-            try:
-                permission = permission[project.department]
-                if permission['canCreateProject']:
-                    project.addContributor(username)
-                    self.update(project)
-            except KeyError:
-                return False
-
-    # Remove a member from a project
-    def removeMember(self, projectTitle, username):
-        project = self.searchProject(projectTitle)
-        if project is not None:
-            try:
-                project.removeMember(username)
-                self.update(project)
-            except InvalidArgument:
-                return False
-    '''
-
     # notify All to getInitialEvent
     def notifyAll(self, event = None):
         for username in self.userManager.clientSocketList:
