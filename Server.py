@@ -4,6 +4,7 @@ from Handler import *
 from UserManager import *
 from ProjectManager import *
 from EventManager import *
+from EventManager import *
 from ChatManager import *
 from DepartmentManager import *
 
@@ -27,6 +28,7 @@ class Server:
             self.chatManager = ChatManager(self.userManager)
             self.departmentManager = DepartmentManager(self.userManager)
             self.projectManager = ProjectManager(self.userManager, self.departmentManager)
+            self.eventManager = EventManager(self.userManager, self.departmentManager)
             print("\n--- Server is Online ---")
             print("IP:", self.host, "Port:", self.port)
             print("Initial Runtime:", format((time.time() - start) / 1000, '.10f'), "sec")
@@ -224,7 +226,7 @@ class Server:
             while True:
                 clientSocket, address = self.socket.accept()
                 print("Got a connection from %s" % str(address))
-                thread = Handler(self.userManager, self.projectManager, self.chatManager, self.departmentManager, clientSocket, address)
+                thread = Handler(self.userManager, self.projectManager, self.eventManager, self.chatManager, self.departmentManager, clientSocket, address)
                 thread.setDaemon(True)
                 thread.start()
         except OSError:
