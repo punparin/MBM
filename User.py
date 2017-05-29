@@ -20,6 +20,7 @@ class User:
         self.department = ""
         self.biology = ""
         self.nationality =""
+        self.image = None
 
         self.isAdmin = False
         self.status = "Offline"

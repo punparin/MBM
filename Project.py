@@ -21,6 +21,9 @@ class Project(Work):
             raise UserAlreadyExists()
         self.memberList.append(username)
 
+    def findMember(self, username):
+        return username in self.memberList
+
     def setDueDate(self, day, month, year):
         self.dueDate = [day, month, year]
 
