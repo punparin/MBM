@@ -123,6 +123,7 @@ class MainUI(QMainWindow):
         self.messageList = []
 
         #Project and Event Section
+        self.projectWidget = form.findChild(QListWidget, "projectWidget")
         self.leader_list = []
         self.tab_widget = form.findChild(QTabWidget, "eventList")
         self.tab_widget.currentChanged.connect(self.eventChange)
@@ -143,12 +144,28 @@ class MainUI(QMainWindow):
         self.cancel_work.clicked.connect(self.backToMainPage)
         self.confirm_work.clicked.connect(self.createConfirm)
 
+    def updateWork(self):
+        print("work updating")
+        self.projectWidget.clear()
+        for work in self.parent.projectList:
+            self.projectWidget.addItem(QListWidgetItem(self.parent.projectList[work]).title)
+
     def createConfirm(self):
-        title = self.work_edit.text()
-        date = self.duedate_edit.date().toString("dd.MM.yyyy")
-        leader = self.leader_box.currentText()
+        if self.new_button.text() == "new project":
+            title = self.work_edit.text()
+            user = self.leader_list[self.leader_box.currentIndex()]
+            project = Project(title, user.username)
+            project.dueDate = self.duedate_edit.date().toString("dd.MM.yyyy").split('.')
+            project.leader = user.username
+            project.createdDate = QDate.currentDate().toString("dd.MM.yyyy").split('.')
+            self.parent.send('createProject',project)
+            self.parent.interest_work = project
+            self.parent.changePageMainSection("see_work")
+        else:
+            pass
 
     def eventChange(self,index):
+        self.parent.send('getInitialProject')
         self.new_button.move(1020, 800)
         if index == 1:
             self.new_button.setText("new project")

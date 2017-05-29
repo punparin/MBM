@@ -9,7 +9,7 @@ class Work(metaclass = abc.ABCMeta):
         self.textList = []
         self.attachmentList = []
         self.status = "Not Started"
-        self.createdDate = ""
+        self.createdDate = None
         self.progress = 0
         self.dueDate = None
 
