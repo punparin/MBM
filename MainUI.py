@@ -3,6 +3,8 @@ from PySide.QtGui import *
 from PySide.QtUiTools import *
 from anytree import Node, RenderTree
 from Chat import*
+from Project import*
+from Event import*
 import ctypes
 
 class MainUI(QMainWindow):
@@ -120,6 +122,64 @@ class MainUI(QMainWindow):
         self.send_button.clicked.connect(self.sendMessage)
         self.messageList = []
 
+        #Project and Event Section
+        self.leader_list = []
+        self.tab_widget = form.findChild(QTabWidget, "eventList")
+        self.tab_widget.currentChanged.connect(self.eventChange)
+        self.new_button = form.findChild(QPushButton, "new_button")
+        self.new_button.clicked.connect(self.createWork)
+        self.new_button.move(-999,-999)
+
+        self.task_label = form.findChild(QLabel, "task_label")
+        self.work_label = form.findChild(QLabel, "work_label")
+        self.duedate_label = form.findChild(QLabel, "duedate_label")
+        self.leader_label = form.findChild(QLabel, "leader_label")
+        self.work_edit = form.findChild(QLineEdit, "work_edit")
+        self.duedate_edit = form.findChild(QDateEdit, "duedate_edit")
+        self.leader_box = form.findChild(QComboBox, "leader_box")
+
+        self.confirm_work = form.findChild(QPushButton, "confirm_word")
+        self.cancel_work = form.findChild(QPushButton, "cancel_work")
+        self.cancel_work.clicked.connect(self.backToMainPage)
+        self.confirm_work.clicked.connect(self.createConfirm)
+
+    def createConfirm(self):
+        title = self.work_edit.text()
+        date = self.duedate_edit.date().toString("dd.MM.yyyy")
+        leader = self.leader_box.currentText()
+
+    def eventChange(self,index):
+        self.new_button.move(1020, 800)
+        if index == 1:
+            self.new_button.setText("new project")
+        elif index == 2:
+            self.new_button.setText("new event")
+        else:
+            self.new_button.move(-999, -999)
+            self.new_button.setText("")
+
+    def createWork(self):
+        self.subWidget.setCurrentIndex(4)
+        for department in self.parent.departmentList:
+            for pre, fill, node in RenderTree(department.positionTree):
+                if node.name.employeeList is not None:
+                    for userID in node.name.employeeList:
+                        user = node.name.employeeList[userID]
+                        self.leader_list.append(user)
+
+        for user in self.leader_list:
+            self.leader_box.addItem(user.name + " " + user.last_name)
+
+        if self.new_button.text() == "new project":
+            self.task_label.setText("Create Project")
+            self.work_label.setText("Project Title :")
+            self.duedate_label.setText("Due Date :")
+            self.leader_label.setText("Project Leader :")
+        else:
+            self.task_label.setText("Create Event")
+            self.work_label.setText("Event Title :")
+            self.duedate_label.setText("Date :")
+            self.leader_label.setText("Event Header :")
 
     def saveProfile(self):
         self.parent.user.name = (self.name_line.text())
@@ -165,8 +225,11 @@ class MainUI(QMainWindow):
         self.subWidget.setCurrentIndex(3)
 
     def backToMainPage(self):
-        if self.menu.currentText() == "Edit Profile":
-            self.subWidget.setCurrentIndex(0)
+        self.subWidget.setCurrentIndex(0)
+        if self.new_button.text() == "new project":
+            self.tab_widget.setCurrentIndex(1)
+        elif self.new_button.text() == "new event":
+            self.tab_widget.setCurrentIndex(2)
 
     def backToProfilePage(self):
         self.subWidget.setCurrentIndex(1)
