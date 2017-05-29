@@ -29,7 +29,7 @@ class Project(Work):
         if self.findMember(username):
             self.leader = username
 
-    def findMember(self, username):
+    def isMemberInProject(self, username):
         return username in self.memberList
 
     def removeMember(self, username):

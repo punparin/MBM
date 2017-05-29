@@ -1,5 +1,6 @@
 import pickle
 import io
+import copy
 from Project import *
 
 class ProjectManager:
@@ -12,13 +13,20 @@ class ProjectManager:
     # Identify task for the exact function
     def work(self, task, obj):
         processedObj = None
-        if task == 'create':
+        if task == 'createProject':
             processedObj = self.createProject(obj)
-        elif task == 'search':
+        elif task == 'searchProject':
             processedObj = self.searchProject(obj)
         elif task == 'updateProject':
             self.update(obj)
+        elif task == 'removeProject':
+            self.removeProject(obj)
+        elif task == 'getInitialProject':
+            processedObj = self.getInitialProject()
         return processedObj
+
+    def getInitialProject(self):
+        return self.projectList
 
     # Get all users to self.userList
     def getProjects(self):
@@ -86,6 +94,15 @@ class ProjectManager:
                 if permission['canCreateProject']:
                     project.addContributor(username)
             except KeyError:
+                return False
+
+    # Remove a member from a project
+    def removeMember(self, projectTitle, username):
+        project = self.searchProject(projectTitle)
+        if project is not None:
+            try:
+                project.removeMember(username)
+            except InvalidArgument:
                 return False
 
     # Update project
