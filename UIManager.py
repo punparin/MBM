@@ -179,7 +179,8 @@ class UImanager(QMainWindow):
                     elif task == 'getInitialProject':
                         # projectList is a tuple {} which contains project.title as a key and project itself as a value
                         projectList = obj
-
+                    elif task == 'updateProject':
+                        project = obj
                 except EOFError as e:
                     print(e)
         except ConnectionResetError:
