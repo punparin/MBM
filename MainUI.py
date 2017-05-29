@@ -197,7 +197,10 @@ class MainUI(QMainWindow):
     def eventChange(self,index):
         if self.parent.projectList == None:
             self.parent.send("getInitialProject",None)
-        self.new_button.move(1020, 800)
+        if self.form_name == "mainForm(1440).ui":
+            self.new_button.move(1020, 800)
+        else:
+            self.new_button.move(1020, 800)
         if index == 1:
             self.new_button.setText("new project")
         elif index == 2:
