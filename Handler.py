@@ -2,17 +2,17 @@ import threading
 from UserManager import *
 
 class Handler(threading.Thread):
-    def __init__(self, userManager, chatManager, departmentManager, clientSocket, address):
+    def __init__(self, userManager, projectManager, chatManager, departmentManager, clientSocket, address):
         threading.Thread.__init__(self)
         self.clientSocket = clientSocket
         self.userManager = userManager
-        #self.projectManager = projectManager
         self.chatManager = chatManager
         self.departmentManager = departmentManager
+        self.projectManager = projectManager
         self.address = address
         self.currentUsername = None
         self.userManagerTasks = ['logIn', 'register', 'updateProfile', 'getUserInfo', 'updateStatus']
-        self.projectManagerTasks = ['create', 'search', 'updateProject']
+        self.projectManagerTasks = ['createProject', 'searchProject', 'updateProject', 'removeProject', 'getInitialProject']
         self.departmentManagerTasks = ['getInitialInfo']
         self.chatManagerTasks = ['sendChat']
         self.clientSocket.send("Connected Successfully".encode('ascii'))
