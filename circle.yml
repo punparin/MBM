@@ -1,6 +1,0 @@
-machine:
-  python:
-    version: 3.4.3
-dependencies:
-  override:
-    - sudo pip install -U setuptools
