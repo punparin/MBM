@@ -7,10 +7,9 @@ class Chat:
         self.message = ""
         self.date = None
         self.time = None
-        self.getTime()
+        self.getDateTime()
 
-    def getTime(self):
+    def getDateTime(self):
         temp = time.asctime(time.localtime(time.time())).split()
-        self.date = temp[0] + " " + temp[1] + " " + temp[2] + " "  + temp[4]
+        self.date = [temp[2], temp[1], temp[4]]
         self.time = temp[3]
-

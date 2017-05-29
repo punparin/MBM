@@ -1,37 +1,42 @@
 from Work import *
+import time
 
 class UserAlreadyExists(Exception) : pass
 class InvalidArgument(Exception) : pass
 
 class Project(Work):
-    def __init__(self, title, department, info = None):
-        super().__init__(title, department, info)
-        self.tasks = []
-        self.leader = ""
+    def __init__(self, title, leaderUsername):
+        super().__init__(title, leaderUsername)
+        self.taskList = []
+        self.getCreatedDate()
+
+    def getCreatedDate(self):
+        temp = time.asctime(time.localtime(time.time())).split()
+        self.createdDate = [temp[2], temp[1], temp[4]]
 
     def changeTitle(self, title):
         self.title = title
 
-    def addContributor(self, username):
-        if self.findContributor(username):
+    def addMember(self, username):
+        if self.findMember(username):
             raise UserAlreadyExists()
-        self.contributorList.append(username)
+        self.memberList.append(username)
+
+    def setDueDate(self, day, month, year):
+        self.dueDate = [day, month, year]
 
     def addLeader(self, username):
-        if self.findContributor(username):
+        if self.findMember(username):
             self.leader = username
 
-    def findContributor(self, username):
-        return username in self.contributorList
+    def findMember(self, username):
+        return username in self.memberList
 
-    def removeContributor(self, username):
+    def removeMember(self, username):
         try:
-            self.contributorList.remove(username)
+            self.memberList.remove(username)
         except ValueError:
             raise InvalidArgument(username + " does not exists")
-
-    def update(self, newInfo):
-        self.info = newInfo
 
     def updateProgress(self, progress):
         self.progress = progress
@@ -40,5 +45,10 @@ class Project(Work):
         self.isDone = True
 
     def addTask(self, task):
-        if task not in self.tasks:
-            self.tasks.append(task)
+        self.taskList.append(task)
+
+    def addText(self, text):
+        self.textList.append(text)
+
+    def addAttachment(self, attachment):
+        self.attachmentList.append(attachment)
