@@ -84,7 +84,6 @@ class ProjectManager:
             print("Project: ", project.title, "Project Not Found")
             return None
 
-    '''
     # Add a member to a project
     def addMember(self, projectTitle, username):
         project = self.searchProject(projectTitle)
@@ -107,7 +106,6 @@ class ProjectManager:
                 self.update(project)
             except InvalidArgument:
                 return False
-    '''
 
     # notify All to getInitialProject
     def notifyAll(self, project = None):
