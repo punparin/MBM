@@ -32,6 +32,7 @@ class DepartmentManager:
             dep.addPosition(position, parent)
             print("Added", position, "successfully")
             self.saveDepartments()
+            self.notifyAll()
         except InvalidArgument as err:
             print(err)
 
@@ -68,6 +69,7 @@ class DepartmentManager:
             dep.removePosition(position)
             print("Removed", position, "successfully")
             self.saveDepartments()
+            self.notifyAll()
         except InvalidArgument as err:
             print(err)
 
@@ -112,6 +114,7 @@ class DepartmentManager:
         else:
             self.departmentList.remove(dep)
             self.saveDepartments()
+            self.notifyAll()
             print('Removed', department, 'successfully')
 
     def addDepartment(self, department):
@@ -123,6 +126,7 @@ class DepartmentManager:
         self.departmentList.append(dep)
         self.saveDepartment(dep)
         print('Created', department, 'successfully')
+        self.notifyAll()
         # notify All to getInitialInfo
 
     def addEmployee(self, department, position, username):
@@ -136,6 +140,7 @@ class DepartmentManager:
                     self.userManager.saveUsers()
                     self.saveDepartments()
                     print('Added', username, 'to', department, 'successfully')
+                    self.notifyAll()
                 except InvalidArgument:
                     print(position, 'does not exist')
             else:
@@ -154,6 +159,7 @@ class DepartmentManager:
                 self.userManager.saveUsers()
                 self.saveDepartments()
                 print('Removed', username, 'from', department, 'successfully')
+                self.notifyAll()
             else:
                 print(username, 'does not exist')
         else:
@@ -185,7 +191,7 @@ class DepartmentManager:
         fileObject.close()
         self.departmentList = []
         print('Cleared successfully')
-        # notify All to getInitialInfo
+        self.notifyAll()
 
     def getUserPermission(self, username):
         user = self.userManager.findByUsername(username)
