@@ -1,77 +1,147 @@
 import pickle
+import io
+import copy
+from Project import *
 from Event import *
 
 class EventManager:
-    def __init__(self, clientSocket):
+    def __init__(self, userManager, departmentManager):
         self.eventListFileName = "eventList"
-        self.eventList = []
-        self.clientSocket = clientSocket
+        self.userManager = userManager
+        self.departmentManager = departmentManager
+        self.eventList = {}
         self.getEvents()
 
     # Identify task for the exact function
-    def work(self, task, event):
+    def work(self, task, obj):
         processedObj = None
-        if task == 'create':
-            processedObj = self.createEvent(event)
-        elif task == 'search':
-            processedObj = self.searchEvent(event)
+        if task == 'createEvent':
+            self.createEvent(obj)
+        elif task == 'searchEvent':
+            processedObj = self.searchEvent(obj)
         elif task == 'updateEvent':
-            self.update(event)
+            self.update(obj)
+        elif task == 'removeEvent':
+            self.removeEvent(obj)
+        elif task == 'getInitialEvent':
+            processedObj = self.getInitialEvent()
         return processedObj
+
+    def getInitialEvent(self):
+        return self.eventList
 
     # Get all users to self.userList
     def getEvents(self):
         print("Loading events...")
-        self.eventList = []
+        self.eventList = {}
         try:
-            file_object = open(self.eventListFileName, 'rb')
+            fileObject = open(self.eventListFileName, 'rb')
         except FileNotFoundError:
-            file_object = open(self.eventListFileName, 'ab')
+            fileObject = open(self.eventListFileName, 'ab')
         try:
             while True:
-                obj = pickle.load(file_object)
-                self.eventList.append(obj)
+                obj = pickle.load(fileObject)
+                self.eventList[obj.title] = obj
         except EOFError:
-            pass
+            fileObject.close()
+        except (AttributeError, io.UnsupportedOperation):
+            fileObject.close()
 
-    # Register new user
+    # Create a new event
     def createEvent(self, event):
-        for createdEvent in self.eventList:
-            if event.title == createdEvent.title:
-                print(event.title + " is not available")
-                return event.title + " is not available"
-
-        event = Event(event.title)
+        for title in self.eventList:
+            if event.title == self.eventList[title].title:
+                return
         fileObject = open(self.eventListFileName, 'ab')
         pickle.dump(event, fileObject)
         fileObject.close()
-        self.eventList.append(event)
-        print("Created Event:", event.title, "successfully")
-        return True
+        self.eventList[event.title] = event
+        self.saveEvent(event)
 
-    # Log in user
-    def searchEvent(self, event):
-        for createdEvent in self.eventList:
-            if event.title == createdEvent.title:
-                print("Event: ", event.title, "Event Found")
-                return createdEvent
-        print("Event: ", event.title, "Event Not Found")
-        return "Event: ", event.title, "Event Not Found"
+    # Remove a event
+    def removeEvent(self, eventTitle):
+        try:
+            del self.eventList[eventTitle]
+            self.saveEvents()
+            self.notifyAll()
+        except KeyError:
+            return 'not found'
 
-    #update user
+    # Find a event by its title
+    def findByTitle(self, title):
+        try:
+            return self.eventList[title]
+        except KeyError:
+            return None
+
+    # Search for a event
+    def searchEvent(self, eventTitle):
+        event = self.findByTitle(eventTitle)
+        if event is not None:
+            print("Event: ", event.title, "Project Found")
+            return event
+        else:
+            print("Event: ", event.title, "Project Not Found")
+            return None
+
+    '''
+    # Add a member to a project
+    def addMember(self, projectTitle, username):
+        project = self.searchProject(projectTitle)
+        if project is not None:
+            permission = self.departmentManager.getUserPermission(username)
+            try:
+                permission = permission[project.department]
+                if permission['canCreateProject']:
+                    project.addContributor(username)
+                    self.update(project)
+            except KeyError:
+                return False
+
+    # Remove a member from a project
+    def removeMember(self, projectTitle, username):
+        project = self.searchProject(projectTitle)
+        if project is not None:
+            try:
+                project.removeMember(username)
+                self.update(project)
+            except InvalidArgument:
+                return False
+    '''
+
+    # notify All to getInitialEvent
+    def notifyAll(self, event = None):
+        for username in self.userManager.clientSocketList:
+            try:
+                clientSocket = self.userManager.clientSocketList[username]
+                if event is None:
+                    clientSocket.send('getInitialEvent'.encode('ascii'))
+                    obj = pickle.dumps(self.getInitialEvent())
+                else:
+                    clientSocket.send('updateEvent'.encode('ascii'))
+                    obj = pickle.dumps(event)
+                clientSocket.send(obj)
+            except KeyError:
+                pass
+
+    # Update event
     def update(self, event):
         for i in range(len(self.eventList)):
             if event.title == self.eventList[i].title:
                 self.eventList[i] = event
         self.saveEvents()
+        # notify all to getInitialEvent
+        self.notifyAll(event)
 
-    def saveEvents(self):
-        fileObject = open(self.eventListFileName, 'wb')
-        for createdEvent in self.eventList:
-            pickle.dump(createdEvent, fileObject)
+    # Save event
+    def saveEvent(self, event):
+        fileObject = open(self.eventListFileName, 'ab')
+        pickle.dump(event, fileObject)
         fileObject.close()
 
-
-
-
-
+    # Save all events
+    def saveEvents(self):
+        fileObject = open(self.eventListFileName, 'wb')
+        for title in self.eventList:
+            pickle.dump(self.eventList[title], fileObject)
+        fileObject.close()

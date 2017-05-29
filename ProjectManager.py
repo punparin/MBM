@@ -32,7 +32,7 @@ class ProjectManager:
     # Get all users to self.userList
     def getProjects(self):
         print("Loading projects...")
-        self.projectList = []
+        self.projectList = {}
         try:
             fileObject = open(self.projectListFileName, 'rb')
         except FileNotFoundError:
@@ -51,7 +51,6 @@ class ProjectManager:
         for title in self.projectList:
             if project.title == self.projectList[title].title:
                 return
-        project = Project(project.title)
         fileObject = open(self.projectListFileName, 'ab')
         pickle.dump(project, fileObject)
         fileObject.close()
@@ -60,7 +59,6 @@ class ProjectManager:
 
     # Remove a project
     def removeProject(self, projectTitle):
-        project = self.findByTitle(projectTitle)
         try:
             del self.projectList[projectTitle]
             self.saveProjects()
@@ -121,7 +119,7 @@ class ProjectManager:
                 else:
                     clientSocket.send('updateProject'.encode('ascii'))
                     obj = pickle.dumps(project)
-                self.clientSocket.send(obj)
+                clientSocket.send(obj)
             except KeyError:
                 pass
 

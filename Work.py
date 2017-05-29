@@ -10,6 +10,7 @@ class Work(metaclass = abc.ABCMeta):
         self.attachmentList = []
         self.status = "Not Started"
         self.createdDate = ""
+        self.isDone = False
         self.dueDate = None
 
     @abc.abstractmethod
