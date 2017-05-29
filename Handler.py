@@ -2,13 +2,14 @@ import threading
 from UserManager import *
 
 class Handler(threading.Thread):
-    def __init__(self, userManager, projectManager, chatManager, departmentManager, clientSocket, address):
+    def __init__(self, userManager, projectManager, eventManager, chatManager, departmentManager, clientSocket, address):
         threading.Thread.__init__(self)
         self.clientSocket = clientSocket
         self.userManager = userManager
         self.chatManager = chatManager
         self.departmentManager = departmentManager
         self.projectManager = projectManager
+        self.eventManager = eventManager
         self.address = address
         self.currentUsername = None
         self.userManagerTasks = ['logIn', 'register', 'updateProfile', 'getUserInfo', 'updateStatus']
