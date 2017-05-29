@@ -204,8 +204,7 @@ class UImanager(QMainWindow):
                         self.main_widget.updateWork()
                     elif task == 'updateProject':
                         project = obj
-                        if self.interest_work != None and self.interest_work.title == obj.title:
-                            self.work_widget.loadWork(obj)
+
                 except EOFError as e:
                     print(e)
         except ConnectionResetError:

@@ -181,6 +181,7 @@ class MainUI(QMainWindow):
             project.leader = user.username
             project.createdDate = QDate.currentDate().toString("dd.MM.yyyy").split('.')
             project.status = "In Process"
+            project.addMember(user.username)
             self.parent.send('createProject',project)
             self.parent.interest_work = project
             self.parent.changePageMainSection("see_work")
