@@ -1,5 +1,5 @@
 from Work import *
-import time
+from PySide.QtCore import *
 
 class UserAlreadyExists(Exception) : pass
 class InvalidArgument(Exception) : pass
@@ -12,8 +12,7 @@ class Project(Work):
         self.getCreatedDate()
 
     def getCreatedDate(self):
-        temp = time.asctime(time.localtime(time.time())).split()
-        self.createdDate = [temp[2], temp[1], temp[4]]
+        self.createdDate = QDate.currentDate().toString("dd.MM.yyyy").split('.')
 
     def changeTitle(self, title):
         self.title = title
@@ -56,3 +55,6 @@ class Project(Work):
 
     def addAttachment(self, attachment):
         self.attachmentList.append(attachment)
+
+    def findMember(self, username):
+        return username in self.memberList

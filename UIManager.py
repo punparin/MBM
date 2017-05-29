@@ -2,6 +2,7 @@ from LoginUI import *
 from RegisterUI import *
 from MainUI import *
 from ProfileUI import *
+from WorkUI import *
 from PySide.QtCore import *
 from PySide.QtGui import *
 from anytree import Node, RenderTree
@@ -40,10 +41,12 @@ class UImanager(QMainWindow):
         self.main_widget = MainUI(self)
         self.register_widget = RegisterUI(self)
         self.profile_widget = ProfileUI(self)
+        self.work_widget = WorkUI(self)
         self.central_widget.addWidget(self.login_widget)
         self.central_widget.addWidget(self.main_widget)
         self.central_widget.addWidget(self.register_widget)
         self.central_widget.addWidget(self.profile_widget)
+        self.central_widget.addWidget(self.work_widget)
 
         # Init socket part
         self.isServerOnline = False
@@ -65,7 +68,9 @@ class UImanager(QMainWindow):
         # Client Attribute
         self.departmentList = None
         self.interest_user = None
+        self.interest_work = None
         self.currentChat = None
+        self.projectList = None
 
     # Change page signal (send from log in UI page)
     def changePageLoginSection(self, signal = None, user = None):
@@ -102,11 +107,28 @@ class UImanager(QMainWindow):
             palette = QPalette()
             palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/profile_background.png")))
             self.setPalette(palette)
+        if signal == "see_work":
+            self.work_widget.loadWork(self.interest_work)
+            self.centralWidget().setCurrentWidget(self.work_widget)
+            palette = QPalette()
+            palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/work_widget.png")))
+            self.setPalette(palette)
 
     # Change Page signal (send from Profile UI page)
     def changePageProfileSection(self, signal=None, user=None):
         if signal == "back":
             self.centralWidget().setCurrentWidget(self.main_widget)
+            palette = QPalette()
+            palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/background2.png")))
+            self.setPalette(palette)
+
+    # Change Page signal (send from Work UI page)
+    def changePageWorkSection(self, signal=None, user=None):
+        if signal == "back":
+            self.main_widget.updateWork()
+            self.centralWidget().setCurrentWidget(self.main_widget)
+            self.main_widget.backToMainPage()
+            self.main_widget.tab_widget.setCurrentIndex(1)
             palette = QPalette()
             palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/background2.png")))
             self.setPalette(palette)
@@ -178,9 +200,11 @@ class UImanager(QMainWindow):
                             self.main_widget.recieveMessage(self.currentChat)
                     elif task == 'getInitialProject':
                         # projectList is a tuple {} which contains project.title as a key and project itself as a value
-                        projectList = obj
+                        self.projectList = obj
+                        self.main_widget.updateWork()
                     elif task == 'updateProject':
                         project = obj
+
                 except EOFError as e:
                     print(e)
         except ConnectionResetError:

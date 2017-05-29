@@ -965,7 +965,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
     <enum>QFrame::WinPanel</enum>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>4</number>
    </property>
    <widget class="QWidget" name="main_page">
     <property name="styleSheet">
@@ -987,7 +987,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
       <string>Company name</string>
      </property>
     </widget>
-    <widget class="QTabWidget" name="tabWidget">
+    <widget class="QTabWidget" name="eventList">
      <property name="geometry">
       <rect>
        <x>50</x>
@@ -1000,7 +1000,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
@@ -1024,30 +1024,14 @@ QWidget {background-image: url(Images/widget.png) }</string>
       <attribute name="title">
        <string>Project List</string>
       </attribute>
-      <widget class="QProgressBar" name="progressBar">
+      <widget class="QListWidget" name="projectWidget">
        <property name="geometry">
         <rect>
-         <x>20</x>
-         <y>10</y>
-         <width>121</width>
-         <height>21</height>
+         <x>0</x>
+         <y>0</y>
+         <width>1121</width>
+         <height>661</height>
         </rect>
-       </property>
-       <property name="value">
-        <number>24</number>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_3">
-       <property name="geometry">
-        <rect>
-         <x>150</x>
-         <y>10</y>
-         <width>111</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>SEP PROJECT</string>
        </property>
       </widget>
      </widget>
@@ -1055,24 +1039,31 @@ QWidget {background-image: url(Images/widget.png) }</string>
       <attribute name="title">
        <string>Event List</string>
       </attribute>
-      <widget class="QLabel" name="label_4">
+      <widget class="QListWidget" name="eventWidget">
        <property name="geometry">
         <rect>
-         <x>20</x>
-         <y>10</y>
-         <width>141</width>
-         <height>21</height>
+         <x>0</x>
+         <y>0</y>
+         <width>1121</width>
+         <height>661</height>
         </rect>
-       </property>
-       <property name="text">
-        <string>Play Overwatch</string>
        </property>
       </widget>
      </widget>
     </widget>
-    <zorder>label</zorder>
-    <zorder>tabWidget</zorder>
-    <zorder>chat_title</zorder>
+    <widget class="QPushButton" name="new_button">
+     <property name="geometry">
+      <rect>
+       <x>1020</x>
+       <y>800</y>
+       <width>151</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="edit_profile">
     <property name="styleSheet">
@@ -1683,52 +1674,141 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
     </widget>
    </widget>
    <widget class="QWidget" name="project_page">
-    <widget class="QScrollArea" name="scrollArea_2">
+    <property name="styleSheet">
+     <string notr="true">QWidget#project_page{background-image: url(Images/widget.png) }
+</string>
+    </property>
+    <widget class="QLabel" name="task_label">
      <property name="geometry">
       <rect>
-       <x>-10</x>
-       <y>0</y>
-       <width>1011</width>
-       <height>601</height>
+       <x>470</x>
+       <y>30</y>
+       <width>321</width>
+       <height>71</height>
       </rect>
      </property>
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOn</enum>
+     <property name="styleSheet">
+      <string notr="true">font: 18pt &quot;MS Shell Dlg 2&quot;;</string>
      </property>
-     <property name="widgetResizable">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;Create new&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="confirm_word">
+     <property name="geometry">
+      <rect>
+       <x>430</x>
+       <y>620</y>
+       <width>112</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Confirm</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="cancel_work">
+     <property name="geometry">
+      <rect>
+       <x>710</x>
+       <y>620</y>
+       <width>112</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Cancle</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="work_label">
+     <property name="geometry">
+      <rect>
+       <x>69</x>
+       <y>200</y>
+       <width>201</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="work_edit">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>200</y>
+       <width>791</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="duedate_label">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>320</y>
+       <width>201</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QDateEdit" name="duedate_edit">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>320</y>
+       <width>131</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="locale">
+      <locale language="English" country="UnitedStates"/>
+     </property>
+     <property name="keyboardTracking">
       <bool>true</bool>
      </property>
-     <widget class="QWidget" name="scrollAreaWidgetContents_2">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>983</width>
-        <height>599</height>
-       </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>983</width>
-        <height>0</height>
-       </size>
-      </property>
-      <layout class="QFormLayout" name="formLayout_2">
-       <property name="fieldGrowthPolicy">
-        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-       </property>
-       <item row="0" column="0" colspan="2">
-        <widget class="QLabel" name="label_21">
-         <property name="styleSheet">
-          <string notr="true">font: 26pt &quot;MS Shell Dlg 2&quot;;</string>
-         </property>
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Project&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
+     <property name="calendarPopup">
+      <bool>false</bool>
+     </property>
+     <property name="timeSpec">
+      <enum>Qt::UTC</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="leader_label">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>440</y>
+       <width>201</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="leader_box">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>440</y>
+       <width>801</width>
+       <height>31</height>
+      </rect>
+     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="admin_page">
@@ -1980,7 +2060,7 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
    <property name="geometry">
     <rect>
      <x>1220</x>
-     <y>660</y>
+     <y>1330</y>
      <width>471</width>
      <height>751</height>
     </rect>
@@ -1994,10 +2074,13 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
    </property>
   </widget>
   <widget class="QPushButton" name="chat_title">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>1220</x>
-     <y>620</y>
+     <y>1290</y>
      <width>471</width>
      <height>41</height>
     </rect>
@@ -2056,8 +2139,8 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
   <widget class="QPushButton" name="exit_button">
    <property name="geometry">
     <rect>
-     <x>1620</x>
-     <y>630</y>
+     <x>1630</x>
+     <y>1300</y>
      <width>61</width>
      <height>21</height>
     </rect>

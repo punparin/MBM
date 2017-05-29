@@ -3,6 +3,8 @@ from PySide.QtGui import *
 from PySide.QtUiTools import *
 from anytree import Node, RenderTree
 from Chat import*
+from Project import*
+from Event import*
 import ctypes
 
 class MainUI(QMainWindow):
@@ -120,6 +122,114 @@ class MainUI(QMainWindow):
         self.send_button.clicked.connect(self.sendMessage)
         self.messageList = []
 
+        #Project and Event Section
+        self.projectWidget = form.findChild(QListWidget, "projectWidget")
+        self.projectWidget.itemClicked.connect(self.openProject)
+        self.leader_list = []
+        self.tab_widget = form.findChild(QTabWidget, "eventList")
+        self.tab_widget.currentChanged.connect(self.eventChange)
+        self.new_button = form.findChild(QPushButton, "new_button")
+        self.new_button.clicked.connect(self.createWork)
+        self.new_button.move(-999,-999)
+
+        self.task_label = form.findChild(QLabel, "task_label")
+        self.work_label = form.findChild(QLabel, "work_label")
+        self.duedate_label = form.findChild(QLabel, "duedate_label")
+        self.leader_label = form.findChild(QLabel, "leader_label")
+        self.work_edit = form.findChild(QLineEdit, "work_edit")
+        self.duedate_edit = form.findChild(QDateEdit, "duedate_edit")
+        self.leader_box = form.findChild(QComboBox, "leader_box")
+
+        self.confirm_work = form.findChild(QPushButton, "confirm_word")
+        self.cancel_work = form.findChild(QPushButton, "cancel_work")
+        self.cancel_work.clicked.connect(self.backToMainPage)
+        self.confirm_work.clicked.connect(self.createConfirm)
+
+        #Project Widget
+        self.allProject = []
+
+    def updateWork(self):
+        self.projectWidget.clear()
+        self.allProject.clear()
+        my_project = []
+        other_project = []
+        for work in self.parent.projectList:
+            project = self.parent.projectList[work]
+            if project.isMemberInProject(self.parent.user.username):
+                my_project.append(self.parent.projectList[work])
+            else:
+                other_project.append(self.parent.projectList[work])
+        my_project = sorted(my_project, key= lambda work: (work.dueDate[2], work.dueDate[1] ,work.dueDate[0]))
+        other_project = sorted(other_project, key=lambda work: (work.dueDate[2], work.dueDate[1] ,work.dueDate[0]))
+        self.allProject.append("My Projects")
+        self.allProject += my_project
+        self.allProject.append("Other Projects")
+        self.allProject += other_project
+
+        for work in self.allProject:
+            if type(work) == str:
+                self.projectWidget.addItem(QListWidgetItem(work))
+            else:
+                self.projectWidget.addItem(QListWidgetItem("\t"+"[" + work.dueDate[0] +"/"+ work.dueDate[1] +"/"+ work.dueDate[2] + "] " + work.title))
+
+    def createConfirm(self):
+        if self.new_button.text() == "new project":
+            title = self.work_edit.text()
+            user = self.leader_list[self.leader_box.currentIndex()]
+            project = Project(title, user.username)
+            project.dueDate = self.duedate_edit.date().toString("dd.MM.yyyy").split('.')
+            project.leader = user.username
+            project.createdDate = QDate.currentDate().toString("dd.MM.yyyy").split('.')
+            project.status = "In Process"
+            project.addMember(user.username)
+            self.parent.send('createProject',project)
+            self.parent.interest_work = project
+            self.parent.changePageMainSection("see_work")
+        else:
+            pass
+
+    def openProject(self, item = None):
+        project = self.allProject[self.projectWidget.currentRow()]
+        if type(project) != str:
+            self.parent.interest_work = project
+            self.parent.changePageMainSection("see_work")
+
+    def eventChange(self,index):
+        if self.parent.projectList == None:
+            self.parent.send("getInitialProject",None)
+        self.new_button.move(1020, 800)
+        if index == 1:
+            self.new_button.setText("new project")
+        elif index == 2:
+            self.new_button.setText("new event")
+        else:
+            self.new_button.move(-999, -999)
+            self.new_button.setText("")
+
+    def createWork(self):
+        self.subWidget.setCurrentIndex(4)
+        createdDate = QDate.currentDate().toString("dd.MM.yyyy").split('.')
+        self.duedate_edit.setDate(QDate(int(createdDate[2]),int(createdDate[1]),int(createdDate[0])))
+        for department in self.parent.departmentList:
+            for pre, fill, node in RenderTree(department.positionTree):
+                if node.name.employeeList is not None:
+                    for userID in node.name.employeeList:
+                        user = node.name.employeeList[userID]
+                        self.leader_list.append(user)
+
+        for user in self.leader_list:
+            self.leader_box.addItem(user.name + " " + user.last_name)
+
+        if self.new_button.text() == "new project":
+            self.task_label.setText("Create Project")
+            self.work_label.setText("Project Title :")
+            self.duedate_label.setText("Due Date :")
+            self.leader_label.setText("Project Leader :")
+        else:
+            self.task_label.setText("Create Event")
+            self.work_label.setText("Event Title :")
+            self.duedate_label.setText("Date :")
+            self.leader_label.setText("Event Header :")
 
     def saveProfile(self):
         self.parent.user.name = (self.name_line.text())
@@ -165,8 +275,11 @@ class MainUI(QMainWindow):
         self.subWidget.setCurrentIndex(3)
 
     def backToMainPage(self):
-        if self.menu.currentText() == "Edit Profile":
-            self.subWidget.setCurrentIndex(0)
+        self.subWidget.setCurrentIndex(0)
+        if self.new_button.text() == "new project":
+            self.tab_widget.setCurrentIndex(1)
+        elif self.new_button.text() == "new event":
+            self.tab_widget.setCurrentIndex(2)
 
     def backToProfilePage(self):
         self.subWidget.setCurrentIndex(1)
@@ -263,7 +376,7 @@ class MainUI(QMainWindow):
         index = 0
         user = None
         for i in range(len(self.user_index)):
-            if self.user_index[i] not in self.allPosition:
+            if self.user_index[i] not in self.allPosition and type(self.user_index[i]) != str:
                 if self.user_index[i].username == username:
                     index = i
                     user = self.user_index[i]

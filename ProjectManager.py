@@ -56,6 +56,7 @@ class ProjectManager:
         fileObject.close()
         self.projectList[project.title] = project
         self.saveProject(project)
+        self.notifyAll()
 
     # Remove a project
     def removeProject(self, projectTitle):
@@ -120,6 +121,7 @@ class ProjectManager:
                 clientSocket.send(obj)
             except KeyError:
                 pass
+
 
     # Update project
     def update(self, project):
