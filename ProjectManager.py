@@ -4,8 +4,9 @@ import copy
 from Project import *
 
 class ProjectManager:
-    def __init__(self, departmentManager):
+    def __init__(self, userManager, departmentManager):
         self.projectListFileName = "projectList"
+        self.userManager = userManager
         self.departmentManager = departmentManager
         self.projectList = {}
         self.getProjects()
@@ -105,13 +106,25 @@ class ProjectManager:
             except InvalidArgument:
                 return False
 
+    # notify All to getInitialProject
+    def notifyAll(self):
+        for username in self.userManager.clientSocketList:
+            try:
+                clientSocket = self.userManager.clientSocketList[username]
+                clientSocket.send('getInitialProject'.encode('ascii'))
+                obj = pickle.dumps(self.getInitialProject())
+                self.clientSocket.send(obj)
+            except KeyError:
+                pass
+
     # Update project
     def update(self, project):
         for i in range(len(self.projectList)):
             if project.title == self.projectList[i].title:
                 self.projectList[i] = project
         self.saveProjects()
-        # notify All to getInitialProject
+        # notify all to getInitialProject
+        self.notifyAll()
 
     # Save project
     def saveProject(self, project):

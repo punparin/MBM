@@ -48,6 +48,17 @@ class DepartmentManager:
                     node.name.employeeList = newEmployeeList
         return initialInfo
 
+    # notify All to getInitialProject
+    def notifyAll(self):
+        for username in self.userManager.clientSocketList:
+            try:
+                clientSocket = self.userManager.clientSocketList[username]
+                clientSocket.send('getInitialInfo'.encode('ascii'))
+                obj = pickle.dumps(self.getInitialInfo())
+                self.clientSocket.send(obj)
+            except KeyError:
+                pass
+
     def removePosition(self, department, position):
         dep = self.searchDepartment(department)
         if dep is None:

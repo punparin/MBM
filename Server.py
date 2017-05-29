@@ -26,7 +26,7 @@ class Server:
             #self.eventManager = EventManager(self.socket)
             self.chatManager = ChatManager(self.userManager)
             self.departmentManager = DepartmentManager(self.userManager)
-            self.projectManager = ProjectManager(self.departmentManager)
+            self.projectManager = ProjectManager(self.userManager, self.departmentManager)
             print("\n--- Server is Online ---")
             print("IP:", self.host, "Port:", self.port)
             print("Initial Runtime:", format((time.time() - start) / 1000, '.10f'), "sec")
