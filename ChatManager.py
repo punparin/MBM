@@ -11,8 +11,7 @@ class ChatManager:
 
     def sendChat(self, chat):
         try:
-            self.userManager.clientSocketList[chat.reciever].send('recieveChat'.encode('ascii'))
-            obj = pickle.dumps(chat)
+            obj = pickle.dumps(['recieveChat', chat])
             self.userManager.clientSocketList[chat.reciever].send(obj)
         except KeyError as err:
             print(err)

@@ -115,11 +115,9 @@ class ProjectManager:
             try:
                 clientSocket = self.userManager.clientSocketList[username]
                 if project is None:
-                    clientSocket.send('getInitialProject'.encode('ascii'))
-                    obj = pickle.dumps(self.getInitialProject())
+                    obj = pickle.dumps(['getInitialProject', self.getInitialProject()])
                 else:
-                    clientSocket.send('updateProject'.encode('ascii'))
-                    obj = pickle.dumps(project)
+                    obj = pickle.dumps(['updateProject', project])
                 clientSocket.send(obj)
             except KeyError:
                 pass

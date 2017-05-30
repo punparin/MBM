@@ -49,12 +49,14 @@ class Handler(threading.Thread):
     def run(self):
         try:
             while True:
-                task = self.clientSocket.recv(32).decode('ascii')
+                task = pickle.loads(self.clientSocket.recv(4096))
+                task, obj = task
+                print(task, obj)
                 if task == '':
-                    pickle.loads(self.clientSocket.recv(4096))
+                    #pickle.loads(self.clientSocket.recv(4096))
                     break
                 try:
-                    obj = pickle.loads(self.clientSocket.recv(4096))
+                    #obj = pickle.loads(self.clientSocket.recv(4096))
                     # Seperate task for each manager
                     if task == 'changeCompanyName':
                         self.companyName = obj
@@ -98,6 +100,5 @@ class Handler(threading.Thread):
 
     # Send task and object to the client
     def send(self, task, obj):
-        self.clientSocket.send(task.encode('ascii'))
-        obj = pickle.dumps(obj)
+        obj = pickle.dumps([task, obj])
         self.clientSocket.send(obj)

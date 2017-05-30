@@ -59,8 +59,7 @@ class DepartmentManager:
         for username in self.userManager.clientSocketList:
             try:
                 clientSocket = self.userManager.clientSocketList[username]
-                clientSocket.send('getInitialInfo'.encode('ascii'))
-                obj = pickle.dumps(self.getInitialInfo())
+                obj = pickle.dumps(['getInitialInfo', self.getInitialInfo()])
                 clientSocket.send(obj)
             except KeyError:
                 pass
