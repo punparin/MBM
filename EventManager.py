@@ -92,11 +92,9 @@ class EventManager:
             try:
                 clientSocket = self.userManager.clientSocketList[username]
                 if event is None:
-                    clientSocket.send('getInitialEvent'.encode('ascii'))
-                    obj = pickle.dumps(self.getInitialEvent())
+                    obj = pickle.dumps(['getInitialEvent', self.getInitialEvent()])
                 else:
-                    clientSocket.send('updateEvent'.encode('ascii'))
-                    obj = pickle.dumps(event)
+                    obj = pickle.dumps(['updateEvent', event])
                 clientSocket.send(obj)
             except KeyError:
                 pass

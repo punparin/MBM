@@ -71,8 +71,7 @@ class UserManager:
             for username in self.clientSocketList:
                 if user.username != username:
                     print("status", username)
-                    self.clientSocketList[username].send('updateStatus'.encode('ascii'))
-                    obj = pickle.dumps([user.username, user.status])
+                    obj = pickle.dumps(['updateStatus', [user.username, user.status]])
                     self.clientSocketList[username].send(obj)
 
     def setStatus(self, username, status):
@@ -84,8 +83,7 @@ class UserManager:
             for username in self.clientSocketList:
                 if user.username != username:
                     print("status", username)
-                    self.clientSocketList[username].send('updateStatus'.encode('ascii'))
-                    obj = pickle.dumps([user.username, user.status])
+                    obj = pickle.dumps(['updateStatus', [user.username, user.status]])
                     self.clientSocketList[username].send(obj)
 
     def addAdmin(self, username):

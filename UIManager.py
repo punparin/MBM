@@ -150,11 +150,12 @@ class UImanager(QMainWindow):
         print('Waiting for User')
         try:
             while True:
-                task = self.socket.recv(32).decode('ascii')
+                task = pickle.loads(self.socket.recv(4096))
+                task, obj = task
                 if task == '':
                     break
                 try:
-                    obj = pickle.loads(self.socket.recv(4096))
+                    #obj = pickle.loads(self.socket.recv(4096))
                     self.state = "waiting"
                     # check if the user logged in successfully
                     if task == 'logIn' and type(obj) == User:
@@ -187,11 +188,12 @@ class UImanager(QMainWindow):
         try:
             while True:
                 print('listening')
-                task = self.socket.recv(32).decode('ascii')
+                task = pickle.loads(self.socket.recv(4096))
+                task, obj = task
                 if task == '':
                     pass
                 try:
-                    obj = pickle.loads(self.socket.recv(4096))
+                    #obj = pickle.loads(self.socket.recv(4096))
                     if task == 'getInitialInfo':
                         self.departmentList = obj
                         self.send("getInitialProject", None)
@@ -264,8 +266,7 @@ class UImanager(QMainWindow):
 
     # Send task and object
     def send(self, task, obj = None):
-        self.socket.send(task.encode('ascii'))
-        obj = pickle.dumps(obj)
+        obj = pickle.dumps([task, obj])
         self.socket.send(obj)
 
     # Close the socket connection

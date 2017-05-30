@@ -124,12 +124,12 @@ class Server:
             # addDepartment
             elif cms[0] == 'addDepartment' and len(cms) == 2:
                 print()
-                self.departmentManager.addDepartment(cms[1])
+                print(self.departmentManager.addDepartment(cms[1]))
                 isCommandValid = True
             # addEmployee
             elif cms[0] == 'addEmployee' and len(cms) == 4:
                 print()
-                self.departmentManager.addEmployee(cms[1], cms[2], cms[3])
+                print(self.departmentManager.addEmployee(cms[1], cms[2], cms[3]))
                 isCommandValid = True
             # showDepartmentList
             elif cms[0] == 'showDepartmentList':
@@ -138,7 +138,7 @@ class Server:
             # removeDepartment
             elif cms[0] == 'removeDepartment' and len(cms) == 2:
                 print()
-                self.departmentManager.removeDepartment(cms[1])
+                print(self.departmentManager.removeDepartment(cms[1]))
                 isCommandValid = True
             # findUser
             elif cms[0] == 'findUser' and len(cms) == 2:
@@ -172,21 +172,21 @@ class Server:
             elif cms[0] == 'addPosition':
                 if len(cms) == 3:
                     print()
-                    self.departmentManager.addPosition(cms[1], cms[2])
+                    print(self.departmentManager.addPosition(cms[1], cms[2]))
                     isCommandValid = True
                 elif len(cms) == 4:
                     print()
-                    self.departmentManager.addPosition(cms[1], cms[2], cms[3])
+                    print(self.departmentManager.addPosition(cms[1], cms[2], cms[3]))
                     isCommandValid = True
             # removePosition
             elif cms[0] == 'removePosition' and len(cms) == 3:
                 print()
-                self.departmentManager.removePosition(cms[1], cms[2])
+                print(self.departmentManager.removePosition(cms[1], cms[2]))
                 isCommandValid = True
             # removeEmployee
             elif cms[0] == 'removeEmployee' and len(cms) == 3:
                 print()
-                self.departmentManager.removeEmployee(cms[1], cms[2])
+                print(self.departmentManager.removeEmployee(cms[1], cms[2]))
                 isCommandValid = True
             # showDepartment
             elif cms[0] == 'showDepartment' and len(cms) == 2:
