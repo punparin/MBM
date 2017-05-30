@@ -110,12 +110,14 @@ class UImanager(QMainWindow):
             palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/profile_background.png")))
             self.setPalette(palette)
         if signal == "see_work":
+            self.work_widget.seeing = "Project"
             self.work_widget.loadWork(self.interest_work)
             self.centralWidget().setCurrentWidget(self.work_widget)
             palette = QPalette()
             palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/work_widget.png")))
             self.setPalette(palette)
         if signal == "see_event":
+            self.work_widget.seeing = "Event"
             self.work_widget.loadWork(self.interest_event)
             self.centralWidget().setCurrentWidget(self.work_widget)
             palette = QPalette()
