@@ -1,5 +1,6 @@
 import pickle
 import io
+import time
 import copy
 from Department import *
 
@@ -15,6 +16,8 @@ class DepartmentManager:
         processedObj = None
         if task == 'getInitialInfo':
             processedObj = self.getInitialInfo()
+        elif task == 'createDepartment':
+            processedObj = self.addDepartment(obj)
         return processedObj
 
     def searchDepartment(self, department):
@@ -46,6 +49,7 @@ class DepartmentManager:
                 clientSocket.send(obj)
             except KeyError:
                 pass
+        time.sleep(0.5)
 
     def getInitialInfo(self):
         initialInfo = copy.deepcopy(self.departmentList)
@@ -121,13 +125,14 @@ class DepartmentManager:
         dep = self.searchDepartment(department)
         if dep is not None:
             print(department, 'already exists')
-            return
+            return False
         dep = Department(department)
         self.departmentList.append(dep)
         self.saveDepartment(dep)
         print('Created', department, 'successfully')
         # notify All to getInitialInfo
         self.notifyAll()
+        return True
 
     def addEmployee(self, department, position, username):
         dep = self.searchDepartment(department)

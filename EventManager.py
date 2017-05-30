@@ -100,6 +100,7 @@ class EventManager:
                 clientSocket.send(obj)
             except KeyError:
                 pass
+        time.sleep(0.5)
 
     # Update event
     def update(self, event):

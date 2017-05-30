@@ -17,7 +17,7 @@ class Handler(threading.Thread):
         self.userManagerTasks = ['logIn', 'register', 'updateProfile', 'getUserInfo', 'updateStatus']
         self.projectManagerTasks = ['createProject', 'searchProject', 'updateProject', 'removeProject', 'getInitialProject']
         self.eventManagerTasks = ['createEvent', 'searchEvent', 'updateEvent', 'removeEvent', 'getInitialEvent']
-        self.departmentManagerTasks = ['getInitialInfo']
+        self.departmentManagerTasks = ['createDepartment', 'getInitialInfo']
         self.chatManagerTasks = ['sendChat']
         self.getInformation()
 
