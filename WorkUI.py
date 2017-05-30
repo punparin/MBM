@@ -1,3 +1,5 @@
+from turtle import done
+
 from PySide.QtCore import *
 from PySide.QtGui import *
 from PySide.QtUiTools import *
@@ -42,8 +44,6 @@ class WorkUI(QMainWindow):
         #work and status label
         self.work_title = form.findChild(QLabel, "work_title")
         self.status_label = form.findChild(QLabel, "status_label")
-
-        self.process_bar = form.findChild(QProgressBar, "process_bar")
 
         #date
         self.create_date = form.findChild(QDateEdit, "create_date")
@@ -167,7 +167,6 @@ class WorkUI(QMainWindow):
                 row = self.task_widget.item(i)
                 row.setForeground(QBrush(Qt.black))
 
-
     def setDone(self):
         if self.task_widget.currentRow() == -1:
             return
@@ -206,6 +205,17 @@ class WorkUI(QMainWindow):
         notDoneLt =[]
         userLt = []
         if type(work) == type(Project(None,None)):
+            self.task_widget.move(1170, 250)
+            self.task_edit.move(1770, 740)
+            self.task_done.move(1500, 770)
+            self.add_task.move(1610, 770)
+            self.remove_task.move(1720, 770)
+
+            self.user_widget.move(1330, 830)
+            self.user_box.move(1330, 1320)
+            self.addUser.move(1610, 1350)
+            self.removeUser.move(1720, 1350)
+            self.user_widget.resize(501, 491)
             #all text and title
             self.work_title.setText(work.title)
             self.create_date.setDate(QDate(int(work.createdDate[2]),int(work.createdDate[1]),int(work.createdDate[0])))
@@ -255,6 +265,63 @@ class WorkUI(QMainWindow):
                     self.user_widget.addItem(QListWidgetItem(user.name + " " + user.last_name + " [Project Leader]"))
                 else:
                     self.user_widget.addItem(QListWidgetItem(user.name + " " + user.last_name + " [Project Member]"))
+
+            for user in self.all_user:
+                isFound = False
+                for userExist in self.userInWork:
+                    if user.username == userExist.username:
+                        isFound = True
+                        break
+                if isFound == False:
+                    self.userInBox.append(user)
+                    self.user_box.addItem(user.name + " " + user.last_name)
+        else:
+            ## FOR EVENT
+            self.remove_task.move(-999,-999)
+            self.task_widget.move(-999, -999)
+            self.task_edit.move(-999, -999)
+            self.task_done.move(-999, -999)
+            self.add_task.move(-999, -999)
+
+            self.user_widget.move(1330, 330)
+            self.user_box.move(1330, 1090)
+            self.addUser.move(1610, 1120)
+            self.removeUser.move(1720, 1120)
+            self.user_widget.resize(501, 701)
+
+            # all text and title
+            self.work_title.setText("EVENT : " + work.title)
+            self.create_date.setDate(QDate(int(work.createdDate[2]), int(work.createdDate[1]), int(work.createdDate[0])))
+            self.due_date.setDate(QDate(int(work.dueDate[2]), int(work.dueDate[1]), int(work.dueDate[0])))
+            self.description.setPlainText(work.description)
+            self.status_label.setText(work.status)
+            # status label
+            if work.status == "In Process":
+                self.status_label.setStyleSheet("font: 75 14pt \"MS UI Gothic\"; background-color : ; color : green;")
+            else:
+                self.status_label.setStyleSheet("font: 75 14pt \"MS UI Gothic\"; background-color : ; color : black;")
+            # commnet Widget
+            for line in work.textList:
+                self.comment_widget.addItem(QListWidgetItem(str(line)))
+
+            # user_Widget:
+            if self.parent.departmentList is not None:
+                self.isRequesting = False
+                for department in self.parent.departmentList:
+                    for pre, fill, node in RenderTree(department.positionTree):
+                        if node.name.employeeList is not None:
+                            for userID in node.name.employeeList:
+                                user = node.name.employeeList[userID]
+                                self.all_user.append(user)
+            for user in work.memberList:
+                for all in self.all_user:
+                    if user == all.username:
+                        self.userInWork.append(all)
+            for user in self.userInWork:
+                if user.username == self.parent.interest_project.leader:
+                    self.user_widget.addItem(QListWidgetItem(user.name + " " + user.last_name + " [Event Header]"))
+                else:
+                    self.user_widget.addItem(QListWidgetItem(user.name + " " + user.last_name))
 
             for user in self.all_user:
                 isFound = False

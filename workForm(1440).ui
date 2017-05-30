@@ -13,11 +13,69 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QPushButton{
+    background-color: rgb(255, 170, 127);
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px;
+    min-width: 5em;
+    padding: 3px;
+}
+
+QComboBox {
+	background-color: rgb(67, 196, 255);
+    border: 1px rgb(85, 170, 255);
+    border-radius: 3px;
+    padding: 1px 18px 1px 3px;
+    min-width: 6em;
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+}
+
+QComboBox:editable {
+    background: rgb(85, 170, 255);
+}
+
+QComboBox:!editable:on, QComboBox::drop-down:editable:on {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #D3D3D3, stop: 0.4 #D8D8D8,
+                                stop: 0.5 #DDDDDD, stop: 1.0 #E1E1E1);
+}
+
+QComboBox:on { /* shift the text when the popup opens */
+    padding-top: 3px;
+    padding-left: 4px;
+}
+
+QComboBox QAbstractItemView {
+    border: 2px solid rgb(75, 177, 255);
+    selection-background-color: rgb(137, 190, 255);
+}
+
+QWidget#list_user {background-image: url(Images/chat_background.png) }
+
+QComboBox#status_box{
+	background-color: rgb(255, 255, 219);
+    border: 1px rgb(85, 170, 255);
+    border-radius: 3px;
+    padding: 1px 18px 1px 3px;
+    min-width: 6em;
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+}</string>
+  </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>770</y>
+     <x>30</x>
+     <y>830</y>
      <width>261</width>
      <height>41</height>
     </rect>
@@ -32,8 +90,8 @@
   <widget class="QListWidget" name="comment_widget">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>770</y>
+     <x>300</x>
+     <y>830</y>
      <width>751</width>
      <height>481</height>
     </rect>
@@ -45,8 +103,8 @@
   <widget class="QPushButton" name="send_comment">
    <property name="geometry">
     <rect>
-     <x>930</x>
-     <y>1280</y>
+     <x>940</x>
+     <y>1340</y>
      <width>112</width>
      <height>34</height>
     </rect>
@@ -58,8 +116,8 @@
   <widget class="QLineEdit" name="comment_edit">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>1250</y>
+     <x>300</x>
+     <y>1310</y>
      <width>751</width>
      <height>31</height>
     </rect>
@@ -71,24 +129,11 @@
     <string>comment here .......</string>
    </property>
   </widget>
-  <widget class="QProgressBar" name="process_bar">
-   <property name="geometry">
-    <rect>
-     <x>1670</x>
-     <y>140</y>
-     <width>151</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="value">
-    <number>24</number>
-   </property>
-  </widget>
   <widget class="QListWidget" name="task_widget">
    <property name="geometry">
     <rect>
-     <x>1160</x>
-     <y>190</y>
+     <x>1170</x>
+     <y>250</y>
      <width>661</width>
      <height>491</height>
     </rect>
@@ -100,8 +145,8 @@
   <widget class="QPushButton" name="remove_task">
    <property name="geometry">
     <rect>
-     <x>1710</x>
-     <y>710</y>
+     <x>1720</x>
+     <y>770</y>
      <width>112</width>
      <height>34</height>
     </rect>
@@ -113,8 +158,8 @@
   <widget class="QPushButton" name="add_task">
    <property name="geometry">
     <rect>
-     <x>1600</x>
-     <y>710</y>
+     <x>1610</x>
+     <y>770</y>
      <width>112</width>
      <height>34</height>
     </rect>
@@ -126,8 +171,8 @@
   <widget class="QPushButton" name="edit_desciption">
    <property name="geometry">
     <rect>
-     <x>930</x>
-     <y>710</y>
+     <x>940</x>
+     <y>770</y>
      <width>112</width>
      <height>34</height>
     </rect>
@@ -139,8 +184,8 @@
   <widget class="QListWidget" name="user_widget">
    <property name="geometry">
     <rect>
-     <x>1320</x>
-     <y>770</y>
+     <x>1330</x>
+     <y>830</y>
      <width>501</width>
      <height>491</height>
     </rect>
@@ -152,8 +197,8 @@
   <widget class="QPushButton" name="addUser">
    <property name="geometry">
     <rect>
-     <x>1600</x>
-     <y>1290</y>
+     <x>1610</x>
+     <y>1350</y>
      <width>112</width>
      <height>34</height>
     </rect>
@@ -165,8 +210,8 @@
   <widget class="QPushButton" name="removeUser">
    <property name="geometry">
     <rect>
-     <x>1710</x>
-     <y>1290</y>
+     <x>1720</x>
+     <y>1350</y>
      <width>112</width>
      <height>34</height>
     </rect>
@@ -178,8 +223,8 @@
   <widget class="QPushButton" name="task_done">
    <property name="geometry">
     <rect>
-     <x>1490</x>
-     <y>710</y>
+     <x>1500</x>
+     <y>770</y>
      <width>112</width>
      <height>34</height>
     </rect>
@@ -191,10 +236,10 @@
   <widget class="QPushButton" name="back_button">
    <property name="geometry">
     <rect>
-     <x>1950</x>
-     <y>30</y>
-     <width>181</width>
-     <height>41</height>
+     <x>1940</x>
+     <y>90</y>
+     <width>201</width>
+     <height>61</height>
     </rect>
    </property>
    <property name="text">
@@ -204,8 +249,8 @@
   <widget class="QDateEdit" name="create_date">
    <property name="geometry">
     <rect>
-     <x>1970</x>
-     <y>190</y>
+     <x>1980</x>
+     <y>250</y>
      <width>111</width>
      <height>31</height>
     </rect>
@@ -217,8 +262,8 @@
   <widget class="QDateEdit" name="due_date">
    <property name="geometry">
     <rect>
-     <x>1970</x>
-     <y>300</y>
+     <x>1980</x>
+     <y>360</y>
      <width>110</width>
      <height>27</height>
     </rect>
@@ -230,8 +275,8 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>1970</x>
-     <y>160</y>
+     <x>1980</x>
+     <y>220</y>
      <width>101</width>
      <height>21</height>
     </rect>
@@ -243,8 +288,8 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>1970</x>
-     <y>270</y>
+     <x>1980</x>
+     <y>330</y>
      <width>101</width>
      <height>21</height>
     </rect>
@@ -256,8 +301,8 @@
   <widget class="QComboBox" name="user_box">
    <property name="geometry">
     <rect>
-     <x>1320</x>
-     <y>1260</y>
+     <x>1330</x>
+     <y>1320</y>
      <width>501</width>
      <height>31</height>
     </rect>
@@ -266,8 +311,8 @@
   <widget class="QLineEdit" name="task_edit">
    <property name="geometry">
     <rect>
-     <x>1160</x>
-     <y>680</y>
+     <x>1170</x>
+     <y>740</y>
      <width>661</width>
      <height>31</height>
     </rect>
@@ -288,17 +333,26 @@
   <widget class="QLabel" name="work_title">
    <property name="geometry">
     <rect>
-     <x>90</x>
-     <y>30</y>
+     <x>100</x>
+     <y>90</y>
      <width>951</width>
      <height>61</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 75 18pt &quot;MS UI Gothic&quot;;</string>
+    <string notr="true">font: 75 18pt &quot;MS UI Gothic&quot;;
+border-style: outset;
+border-width: 2px;
+border-radius: 10px;
+border-color: beige;
+min-width: 5em;
+padding: 3px;</string>
    </property>
    <property name="text">
     <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>Images/widget.png</pixmap>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -308,7 +362,7 @@
    <property name="geometry">
     <rect>
      <x>1170</x>
-     <y>120</y>
+     <y>170</y>
      <width>491</width>
      <height>61</height>
     </rect>
@@ -326,8 +380,8 @@
   <widget class="QTextEdit" name="description">
    <property name="geometry">
     <rect>
-     <x>90</x>
-     <y>120</y>
+     <x>100</x>
+     <y>180</y>
      <width>951</width>
      <height>591</height>
     </rect>
@@ -336,6 +390,28 @@
     <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
    </property>
   </widget>
+  <zorder>label</zorder>
+  <zorder>comment_widget</zorder>
+  <zorder>send_comment</zorder>
+  <zorder>comment_edit</zorder>
+  <zorder>task_widget</zorder>
+  <zorder>remove_task</zorder>
+  <zorder>add_task</zorder>
+  <zorder>edit_desciption</zorder>
+  <zorder>user_widget</zorder>
+  <zorder>addUser</zorder>
+  <zorder>removeUser</zorder>
+  <zorder>task_done</zorder>
+  <zorder>back_button</zorder>
+  <zorder>create_date</zorder>
+  <zorder>due_date</zorder>
+  <zorder>label_2</zorder>
+  <zorder>label_3</zorder>
+  <zorder>user_box</zorder>
+  <zorder>task_edit</zorder>
+  <zorder>status_label</zorder>
+  <zorder>description</zorder>
+  <zorder>work_title</zorder>
  </widget>
  <resources/>
  <connections/>

@@ -3,7 +3,6 @@ from RegisterUI import *
 from MainUI import *
 from ProfileUI import *
 from WorkUI import *
-from PySide.QtCore import *
 from PySide.QtGui import *
 from anytree import Node, RenderTree
 from User import *
@@ -64,13 +63,14 @@ class UImanager(QMainWindow):
 
         self.thread = threading.Thread(target=self.listen, args=[])
         self.thread.setDaemon(True)
-
         # Client Attribute
         self.departmentList = None
         self.interest_user = None
         self.interest_work = None
+        self.interest_event = None
         self.currentChat = None
-        self.projectList = None
+        self.projectList = []
+        self.eventList = []
 
     # Change page signal (send from log in UI page)
     def changePageLoginSection(self, signal = None, user = None):
@@ -113,6 +113,12 @@ class UImanager(QMainWindow):
             palette = QPalette()
             palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/work_widget.png")))
             self.setPalette(palette)
+        if signal == "see_event":
+            self.work_widget.loadWork(self.interest_event)
+            self.centralWidget().setCurrentWidget(self.work_widget)
+            palette = QPalette()
+            palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/work_widget.png")))
+            self.setPalette(palette)
 
     # Change Page signal (send from Profile UI page)
     def changePageProfileSection(self, signal=None, user=None):
@@ -140,7 +146,7 @@ class UImanager(QMainWindow):
         print('Waiting for User')
         try:
             while True:
-                task = self.socket.recv(1024).decode('ascii')
+                task = self.socket.recv(32).decode('ascii')
                 if task == '':
                     break
                 try:
@@ -166,6 +172,7 @@ class UImanager(QMainWindow):
             # Start listening for the server
             self.thread.start()
             self.send('getInitialInfo')
+            self.interrupt()
         except ConnectionResetError:
             # Completely terminate connection when the client disconnects
             print("The server is currently offline.")
@@ -175,7 +182,7 @@ class UImanager(QMainWindow):
         try:
             while True:
                 print('listening')
-                task = self.socket.recv(1024).decode('ascii')
+                task = self.socket.recv(32).decode('ascii')
                 if task == '':
                     pass
                 try:
@@ -205,12 +212,15 @@ class UImanager(QMainWindow):
                         self.projectList = obj
                         self.main_widget.updateWork()
                         self.main_widget.calendarUpdate()
+                        self.send("getInitialEvent", None)
                     elif task == 'updateProject':
                         self.interest_work = obj
                     elif task == 'getInitialEvent':
-                        eventList = obj
+                        self.eventList = obj
+                        self.main_widget.updateWork()
+                        self.main_widget.calendarUpdate()
                     elif task == 'updateEvent':
-                        event = obj
+                        self.interest_event = obj
                 except EOFError as e:
                     print(e)
         except ConnectionResetError:
@@ -238,10 +248,16 @@ class UImanager(QMainWindow):
     def close(self):
         self.socket.close()
 
+    #use signal slot interrupt in mainUI
+    def interrupt(self):
+        if self.main_widget.interrupt_box.currentIndex() == 0:
+            self.main_widget.interrupt_box.setCurrentIndex(1)
+        else:
+            self.main_widget.interrupt_box.setCurrentIndex(0)
+
 def main():
     app = QApplication(sys.argv)
     ui = UImanager(socket.gethostname())
-    ui.show()
     app.exec_()
 
 if __name__ == "__main__":

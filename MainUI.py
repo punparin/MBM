@@ -2,10 +2,13 @@ from PySide.QtCore import *
 from PySide.QtGui import *
 from PySide.QtUiTools import *
 from anytree import Node, RenderTree
+from PIL import Image
 from Chat import*
 from Project import*
 from Event import*
 import ctypes
+import os
+import base64
 
 class MainUI(QMainWindow):
     def __init__(self , parent = None):
@@ -46,7 +49,8 @@ class MainUI(QMainWindow):
 
         #Edit Profile section components
         self.save_warn_label = form.findChild(QLabel, "save_warn_label")
-
+        self.profile_pic = form.findChild(QLabel, "profile_pic")
+        self.my_pic = form.findChild(QLabel, "my_pic")
         self.name_line = form.findChild(QLineEdit, "name_lineEdit")
         self.middlename_line = form.findChild(QLineEdit, "middlename_lineEdit")
         self.surname_line = form.findChild(QLineEdit, "surname_lineEdit")
@@ -55,6 +59,7 @@ class MainUI(QMainWindow):
         self.email_line = form.findChild(QLineEdit, "email_lineEdit")
         self.address_text = form.findChild(QTextEdit, "address_textEdit")
         self.bio_text = form.findChild(QTextEdit, "bio_textEdit")
+        self.upload_button = form.findChild(QPushButton, "upload_button")
 
         self.birth_edit = form.findChild(QDateEdit, "dateEdit")
         self.nation_box = form.findChild(QComboBox, "nation_box")
@@ -67,6 +72,7 @@ class MainUI(QMainWindow):
         self.save_button.clicked.connect(self.saveProfile)
         self.cancel_button.clicked.connect(self.backToMainPage)
         self.change_password_button.clicked.connect(self.changePassWordWidget)
+        self.upload_button.clicked.connect(self.uploadPicture)
 
         #Change password section component
         self.cur_password = form.findChild(QLineEdit, "cur_password")
@@ -125,6 +131,8 @@ class MainUI(QMainWindow):
         #Project and Event Section
         self.projectWidget = form.findChild(QListWidget, "projectWidget")
         self.projectWidget.itemClicked.connect(self.openProject)
+        self.eventWidget = form.findChild(QListWidget, "eventWidget")
+        self.eventWidget.itemClicked.connect(self.openEvent)
         self.leader_list = []
         self.tab_widget = form.findChild(QTabWidget, "eventList")
         self.tab_widget.currentChanged.connect(self.eventChange)
@@ -147,6 +155,7 @@ class MainUI(QMainWindow):
 
         #Project Widget
         self.allProject = []
+        self.allEvent = []
 
         #calendar section
         self.calendar = form.findChild(QCalendarWidget, "calendarWidget")
@@ -154,6 +163,48 @@ class MainUI(QMainWindow):
         #cf = self.calendar.dateTextFormat(QDate(2017,5,31));
         #cf.setBackground(color)
         #self.calendar.setDateTextFormat(QDate(2017,5,31), cf);
+        self.interrupt_box = form.findChild(QComboBox, "test_box")
+        self.interrupt_box.currentIndexChanged.connect(self.updatePicture)
+        self.interrupt_box.move(-999,-999)
+
+    def uploadPicture(self):
+        path = "Images/" + self.parent.user.username + ".png"
+        fname = QFileDialog.getOpenFileName()
+        if fname[0] == "":
+            return
+        blob_value = open(fname[0], 'rb').read()
+        blob_data = base64.encodestring(blob_value)
+        self.parent.user.image = "str"
+        if(blob_data != None):
+            file = open(path, "wb")
+            file.write(base64.decodestring(blob_data))
+            file.close()
+        pixmap = QPixmap()
+        pixmap.load(path)
+        pixmap = pixmap.scaled(161, 150, aspectRatioMode=Qt.KeepAspectRatio, transformMode=Qt.SmoothTransformation)
+        self.profile_pic.setPixmap(pixmap)
+        self.my_pic.setPixmap(pixmap)
+        self.parent.send("updateProfile", self.parent.user)
+
+    def updatePicture(self, idx = None):
+        path = "Images/" + self.parent.user.username + ".png"
+        pixmap = QPixmap()
+        if self.parent.user.image == None:
+            pixmap.load("Images/profile_pic.png")
+            pixmap = pixmap.scaled(161, 150, aspectRatioMode=Qt.KeepAspectRatio, transformMode=Qt.SmoothTransformation)
+            self.profile_pic.setPixmap(pixmap)
+            self.my_pic.setPixmap(pixmap)
+            return
+        try:
+            pixmap.load(path)
+            pixmap = pixmap.scaled(161, 150, aspectRatioMode=Qt.KeepAspectRatio, transformMode=Qt.SmoothTransformation)
+            self.profile_pic.setPixmap(pixmap)
+            self.my_pic.setPixmap(pixmap)
+        except:
+            pixmap.load("Images/profile_pic.png")
+            pixmap = pixmap.scaled(161, 150, aspectRatioMode=Qt.KeepAspectRatio, transformMode=Qt.SmoothTransformation)
+            self.profile_pic.setPixmap(pixmap)
+            self.my_pic.setPixmap(pixmap)
 
     def calendarUpdate(self):
         for work in self.parent.projectList:
@@ -188,21 +239,75 @@ class MainUI(QMainWindow):
             else:
                 self.projectWidget.addItem(QListWidgetItem("\t"+"[" + work.dueDate[0] +"/"+ work.dueDate[1] +"/"+ work.dueDate[2] + "] " + work.title))
 
+        ## for event
+        my_event = []
+        other_event = []
+        self.eventWidget.clear()
+        self.allEvent.clear()
+        for work in self.parent.eventList:
+            event = self.parent.eventList[work]
+            if event.isMemberInEvent(self.parent.user.username):
+                my_event.append(self.parent.projectList[work])
+            else:
+                other_event.append(self.parent.projectList[work])
+        my_event = sorted(my_event, key= lambda work: (work.dueDate[2], work.dueDate[1] ,work.dueDate[0]))
+        other_event = sorted(other_event, key=lambda work: (work.dueDate[2], work.dueDate[1] ,work.dueDate[0]))
+        self.allEvent.append("My Events")
+        self.allEvent += my_event
+        self.allEvent.append("Other Events")
+        self.allEvent += other_event
+
+        for work in self.allEvent:
+            if type(work) == str:
+                self.eventWidget.addItem(QListWidgetItem(work))
+            else:
+                self.eventWidget.addItem(QListWidgetItem("\t"+"[" + work.dueDate[0] +"/"+ work.dueDate[1] +"/"+ work.dueDate[2] + "] " + work.title))
+
     def createConfirm(self):
         if self.new_button.text() == "new project":
             title = self.work_edit.text()
+            if self.leader_box.currentIndex() == -1:
+                return
             user = self.leader_list[self.leader_box.currentIndex()]
             project = Project(title, user.username)
             project.dueDate = self.duedate_edit.date().toString("dd.MM.yyyy").split('.')
             project.leader = user.username
             project.createdDate = QDate.currentDate().toString("dd.MM.yyyy").split('.')
+            if title == "":
+                return
+            for work in self.allProject:
+                if type(work) == str:
+                    pass
+                else:
+                    if title == work.title:
+                        return
             project.status = "In Process"
             project.addMember(user.username)
             self.parent.send('createProject',project)
             self.parent.interest_work = project
             self.parent.changePageMainSection("see_work")
         else:
-            pass
+            title = self.work_edit.text()
+            if self.leader_box.currentIndex() == -1:
+                return
+            user = self.leader_list[self.leader_box.currentIndex()]
+            event = Event(title, user.username)
+            event.dueDate = self.duedate_edit.date().toString("dd.MM.yyyy").split('.')
+            event.leader = user.username
+            event.createdDate = QDate.currentDate().toString("dd.MM.yyyy").split('.')
+            if title == "":
+                return
+            for work in self.allProject:
+                if type(work) == str:
+                    pass
+                else:
+                    if title == work.title:
+                        return
+            event.status = "Up Coming"
+            event.addMember(user.username)
+            self.parent.send('createEvent', event)
+            self.parent.interest_event = event
+            self.parent.changePageMainSection("see_event")
 
     def openProject(self, item = None):
         self.parent.send('getInitialInfo',None)
@@ -210,6 +315,13 @@ class MainUI(QMainWindow):
         if type(project) != str:
             self.parent.interest_work = project
             self.parent.changePageMainSection("see_work")
+
+    def openEvent(self, item = None):
+        self.parent.send('getInitialInfo',None)
+        event = self.allEvent[self.eventWidget.currentRow()]
+        if type(event) != str:
+            self.parent.interest_event = event
+            self.parent.changePageMainSection("see_event")
 
     def eventChange(self,index):
         if self.parent.projectList == None:
@@ -227,6 +339,7 @@ class MainUI(QMainWindow):
             self.new_button.setText("")
 
     def createWork(self):
+        self.leader_list.clear()
         self.subWidget.setCurrentIndex(4)
         createdDate = QDate.currentDate().toString("dd.MM.yyyy").split('.')
         self.duedate_edit.setDate(QDate(int(createdDate[2]),int(createdDate[1]),int(createdDate[0])))

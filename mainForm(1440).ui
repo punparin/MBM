@@ -468,20 +468,23 @@ QComboBox#status_box{
     border-color: beige;
 }</string>
   </property>
-  <widget class="QLabel" name="profile">
+  <widget class="QLabel" name="profile_pic">
    <property name="geometry">
     <rect>
-     <x>1930</x>
-     <y>100</y>
-     <width>101</width>
-     <height>131</height>
+     <x>1900</x>
+     <y>80</y>
+     <width>161</width>
+     <height>150</height>
     </rect>
    </property>
    <property name="text">
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>Images/profile.png</pixmap>
+    <pixmap>Images/profile_pic.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QComboBox" name="comboBox">
@@ -965,7 +968,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
     <enum>QFrame::WinPanel</enum>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="main_page">
     <property name="styleSheet">
@@ -1077,8 +1080,8 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
     <widget class="QLabel" name="label_2">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>30</y>
+       <x>20</x>
+       <y>20</y>
        <width>321</width>
        <height>61</height>
       </rect>
@@ -1090,27 +1093,30 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
       <string> Personal Profile</string>
      </property>
     </widget>
-    <widget class="QLabel" name="profile_2">
+    <widget class="QLabel" name="my_pic">
      <property name="geometry">
       <rect>
-       <x>80</x>
-       <y>100</y>
-       <width>91</width>
-       <height>111</height>
+       <x>50</x>
+       <y>90</y>
+       <width>161</width>
+       <height>150</height>
       </rect>
      </property>
      <property name="text">
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>Images/profile.png</pixmap>
+      <pixmap>Images/profile_pic.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
      </property>
     </widget>
     <widget class="QPushButton" name="upload_button">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>220</y>
+       <y>260</y>
        <width>211</width>
        <height>41</height>
       </rect>
@@ -1396,7 +1402,7 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>270</y>
+       <y>310</y>
        <width>211</width>
        <height>41</height>
       </rect>
@@ -2167,6 +2173,26 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
    <property name="text">
     <string>X</string>
    </property>
+  </widget>
+  <widget class="QComboBox" name="test_box">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>103</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>TEST1</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>TEST2</string>
+    </property>
+   </item>
   </widget>
  </widget>
  <resources/>
