@@ -16,7 +16,7 @@ class EventManager:
     def work(self, task, obj):
         processedObj = None
         if task == 'createEvent':
-            self.createEvent(obj)
+            processedObj = self.createEvent(obj)
         elif task == 'searchEvent':
             processedObj = self.searchEvent(obj)
         elif task == 'updateEvent':
@@ -51,12 +51,14 @@ class EventManager:
     def createEvent(self, event):
         for title in self.eventList:
             if event.title == self.eventList[title].title:
-                return
+                return False
         fileObject = open(self.eventListFileName, 'ab')
         pickle.dump(event, fileObject)
         fileObject.close()
         self.eventList[event.title] = event
         self.saveEvent(event)
+        self.notifyAll()
+        return True
 
     # Remove a event
     def removeEvent(self, eventTitle):
