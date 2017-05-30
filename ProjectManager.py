@@ -15,7 +15,7 @@ class ProjectManager:
     def work(self, task, obj):
         processedObj = None
         if task == 'createProject':
-            self.createProject(obj)
+            processedObj = self.createProject(obj)
         elif task == 'searchProject':
             processedObj = self.searchProject(obj)
         elif task == 'updateProject':
@@ -50,13 +50,14 @@ class ProjectManager:
     def createProject(self, project):
         for title in self.projectList:
             if project.title == self.projectList[title].title:
-                return
+                return False
         fileObject = open(self.projectListFileName, 'ab')
         pickle.dump(project, fileObject)
         fileObject.close()
         self.projectList[project.title] = project
         self.saveProject(project)
         self.notifyAll()
+        return True
 
     # Remove a project
     def removeProject(self, projectTitle):
