@@ -111,9 +111,11 @@ class WorkUI(QMainWindow):
                 self.user_box.addItem(user.name + " " + user.last_name)
 
     def removeMember(self):
-        if self.userInWork[self.task_widget.currentRow()].username == self.parent.interest_work.leader:
+        if self.userInWork[self.user_widget.currentRow()].username == self.parent.interest_work.leader:
             return
-        self.userInWork.remove(self.userInWork[self.task_widget.currentRow()])
+        if self.user_widget.currentRow() == 0 or self.user_widget.currentRow() == -1:
+            return
+        self.userInWork.remove(self.userInWork[self.user_widget.currentRow()])
         cur = self.user_widget.currentItem()
         self.user_widget.removeItemWidget(cur)
         self.parent.interest_work.memberList.clear()
@@ -146,6 +148,8 @@ class WorkUI(QMainWindow):
         self.comment_edit.clear()
 
     def removeTask(self):
+        if self.task_widget.currentRow() == -1:
+            return
         self.task_list.remove(self.task_list[self.task_widget.currentRow()])
         cur = self.task_widget.currentItem()
         self.task_widget.removeItemWidget(cur)
@@ -164,6 +168,8 @@ class WorkUI(QMainWindow):
 
 
     def setDone(self):
+        if self.task_widget.currentRow() == -1:
+            return
         self.task_list[self.task_widget.currentRow()][1] = "Done"
         cur = self.task_widget.currentItem()
         cur.setForeground(QBrush(Qt.green))

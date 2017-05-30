@@ -132,6 +132,7 @@ class UImanager(QMainWindow):
             palette = QPalette()
             palette.setBrush(QPalette.Background, QBrush(QPixmap("Images/background2.png")))
             self.setPalette(palette)
+            self.send("getInitialProject",None)
 
 
     # Recieve task and object before logged in
@@ -181,6 +182,7 @@ class UImanager(QMainWindow):
                     obj = pickle.loads(self.socket.recv(4096))
                     if task == 'getInitialInfo':
                         self.departmentList = obj
+                        self.send("getInitialProject", None)
                     elif task == 'getUserInfo':
                         self.interest_user = obj
                         # obj in this case is a User instance without password
@@ -202,8 +204,9 @@ class UImanager(QMainWindow):
                         # projectList is a tuple {} which contains project.title as a key and project itself as a value
                         self.projectList = obj
                         self.main_widget.updateWork()
+                        self.main_widget.calendarUpdate()
                     elif task == 'updateProject':
-                        project = obj
+                        self.interest_work = obj
 
                 except EOFError as e:
                     print(e)

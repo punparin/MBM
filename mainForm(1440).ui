@@ -1018,6 +1018,9 @@ QWidget {background-image: url(Images/widget.png) }</string>
        <property name="locale">
         <locale language="English" country="UnitedStates"/>
        </property>
+       <property name="firstDayOfWeek">
+        <enum>Qt::Monday</enum>
+       </property>
       </widget>
      </widget>
      <widget class="QWidget" name="tab">
