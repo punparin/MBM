@@ -207,7 +207,10 @@ class UImanager(QMainWindow):
                         self.main_widget.calendarUpdate()
                     elif task == 'updateProject':
                         self.interest_work = obj
-
+                    elif task == 'getInitialEvent':
+                        eventList = obj
+                    elif task == 'updateEvent':
+                        event = obj
                 except EOFError as e:
                     print(e)
         except ConnectionResetError:
