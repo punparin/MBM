@@ -123,7 +123,6 @@ class ProjectManager:
             except KeyError:
                 pass
 
-
     # Update project
     def update(self, project):
         for title in self.projectList:

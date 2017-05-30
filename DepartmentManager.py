@@ -36,6 +36,17 @@ class DepartmentManager:
         except InvalidArgument as err:
             print(err)
 
+    # notify All to getInitialInfo
+    def notifyAll(self):
+        for username in self.userManager.clientSocketList:
+            try:
+                clientSocket = self.userManager.clientSocketList[username]
+                clientSocket.send('getInitialInfo'.encode('ascii'))
+                obj = pickle.dumps(self.getInitialInfo())
+                clientSocket.send(obj)
+            except KeyError:
+                pass
+
     def getInitialInfo(self):
         initialInfo = copy.deepcopy(self.departmentList)
         for department in initialInfo:
@@ -48,17 +59,6 @@ class DepartmentManager:
                         newEmployeeList[id] = user.dummy()
                     node.name.employeeList = newEmployeeList
         return initialInfo
-
-    # notify All to getInitialProject
-    def notifyAll(self):
-        for username in self.userManager.clientSocketList:
-            try:
-                clientSocket = self.userManager.clientSocketList[username]
-                clientSocket.send('getInitialInfo'.encode('ascii'))
-                obj = pickle.dumps(self.getInitialInfo())
-                self.clientSocket.send(obj)
-            except KeyError:
-                pass
 
     def removePosition(self, department, position):
         dep = self.searchDepartment(department)
@@ -126,8 +126,8 @@ class DepartmentManager:
         self.departmentList.append(dep)
         self.saveDepartment(dep)
         print('Created', department, 'successfully')
-        self.notifyAll()
         # notify All to getInitialInfo
+        self.notifyAll()
 
     def addEmployee(self, department, position, username):
         dep = self.searchDepartment(department)
@@ -140,6 +140,7 @@ class DepartmentManager:
                     self.userManager.saveUsers()
                     self.saveDepartments()
                     print('Added', username, 'to', department, 'successfully')
+                    # notify All to getInitialInfo
                     self.notifyAll()
                 except InvalidArgument:
                     print(position, 'does not exist')
@@ -147,7 +148,6 @@ class DepartmentManager:
                 print(username, 'does not exist')
         else:
             print(department, 'does not exist')
-        # notify All to getInitialInfo
 
     def removeEmployee(self, department, username):
         dep = self.searchDepartment(department)
@@ -159,12 +159,12 @@ class DepartmentManager:
                 self.userManager.saveUsers()
                 self.saveDepartments()
                 print('Removed', username, 'from', department, 'successfully')
+                # notify All to getInitialInfo
                 self.notifyAll()
             else:
                 print(username, 'does not exist')
         else:
             print(department, 'does not exist')
-        # notify All to getInitialInfo
 
     def findEmployeePosition(self, department, username):
         dep = self.searchDepartment(department)
@@ -191,6 +191,7 @@ class DepartmentManager:
         fileObject.close()
         self.departmentList = []
         print('Cleared successfully')
+        # notify All to getInitialInfo
         self.notifyAll()
 
     def getUserPermission(self, username):
