@@ -168,7 +168,7 @@ class MainUI(QMainWindow):
         self.interrupt_box.move(-999,-999)
 
         #Admin Features
-        self.departmentWidget = form.findChild(QListWidget, "departmentWidget")
+        self.warn_admin = form.findChild(QLabel, "warn_admin")
         self.departmentLine = form.findChild(QLineEdit, "departmentLine")
         self.positionLine = form.findChild(QLineEdit, "positionLine")
         self.parentpositionLine = form.findChild(QLineEdit, "parentpositionLine")
@@ -187,30 +187,34 @@ class MainUI(QMainWindow):
         self.addEmployee.clicked.connect(self.AddEmployee)
         self.removeEmployee.clicked.connect(self.RemoveEmployee)
 
-    def updateAdminWidget(self):
-        pass
+    def updateWarnAdmin(self,message):
+        self.positionLine.clear()
+        self.positionLine.clear()
+        self.parentpositionLine.clear()
+        self.employeeLine.clear()
+        self.warn_admin.setText(message)
 
     def AddDepartment(self):
-        department = self.departmentLine.text()
-        lt = [department]
+        self.parent.send('addDepartment',self.departmentLine.text())
 
     def RemoveDepartment(self):
-        department = self.departmentLine.text()
-        lt = [department]
+        self.parent.send('removeDepartment',self.departmentLine.text())
 
     def AddPosition(self):
         department = self.departmentLine.text()
         position = self.positionLine.text()
         parentposition = self.parentpositionLine.text()
         if parentposition == "":
-            lt = [department, position]
+            lt = [department, position, None]
         else:
             lt = [department , position , parentposition]
+        self.parent.send('addPosition',lt)
 
     def RemovePosition(self):
         department = self.departmentLine.text()
         position = self.positionLine.text()
         lt = [department, position]
+        self.parent.send('removePosition',lt)
 
 
     def AddEmployee(self):
@@ -218,11 +222,13 @@ class MainUI(QMainWindow):
         position = self.positionLine.text()
         employee = self.employeeLine.text()
         lt = [department, position, employee]
+        self.parent.send('addEmployee',lt)
 
     def RemoveEmployee(self):
         department = self.departmentLine.text()
         employee = self.employeeLine.text()
         lt = [department, employee]
+        self.parent.send('removeEmployee',lt)
 
     def uploadPicture(self):
         path = "Images/" + self.parent.user.username + ".png"
@@ -513,6 +519,8 @@ class MainUI(QMainWindow):
                         self.user_index.append(department.name)
                         self.user_index.append(node.name.name)
                         self.user_index += (self.online_user + self.offline_user)
+                    self.online_user.clear()
+                    self.offline_user.clear()
             else:
                 self.list_user.clear()
                 self.user_index.clear()

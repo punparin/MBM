@@ -49,7 +49,9 @@ class Handler(threading.Thread):
     def run(self):
         try:
             while True:
-                task = self.clientSocket.recv(32).decode('ascii')
+                task = self.clientSocket.recv(32)
+                print(task)
+                task = task.decode('ascii')
                 if task == '':
                     pickle.loads(self.clientSocket.recv(4096))
                     break

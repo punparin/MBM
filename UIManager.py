@@ -230,16 +230,22 @@ class UImanager(QMainWindow):
                         self.companyName = obj
                     elif task == 'addDepartment':
                         message = obj
+                        self.main_widget.updateWarnAdmin(message)
                     elif task == 'removeDepartment':
                         message = obj
+                        self.main_widget.updateWarnAdmin(message)
                     elif task == 'addPosition':
                         message = obj
+                        self.main_widget.updateWarnAdmin(message)
                     elif task == 'removePosition':
                         message = obj
+                        self.main_widget.updateWarnAdmin(message)
                     elif task == 'addEmployee':
                         message = obj
+                        self.main_widget.updateWarnAdmin(message)
                     elif task == 'removeEmployee':
                         message = obj
+                        self.main_widget.updateWarnAdmin(message)
                 except EOFError as e:
                     print(e)
         except ConnectionResetError:

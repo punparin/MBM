@@ -373,6 +373,8 @@ class WorkUI(QMainWindow):
                 self.isRequesting = False
                 for department in self.parent.departmentList:
                     for pre, fill, node in RenderTree(department.positionTree):
+                        if node is None:
+                            continue
                         if node.name.employeeList is not None:
                             for userID in node.name.employeeList:
                                 user = node.name.employeeList[userID]
