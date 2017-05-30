@@ -228,7 +228,18 @@ class UImanager(QMainWindow):
                         self.interest_event = obj
                     elif task == 'changeCompanyName':
                         self.companyName = obj
-
+                    elif task == 'addDepartment':
+                        message = obj
+                    elif task == 'removeDepartment':
+                        message = obj
+                    elif task == 'addPosition':
+                        message = obj
+                    elif task == 'removePosition':
+                        message = obj
+                    elif task == 'addEmployee':
+                        message = obj
+                    elif task == 'removeEmployee':
+                        message = obj
                 except EOFError as e:
                     print(e)
         except ConnectionResetError:

@@ -16,8 +16,24 @@ class DepartmentManager:
         processedObj = None
         if task == 'getInitialInfo':
             processedObj = self.getInitialInfo()
-        elif task == 'createDepartment':
+        elif task == 'addDepartment':
             processedObj = self.addDepartment(obj)
+        elif task == 'removeDepartment':
+            processedObj = self.removeDepartment(obj)
+        elif task == 'addEmployee':
+            dep, pos, username = obj
+            processedObj = self.addEmployee(dep, pos, username)
+        elif task == 'removeEmployee':
+            dep, username = obj
+            processedObj = self.removeEmployee(dep, username)
+        elif task == 'addPosition':
+            if len(obj) == 2:
+                processedObj = self.addPosition(obj[0], obj[1])
+            else:
+                processedObj = self.addPosition(obj[0], obj[1], obj[2])
+        elif task == 'removePosition':
+            dep, pos = obj
+            processedObj = self.removePosition(dep, pos)
         return processedObj
 
     def searchDepartment(self, department):
@@ -29,15 +45,14 @@ class DepartmentManager:
     def addPosition(self, department, position, parent = None):
         dep = self.searchDepartment(department)
         if dep is None:
-            print(department, 'does not exist')
-            return
+            return department + ' does not exist'
         try:
             dep.addPosition(position, parent)
-            print("Added", position, "successfully")
             self.saveDepartments()
             self.notifyAll()
+            return "Added " + position + " successfully"
         except InvalidArgument as err:
-            print(err)
+            return position + " does not exist"
 
     # notify All to getInitialInfo
     def notifyAll(self):
@@ -67,15 +82,14 @@ class DepartmentManager:
     def removePosition(self, department, position):
         dep = self.searchDepartment(department)
         if dep is None:
-            print(department, 'does not exist')
-            return
+            return department + ' does not exist'
         try:
             dep.removePosition(position)
-            print("Removed", position, "successfully")
             self.saveDepartments()
             self.notifyAll()
+            return "Removed " + position + " successfully"
         except InvalidArgument as err:
-            print(err)
+            return position + " does not exist"
 
     def searchPosition(self, department, position):
         dep = self.searchDepartment(department)
@@ -114,25 +128,23 @@ class DepartmentManager:
     def removeDepartment(self, department):
         dep = self.searchDepartment(department)
         if dep is None:
-            print(department, 'does not exist')
+            return department + ' does not exist'
         else:
             self.departmentList.remove(dep)
             self.saveDepartments()
             self.notifyAll()
-            print('Removed', department, 'successfully')
+            return 'Removed ' + department + ' successfully'
 
     def addDepartment(self, department):
         dep = self.searchDepartment(department)
         if dep is not None:
-            print(department, 'already exists')
-            return False
+            return department + ' already exists'
         dep = Department(department)
         self.departmentList.append(dep)
         self.saveDepartment(dep)
-        print('Created', department, 'successfully')
         # notify All to getInitialInfo
         self.notifyAll()
-        return True
+        return 'Created ' + department + ' successfully'
 
     def addEmployee(self, department, position, username):
         dep = self.searchDepartment(department)
@@ -144,15 +156,15 @@ class DepartmentManager:
                     user.position[department] = position
                     self.userManager.saveUsers()
                     self.saveDepartments()
-                    print('Added', username, 'to', department, 'successfully')
                     # notify All to getInitialInfo
                     self.notifyAll()
+                    return 'Added ' + username + ' to ' + department + ' successfully'
                 except InvalidArgument:
-                    print(position, 'does not exist')
+                    return position + ' does not exist'
             else:
-                print(username, 'does not exist')
+                return username + ' does not exist'
         else:
-            print(department, 'does not exist')
+            return department + ' does not exist'
 
     def removeEmployee(self, department, username):
         dep = self.searchDepartment(department)
@@ -163,13 +175,13 @@ class DepartmentManager:
                 user.position = ""
                 self.userManager.saveUsers()
                 self.saveDepartments()
-                print('Removed', username, 'from', department, 'successfully')
                 # notify All to getInitialInfo
                 self.notifyAll()
+                return 'Removed ' + username + ' from ' + department + ' successfully'
             else:
-                print(username, 'does not exist')
+                return username + ' does not exist'
         else:
-            print(department, 'does not exist')
+            return department + ' does not exist'
 
     def findEmployeePosition(self, department, username):
         dep = self.searchDepartment(department)
