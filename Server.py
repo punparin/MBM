@@ -23,8 +23,6 @@ class Server:
             self.socket.bind((self.host, self.port))
             self.socket.listen(self.maximumClient)
             self.userManager = UserManager()
-            #self.projectManager = ProjectManager(self.socket)
-            #self.eventManager = EventManager(self.socket)
             self.chatManager = ChatManager(self.userManager)
             self.departmentManager = DepartmentManager(self.userManager)
             self.projectManager = ProjectManager(self.userManager, self.departmentManager)
