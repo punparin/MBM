@@ -119,7 +119,8 @@ class WorkUI(QMainWindow):
         cur = self.user_widget.currentItem()
         self.user_widget.removeItemWidget(cur)
         self.parent.interest_work.memberList.clear()
-        self.parent.interest_work.memberList += self.userInWork
+        for user in self.userInWork:
+            self.parent.interest_work.memberList.append(user.username)
         self.user_widget.clear()
         self.userInBox.clear()
         self.user_box.clear()

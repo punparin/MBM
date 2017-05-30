@@ -205,6 +205,7 @@ class MainUI(QMainWindow):
             pass
 
     def openProject(self, item = None):
+        self.parent.send('getInitialInfo',None)
         project = self.allProject[self.projectWidget.currentRow()]
         if type(project) != str:
             self.parent.interest_work = project
