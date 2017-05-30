@@ -318,7 +318,7 @@ class WorkUI(QMainWindow):
                     if user == all.username:
                         self.userInWork.append(all)
             for user in self.userInWork:
-                if user.username == self.parent.interest_project.leader:
+                if user.username == self.parent.interest_event.leader:
                     self.user_widget.addItem(QListWidgetItem(user.name + " " + user.last_name + " [Event Header]"))
                 else:
                     self.user_widget.addItem(QListWidgetItem(user.name + " " + user.last_name))

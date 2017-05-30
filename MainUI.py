@@ -239,7 +239,7 @@ class MainUI(QMainWindow):
             else:
                 self.projectWidget.addItem(QListWidgetItem("\t"+"[" + work.dueDate[0] +"/"+ work.dueDate[1] +"/"+ work.dueDate[2] + "] " + work.title))
 
-        ## for event
+        ## FOR EVENT
         my_event = []
         other_event = []
         self.eventWidget.clear()
@@ -247,9 +247,9 @@ class MainUI(QMainWindow):
         for work in self.parent.eventList:
             event = self.parent.eventList[work]
             if event.isMemberInEvent(self.parent.user.username):
-                my_event.append(self.parent.projectList[work])
+                my_event.append(self.parent.eventList[work])
             else:
-                other_event.append(self.parent.projectList[work])
+                other_event.append(self.parent.eventList[work])
         my_event = sorted(my_event, key= lambda work: (work.dueDate[2], work.dueDate[1] ,work.dueDate[0]))
         other_event = sorted(other_event, key=lambda work: (work.dueDate[2], work.dueDate[1] ,work.dueDate[0]))
         self.allEvent.append("My Events")
