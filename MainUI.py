@@ -148,6 +148,22 @@ class MainUI(QMainWindow):
         #Project Widget
         self.allProject = []
 
+        #calendar section
+        self.calendar = form.findChild(QCalendarWidget, "calendarWidget")
+        #color = QBrush(Qt.green)
+        #cf = self.calendar.dateTextFormat(QDate(2017,5,31));
+        #cf.setBackground(color)
+        #self.calendar.setDateTextFormat(QDate(2017,5,31), cf);
+
+    def calendarUpdate(self):
+        for work in self.parent.projectList:
+            project = self.parent.projectList[work]
+            date = QDate(int(project.dueDate[2]) ,int(project.dueDate[1]) ,int(project.dueDate[0]))
+            color = QBrush(Qt.green)
+            cf = self.calendar.dateTextFormat(date)
+            cf.setBackground(color)
+            self.calendar.setDateTextFormat(date, cf)
+
     def updateWork(self):
         self.projectWidget.clear()
         self.allProject.clear()
@@ -189,6 +205,7 @@ class MainUI(QMainWindow):
             pass
 
     def openProject(self, item = None):
+        self.parent.send('getInitialInfo',None)
         project = self.allProject[self.projectWidget.currentRow()]
         if type(project) != str:
             self.parent.interest_work = project
