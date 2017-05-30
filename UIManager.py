@@ -174,6 +174,7 @@ class UImanager(QMainWindow):
 
     # Recieve task and object after logged in
     def listen(self):
+        taskList = ['createProject']
         try:
             while True:
                 print('listening')
@@ -233,7 +234,6 @@ class UImanager(QMainWindow):
 
     # Send task and object
     def send(self, task, obj = None):
-        print(task, str(obj))
         self.socket.send(task.encode('ascii'))
         obj = pickle.dumps(obj)
         self.socket.send(obj)

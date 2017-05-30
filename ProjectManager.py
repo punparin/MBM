@@ -1,5 +1,6 @@
 import pickle
 import io
+import time
 import copy
 from Project import *
 
@@ -122,6 +123,7 @@ class ProjectManager:
                 clientSocket.send(obj)
             except KeyError:
                 pass
+        time.sleep(0.5)
 
     # Update project
     def update(self, project):
