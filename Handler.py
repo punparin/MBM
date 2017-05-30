@@ -14,6 +14,7 @@ class Handler(threading.Thread):
         self.currentUsername = None
         self.userManagerTasks = ['logIn', 'register', 'updateProfile', 'getUserInfo', 'updateStatus']
         self.projectManagerTasks = ['createProject', 'searchProject', 'updateProject', 'removeProject', 'getInitialProject']
+        self.eventManagerTasks = ['createEvent', 'searchEvent', 'updateEvent', 'removeEvent', 'getInitialEvent']
         self.departmentManagerTasks = ['getInitialInfo']
         self.chatManagerTasks = ['sendChat']
         self.clientSocket.send("Connected Successfully".encode('ascii'))
@@ -46,6 +47,10 @@ class Handler(threading.Thread):
                             self.send(task, obj)
                     elif task in self.projectManagerTasks:
                         obj = self.projectManager.work(task, obj)
+                        if obj is not None:
+                            self.send(task, obj)
+                    elif task in self.eventManagerTasks:
+                        obj = self.eventManager.work(task, obj)
                         if obj is not None:
                             self.send(task, obj)
                 except EOFError:
