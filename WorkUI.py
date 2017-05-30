@@ -351,7 +351,7 @@ class WorkUI(QMainWindow):
             self.user_box.move(1330, 1090)
             self.addUser.move(1610, 1120)
             self.removeUser.move(1720, 1120)
-            self.user_widget.resize(501, 701)
+            self.user_widget.resize(501, 790)
 
             # all text and title
             self.work_title.setText("EVENT : " + work.title)

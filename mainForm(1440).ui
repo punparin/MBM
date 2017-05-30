@@ -968,7 +968,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
     <enum>QFrame::WinPanel</enum>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>5</number>
    </property>
    <widget class="QWidget" name="main_page">
     <property name="styleSheet">
@@ -1862,7 +1862,7 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
       <enum>QTabWidget::Triangular</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="movable">
       <bool>false</bool>
@@ -1946,51 +1946,186 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
       <attribute name="title">
        <string>Department</string>
       </attribute>
-      <widget class="QTreeWidget" name="treeWidget">
+      <widget class="QListWidget" name="departmentWidget">
        <property name="geometry">
         <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>1211</width>
-         <height>671</height>
+         <x>40</x>
+         <y>30</y>
+         <width>601</width>
+         <height>611</height>
         </rect>
        </property>
-       <column>
-        <property name="text">
-         <string>Department 1</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Department 2</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Department 3</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Department 4</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Department 5</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string/>
-        </property>
-       </column>
       </widget>
-     </widget>
-     <widget class="QWidget" name="widget">
-      <attribute name="title">
-       <string>Position</string>
-      </attribute>
+      <widget class="QLabel" name="label_3">
+       <property name="geometry">
+        <rect>
+         <x>700</x>
+         <y>130</y>
+         <width>151</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Department:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_4">
+       <property name="geometry">
+        <rect>
+         <x>730</x>
+         <y>220</y>
+         <width>81</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Position:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_21">
+       <property name="geometry">
+        <rect>
+         <x>710</x>
+         <y>380</y>
+         <width>121</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Employee :</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="departmentLine">
+       <property name="geometry">
+        <rect>
+         <x>830</x>
+         <y>130</y>
+         <width>341</width>
+         <height>31</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="positionLine">
+       <property name="geometry">
+        <rect>
+         <x>830</x>
+         <y>220</y>
+         <width>341</width>
+         <height>31</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="employeeLine">
+       <property name="geometry">
+        <rect>
+         <x>830</x>
+         <y>380</y>
+         <width>341</width>
+         <height>31</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="addDepartment">
+       <property name="geometry">
+        <rect>
+         <x>780</x>
+         <y>460</y>
+         <width>161</width>
+         <height>34</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Add Department</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="addEmployee">
+       <property name="geometry">
+        <rect>
+         <x>780</x>
+         <y>560</y>
+         <width>161</width>
+         <height>34</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Add Employee</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="addPosition">
+       <property name="geometry">
+        <rect>
+         <x>780</x>
+         <y>510</y>
+         <width>161</width>
+         <height>34</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Add Position</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="removeEmployee">
+       <property name="geometry">
+        <rect>
+         <x>960</x>
+         <y>560</y>
+         <width>201</width>
+         <height>34</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Remove Employee</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="removePosition">
+       <property name="geometry">
+        <rect>
+         <x>960</x>
+         <y>510</y>
+         <width>201</width>
+         <height>34</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Remove Position</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="removeDepartment">
+       <property name="geometry">
+        <rect>
+         <x>960</x>
+         <y>460</y>
+         <width>201</width>
+         <height>34</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Remove Department</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_23">
+       <property name="geometry">
+        <rect>
+         <x>670</x>
+         <y>300</y>
+         <width>141</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Parent Position:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="parentpositionLine">
+       <property name="geometry">
+        <rect>
+         <x>830</x>
+         <y>300</y>
+         <width>341</width>
+         <height>31</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
     </widget>
    </widget>

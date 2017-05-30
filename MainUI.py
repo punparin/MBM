@@ -167,6 +167,63 @@ class MainUI(QMainWindow):
         self.interrupt_box.currentIndexChanged.connect(self.updatePicture)
         self.interrupt_box.move(-999,-999)
 
+        #Admin Features
+        self.departmentWidget = form.findChild(QListWidget, "departmentWidget")
+        self.departmentLine = form.findChild(QLineEdit, "departmentLine")
+        self.positionLine = form.findChild(QLineEdit, "positionLine")
+        self.parentpositionLine = form.findChild(QLineEdit, "parentpositionLine")
+        self.employeeLine = form.findChild(QLineEdit, "employeeLine")
+        self.addDepartment = form.findChild(QPushButton, "addDepartment")
+        self.removeDepartment = form.findChild(QPushButton, "removeDepartment")
+        self.addPosition = form.findChild(QPushButton, "addPosition")
+        self.removePosition = form.findChild(QPushButton, "removePosition")
+        self.addEmployee = form.findChild(QPushButton, "addEmployee")
+        self.removeEmployee = form.findChild(QPushButton, "removeEmployee")
+
+        self.addDepartment.clicked.connect(self.AddDepartment)
+        self.removeDepartment.clicked.connect(self.RemoveDepartment)
+        self.addPosition.clicked.connect(self.AddPosition)
+        self.removePosition.clicked.connect(self.RemovePosition)
+        self.addEmployee.clicked.connect(self.AddEmployee)
+        self.removeEmployee.clicked.connect(self.RemoveEmployee)
+
+    def updateAdminWidget(self):
+        pass
+
+    def AddDepartment(self):
+        department = self.departmentLine.text()
+        lt = [department]
+
+    def RemoveDepartment(self):
+        department = self.departmentLine.text()
+        lt = [department]
+
+    def AddPosition(self):
+        department = self.departmentLine.text()
+        position = self.positionLine.text()
+        parentposition = self.parentpositionLine.text()
+        if parentposition == "":
+            lt = [department, position]
+        else:
+            lt = [department , position , parentposition]
+
+    def RemovePosition(self):
+        department = self.departmentLine.text()
+        position = self.positionLine.text()
+        lt = [department, position]
+
+
+    def AddEmployee(self):
+        department = self.departmentLine.text()
+        position = self.positionLine.text()
+        employee = self.employeeLine.text()
+        lt = [department, position, employee]
+
+    def RemoveEmployee(self):
+        department = self.departmentLine.text()
+        employee = self.employeeLine.text()
+        lt = [department, employee]
+
     def uploadPicture(self):
         path = "Images/" + self.parent.user.username + ".png"
         fname = QFileDialog.getOpenFileName()
@@ -207,6 +264,13 @@ class MainUI(QMainWindow):
             self.my_pic.setPixmap(pixmap)
 
     def calendarUpdate(self):
+        for work in self.parent.eventList:
+            event = self.parent.eventList[work]
+            date = QDate(int(event.dueDate[2]) ,int(event.dueDate[1]) ,int(event.dueDate[0]))
+            color = QBrush(Qt.yellow)
+            cf = self.calendar.dateTextFormat(date)
+            cf.setBackground(color)
+            self.calendar.setDateTextFormat(date, cf)
         for work in self.parent.projectList:
             project = self.parent.projectList[work]
             date = QDate(int(project.dueDate[2]) ,int(project.dueDate[1]) ,int(project.dueDate[0]))
