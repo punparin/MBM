@@ -140,7 +140,7 @@ class UImanager(QMainWindow):
         print('Waiting for User')
         try:
             while True:
-                task = self.socket.recv(1024).decode('ascii')
+                task = self.socket.recv(6).decode('ascii')
                 if task == '':
                     break
                 try:
@@ -175,7 +175,7 @@ class UImanager(QMainWindow):
         try:
             while True:
                 print('listening')
-                task = self.socket.recv(1024).decode('ascii')
+                task = self.socket.recv(32).decode('ascii')
                 if task == '':
                     pass
                 try:
