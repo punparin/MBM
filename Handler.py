@@ -12,12 +12,38 @@ class Handler(threading.Thread):
         self.eventManager = eventManager
         self.address = address
         self.currentUsername = None
+        self.logFileName = 'companyLog'
+        self.companyName = None
         self.userManagerTasks = ['logIn', 'register', 'updateProfile', 'getUserInfo', 'updateStatus']
         self.projectManagerTasks = ['createProject', 'searchProject', 'updateProject', 'removeProject', 'getInitialProject']
         self.eventManagerTasks = ['createEvent', 'searchEvent', 'updateEvent', 'removeEvent', 'getInitialEvent']
         self.departmentManagerTasks = ['getInitialInfo']
         self.chatManagerTasks = ['sendChat']
-        self.clientSocket.send("Connected Successfully".encode('ascii'))
+        self.getInformation()
+
+    # Get data from a secret file
+    def getInformation(self):
+        try:
+            fileObject = open(self.logFileName, 'rb')
+            self.companyName = pickle.load(fileObject)
+            fileObject.close()
+        except FileNotFoundError:
+            fileObject = open(self.logFileName, 'wb')
+            self.companyName = 'Company Name'
+            pickle.dump(self.companyName, fileObject)
+            fileObject.close()
+        self.clientSocket.send(self.companyName.encode('ascii'))
+
+    # notify All to getInitialInfo
+    def notifyAll(self):
+        for username in self.userManager.clientSocketList:
+            try:
+                clientSocket = self.userManager.clientSocketList[username]
+                clientSocket.send('changeCompanyName'.encode('ascii'))
+                obj = pickle.dumps(self.companyName)
+                clientSocket.send(obj)
+            except KeyError:
+                pass
 
     # Constantly recieve data from the client
     def run(self):
@@ -25,11 +51,14 @@ class Handler(threading.Thread):
             while True:
                 task = self.clientSocket.recv(32).decode('ascii')
                 if task == '':
-                    pickle.loads(self.clientSocket.recv(1024))
+                    pickle.loads(self.clientSocket.recv(4096))
                     break
                 try:
                     obj = pickle.loads(self.clientSocket.recv(4096))
                     # Seperate task for each manager
+                    if task == 'changeCompanyName':
+                        self.companyName = obj
+                        self.notifyAll()
                     if task in self.userManagerTasks:
                         obj = self.userManager.work(task, obj)
                         if task == 'logIn' and type(obj) == User:

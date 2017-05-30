@@ -52,6 +52,8 @@ class UImanager(QMainWindow):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.host = host
         self.port = port
+
+        self.companyName = None
         self.connect()
 
         if self.isServerOnline:
@@ -221,6 +223,9 @@ class UImanager(QMainWindow):
                         self.main_widget.calendarUpdate()
                     elif task == 'updateEvent':
                         self.interest_event = obj
+                    elif task == 'changeCompanyName':
+                        self.companyName = obj
+
                 except EOFError as e:
                     print(e)
         except ConnectionResetError:
@@ -232,7 +237,7 @@ class UImanager(QMainWindow):
         try:
             self.socket.connect((self.host, self.port))
             msg = self.socket.recv(1024)
-            print(msg.decode('ascii'))
+            self.companyName = msg.decode('ascii')
             self.isServerOnline = True
         except ConnectionRefusedError:
             print("The server is currently offline.")
