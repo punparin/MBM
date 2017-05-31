@@ -1,3 +1,5 @@
+from turtle import done
+
 from PySide.QtCore import *
 from PySide.QtGui import *
 from PySide.QtUiTools import *
@@ -43,8 +45,6 @@ class WorkUI(QMainWindow):
         self.work_title = form.findChild(QLabel, "work_title")
         self.status_label = form.findChild(QLabel, "status_label")
 
-        self.process_bar = form.findChild(QProgressBar, "process_bar")
-
         #date
         self.create_date = form.findChild(QDateEdit, "create_date")
         self.due_date = form.findChild(QDateEdit, "due_date")
@@ -89,64 +89,135 @@ class WorkUI(QMainWindow):
         self.all_user = []
         self.userInWork = []
         self.userInBox = []
+        self.seeing = ""
+
+        self.removeproject = form.findChild(QPushButton, "remove_project")
+        self.removeproject.clicked.connect(self.removeProject)
+
+    def removeProject(self):
+        if self.seeing == "Project":
+            #self.parent.interest_work.status = "removed"
+            self.parent.send("removeProject",self.parent.interest_work.title)
+        else:
+            #self.parent.interest_event.status = "removed"
+            self.parent.send("removeEvent",self.parent.interest_event.title)
+        self.seeing == ""
+        self.parent.changePageWorkSection("back")
 
     def addMember(self):
-        if self.user_box.currentIndex() == -1:
-            return
-        user = self.userInBox[self.user_box.currentIndex()]
-        self.userInWork.append(user)
-        self.parent.interest_work.memberList.append(user.username)
-        self.user_widget.addItem(QListWidgetItem(user.name + " " + user.last_name + " [Project Member]"))
-        self.parent.send('updateProject', self.parent.interest_work)
-        self.userInBox.clear()
-        self.user_box.clear()
-        for user in self.all_user:
-            isFound = False
-            for userExist in self.userInWork:
-                if user.username == userExist.username:
-                    isFound = True
-                    break
-            if isFound == False:
-                self.userInBox.append(user)
-                self.user_box.addItem(user.name + " " + user.last_name)
+        if self.seeing == "Project":
+            if self.user_box.currentIndex() == -1:
+                return
+            user = self.userInBox[self.user_box.currentIndex()]
+            self.userInWork.append(user)
+            self.parent.interest_work.memberList.append(user.username)
+            self.user_widget.addItem(QListWidgetItem(user.name + " " + user.last_name + " [Project Member]"))
+            self.parent.send('updateProject', self.parent.interest_work)
+            self.userInBox.clear()
+            self.user_box.clear()
+            for user in self.all_user:
+                isFound = False
+                for userExist in self.userInWork:
+                    if user.username == userExist.username:
+                        isFound = True
+                        break
+                if isFound == False:
+                    self.userInBox.append(user)
+                    self.user_box.addItem(user.name + " " + user.last_name)
+        else:
+            if self.user_box.currentIndex() == -1:
+                return
+            user = self.userInBox[self.user_box.currentIndex()]
+            self.userInWork.append(user)
+            self.parent.interest_event.memberList.append(user.username)
+            self.user_widget.addItem(QListWidgetItem(user.name + " " + user.last_name + " [Project Member]"))
+            self.parent.send('updateProject', self.parent.interest_event)
+            self.userInBox.clear()
+            self.user_box.clear()
+            for user in self.all_user:
+                isFound = False
+                for userExist in self.userInWork:
+                    if user.username == userExist.username:
+                        isFound = True
+                        break
+                if isFound == False:
+                    self.userInBox.append(user)
+                    self.user_box.addItem(user.name + " " + user.last_name)
 
     def removeMember(self):
-        if self.userInWork[self.user_widget.currentRow()].username == self.parent.interest_work.leader:
-            return
-        if self.user_widget.currentRow() == 0 or self.user_widget.currentRow() == -1:
-            return
-        self.userInWork.remove(self.userInWork[self.user_widget.currentRow()])
-        cur = self.user_widget.currentItem()
-        self.user_widget.removeItemWidget(cur)
-        self.parent.interest_work.memberList.clear()
-        for user in self.userInWork:
-            self.parent.interest_work.memberList.append(user.username)
-        self.user_widget.clear()
-        self.userInBox.clear()
-        self.user_box.clear()
-        for user in self.userInWork:
-            if user.username == self.parent.interest_work.leader:
-                self.user_widget.addItem(QListWidgetItem(user.name + " " + user.last_name + " [Project Leader]"))
-            else:
-                self.user_widget.addItem(QListWidgetItem(user.name + " " + user.last_name + " [Project Member]"))
-        for user in self.all_user:
-            isFound = False
-            for userExist in self.userInWork:
-                if user.username == userExist.username:
-                    isFound = True
-                    break
-            if isFound == False:
-                self.userInBox.append(user)
-                self.user_box.addItem(user.name + " " + user.last_name)
-        self.parent.send('updateProject', self.parent.interest_work)
-
+        if self.seeing == "Project":
+            if self.userInWork[self.user_widget.currentRow()].username == self.parent.interest_work.leader:
+                return
+            if self.user_widget.currentRow() == 0 or self.user_widget.currentRow() == -1:
+                return
+            self.userInWork.remove(self.userInWork[self.user_widget.currentRow()])
+            cur = self.user_widget.currentItem()
+            self.user_widget.removeItemWidget(cur)
+            self.parent.interest_work.memberList.clear()
+            for user in self.userInWork:
+                self.parent.interest_work.memberList.append(user.username)
+            self.user_widget.clear()
+            self.userInBox.clear()
+            self.user_box.clear()
+            for user in self.userInWork:
+                if user.username == self.parent.interest_work.leader:
+                    self.user_widget.addItem(QListWidgetItem(user.name + " " + user.last_name + " [Project Leader]"))
+                else:
+                    self.user_widget.addItem(QListWidgetItem(user.name + " " + user.last_name + " [Project Member]"))
+            for user in self.all_user:
+                isFound = False
+                for userExist in self.userInWork:
+                    if user.username == userExist.username:
+                        isFound = True
+                        break
+                if isFound == False:
+                    self.userInBox.append(user)
+                    self.user_box.addItem(user.name + " " + user.last_name)
+            self.parent.send('updateProject', self.parent.interest_work)
+        else:
+            if self.userInWork[self.user_widget.currentRow()].username == self.parent.interest_event.leader:
+                return
+            if self.user_widget.currentRow() == 0 or self.user_widget.currentRow() == -1:
+                return
+            self.userInWork.remove(self.userInWork[self.user_widget.currentRow()])
+            cur = self.user_widget.currentItem()
+            self.user_widget.removeItemWidget(cur)
+            self.parent.interest_event.memberList.clear()
+            for user in self.userInWork:
+                self.parent.interest_event.memberList.append(user.username)
+            self.user_widget.clear()
+            self.userInBox.clear()
+            self.user_box.clear()
+            for user in self.userInWork:
+                if user.username == self.parent.interest_event.leader:
+                    self.user_widget.addItem(QListWidgetItem(user.name + " " + user.last_name + " [Project Header]"))
+                else:
+                    self.user_widget.addItem(QListWidgetItem(user.name + " " + user.last_name ))
+            for user in self.all_user:
+                isFound = False
+                for userExist in self.userInWork:
+                    if user.username == userExist.username:
+                        isFound = True
+                        break
+                if isFound == False:
+                    self.userInBox.append(user)
+                    self.user_box.addItem(user.name + " " + user.last_name)
+            self.parent.send('updateEvent', self.parent.interest_event)
 
     def comment(self):
-        date = QDate.currentDate().toString("[dd/MM/yyyy] ")
-        self.parent.interest_work.textList.append(date + self.parent.user.name + " :  " + self.comment_edit.text())
-        self.comment_widget.addItem(QListWidgetItem(date+ self.parent.user.name + " :  " + self.comment_edit.text()))
-        self.parent.send('updateProject', self.parent.interest_work)
-        self.comment_edit.clear()
+        if self.seeing == "Project":
+            date = QDate.currentDate().toString("[dd/MM/yyyy] ")
+            self.parent.interest_work.textList.append(date + self.parent.user.name + " :  " + self.comment_edit.text())
+            self.comment_widget.addItem(QListWidgetItem(date+ self.parent.user.name + " :  " + self.comment_edit.text()))
+            self.parent.send('updateProject', self.parent.interest_work)
+            self.comment_edit.clear()
+        else:
+            date = QDate.currentDate().toString("[dd/MM/yyyy] ")
+            self.parent.interest_event.textList.append(date + self.parent.user.name + " :  " + self.comment_edit.text())
+            self.comment_widget.addItem(
+            QListWidgetItem(date + self.parent.user.name + " :  " + self.comment_edit.text()))
+            self.parent.send('updateEvent', self.parent.interest_event)
+            self.comment_edit.clear()
 
     def removeTask(self):
         if self.task_widget.currentRow() == -1:
@@ -167,7 +238,6 @@ class WorkUI(QMainWindow):
                 row = self.task_widget.item(i)
                 row.setForeground(QBrush(Qt.black))
 
-
     def setDone(self):
         if self.task_widget.currentRow() == -1:
             return
@@ -180,8 +250,12 @@ class WorkUI(QMainWindow):
         self.parent.send('updateProject', self.parent.interest_work)
 
     def editDesciption(self):
-        self.parent.interest_work.description = self.description.toPlainText()
-        self.parent.send('updateProject', self.parent.interest_work)
+        if  self.seeing == "Project":
+            self.parent.interest_work.description = self.description.toPlainText()
+            self.parent.send('updateProject', self.parent.interest_work)
+        else:
+            self.parent.interest_event.description = self.description.toPlainText()
+            self.parent.send('updateEvent', self.parent.interest_event)
 
     def addTask(self):
         if self.task_edit.text() == "":
@@ -206,12 +280,26 @@ class WorkUI(QMainWindow):
         notDoneLt =[]
         userLt = []
         if type(work) == type(Project(None,None)):
+            self.seeing = "Project"
+            self.task_widget.move(1170, 250)
+            self.task_edit.move(1170, 740)
+            self.task_done.move(1500, 770)
+            self.add_task.move(1610, 770)
+            self.remove_task.move(1720, 770)
+
+            self.user_widget.move(1330, 830)
+            self.user_box.move(1330, 1320)
+            self.addUser.move(1610, 1350)
+            self.removeUser.move(1720, 1350)
+            self.user_widget.resize(501, 491)
             #all text and title
             self.work_title.setText(work.title)
             self.create_date.setDate(QDate(int(work.createdDate[2]),int(work.createdDate[1]),int(work.createdDate[0])))
             self.due_date.setDate(QDate(int(work.dueDate[2]),int(work.dueDate[1]),int(work.dueDate[0])))
             self.description.setPlainText(work.description)
             self.status_label.setText(work.status)
+            if QDate(int(work.createdDate[2]), int(work.createdDate[1]), int(work.createdDate[0])) > QDate(int(work.dueDate[2]), int(work.dueDate[1]), int(work.dueDate[0])):
+                self.status_label.setText("Expired")
             #status label
             if work.status == "In Process":
                 self.status_label.setStyleSheet("font: 75 14pt \"MS UI Gothic\"; background-color : ; color : green;")
@@ -255,6 +343,68 @@ class WorkUI(QMainWindow):
                     self.user_widget.addItem(QListWidgetItem(user.name + " " + user.last_name + " [Project Leader]"))
                 else:
                     self.user_widget.addItem(QListWidgetItem(user.name + " " + user.last_name + " [Project Member]"))
+
+            for user in self.all_user:
+                isFound = False
+                for userExist in self.userInWork:
+                    if user.username == userExist.username:
+                        isFound = True
+                        break
+                if isFound == False:
+                    self.userInBox.append(user)
+                    self.user_box.addItem(user.name + " " + user.last_name)
+        else:
+            ## FOR EVENT
+            self.seeing = "Event"
+            self.remove_task.move(-999,-999)
+            self.task_widget.move(-999, -999)
+            self.task_edit.move(-999, -999)
+            self.task_done.move(-999, -999)
+            self.add_task.move(-999, -999)
+
+            self.user_widget.move(1330, 330)
+            self.user_box.move(1330, 1090)
+            self.addUser.move(1610, 1120)
+            self.removeUser.move(1720, 1120)
+            self.user_widget.resize(501, 790)
+
+            # all text and title
+            self.work_title.setText("EVENT : " + work.title)
+            self.create_date.setDate(QDate(int(work.createdDate[2]), int(work.createdDate[1]), int(work.createdDate[0])))
+            self.due_date.setDate(QDate(int(work.dueDate[2]), int(work.dueDate[1]), int(work.dueDate[0])))
+            self.description.setPlainText(work.description)
+            self.status_label.setText("In process")
+            if QDate(int(work.createdDate[2]), int(work.createdDate[1]), int(work.createdDate[0])) > QDate(int(work.dueDate[2]), int(work.dueDate[1]), int(work.dueDate[0])):
+                self.status_label.setText("Expired")
+            # status label
+            if work.status == "In Process":
+                self.status_label.setStyleSheet("font: 75 14pt \"MS UI Gothic\"; background-color : ; color : green;")
+            else:
+                self.status_label.setStyleSheet("font: 75 14pt \"MS UI Gothic\"; background-color : ; color : red;")
+            # commnet Widget
+            for line in work.textList:
+                self.comment_widget.addItem(QListWidgetItem(str(line)))
+
+            # user_Widget:
+            if self.parent.departmentList is not None:
+                self.isRequesting = False
+                for department in self.parent.departmentList:
+                    for pre, fill, node in RenderTree(department.positionTree):
+                        if node is None:
+                            continue
+                        if node.name.employeeList is not None:
+                            for userID in node.name.employeeList:
+                                user = node.name.employeeList[userID]
+                                self.all_user.append(user)
+            for user in work.memberList:
+                for all in self.all_user:
+                    if user == all.username:
+                        self.userInWork.append(all)
+            for user in self.userInWork:
+                if user.username == self.parent.interest_event.leader:
+                    self.user_widget.addItem(QListWidgetItem(user.name + " " + user.last_name + " [Event Header]"))
+                else:
+                    self.user_widget.addItem(QListWidgetItem(user.name + " " + user.last_name))
 
             for user in self.all_user:
                 isFound = False

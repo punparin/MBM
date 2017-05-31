@@ -458,7 +458,7 @@ QWidget#list_user {background-image: url(Images/chat_background.png) }
 
 </string>
   </property>
-  <widget class="QLabel" name="profile">
+  <widget class="QLabel" name="profile_pic">
    <property name="geometry">
     <rect>
      <x>1670</x>
@@ -2152,7 +2152,7 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
     <string/>
    </property>
   </widget>
-  <zorder>profile</zorder>
+  <zorder>profile_pic</zorder>
   <zorder>comboBox</zorder>
   <zorder>stackedWidget</zorder>
   <zorder>chat_button</zorder>
