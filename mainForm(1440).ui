@@ -945,11 +945,6 @@ QComboBox QAbstractItemView {
      <string>Settings</string>
     </property>
    </item>
-   <item>
-    <property name="text">
-     <string>Sign Out</string>
-    </property>
-   </item>
   </widget>
   <widget class="QStackedWidget" name="stackedWidget">
    <property name="geometry">
@@ -968,18 +963,18 @@ QWidget {background-image: url(Images/widget.png) }</string>
     <enum>QFrame::WinPanel</enum>
    </property>
    <property name="currentIndex">
-    <number>5</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="main_page">
     <property name="styleSheet">
      <string notr="true">QWidget#main_page {background-image: url(Images/widget.png) }</string>
     </property>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="company_name">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>50</x>
        <y>20</y>
-       <width>261</width>
+       <width>451</width>
        <height>51</height>
       </rect>
      </property>
@@ -987,7 +982,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
       <string notr="true">font: 15pt &quot;MS Shell Dlg 2&quot;;</string>
      </property>
      <property name="text">
-      <string>Company name</string>
+      <string/>
      </property>
     </widget>
     <widget class="QTabWidget" name="eventList">
@@ -1003,7 +998,7 @@ QWidget {background-image: url(Images/widget.png) }</string>
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
@@ -1299,49 +1294,7 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
          </property>
         </widget>
        </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="label_16">
-         <property name="text">
-          <string>Nationality :</string>
-         </property>
-        </widget>
-       </item>
        <item row="9" column="1">
-        <widget class="QComboBox" name="nation_box">
-         <property name="cursor">
-          <cursorShape>PointingHandCursor</cursorShape>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="0">
-        <widget class="QLabel" name="label_14">
-         <property name="text">
-          <string>Position :</string>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="1">
-        <widget class="QComboBox" name="position_box">
-         <property name="cursor">
-          <cursorShape>PointingHandCursor</cursorShape>
-         </property>
-        </widget>
-       </item>
-       <item row="11" column="0">
-        <widget class="QLabel" name="label_15">
-         <property name="text">
-          <string>Department :</string>
-         </property>
-        </widget>
-       </item>
-       <item row="11" column="1">
-        <widget class="QComboBox" name="department_box">
-         <property name="cursor">
-          <cursorShape>PointingHandCursor</cursorShape>
-         </property>
-        </widget>
-       </item>
-       <item row="12" column="1">
         <widget class="QPushButton" name="save_button">
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
@@ -1351,7 +1304,7 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
          </property>
         </widget>
        </item>
-       <item row="13" column="1">
+       <item row="10" column="1">
         <widget class="QPushButton" name="cancel_button">
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
@@ -1361,7 +1314,7 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
          </property>
         </widget>
        </item>
-       <item row="14" column="1">
+       <item row="11" column="1">
         <widget class="QLabel" name="save_warn_label">
          <property name="text">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -1385,12 +1338,6 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
       <zorder>label_12</zorder>
       <zorder>dateEdit</zorder>
       <zorder>label_13</zorder>
-      <zorder>position_box</zorder>
-      <zorder>department_box</zorder>
-      <zorder>label_14</zorder>
-      <zorder>label_15</zorder>
-      <zorder>label_16</zorder>
-      <zorder>nation_box</zorder>
       <zorder>label_17</zorder>
       <zorder>email_lineEdit</zorder>
       <zorder>cancel_button</zorder>
@@ -1422,134 +1369,37 @@ QTextEdit { background-color: rgb(255, 255, 127) }</string>
     <widget class="QLabel" name="label_8">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>30</y>
-       <width>191</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 15pt &quot;MS Shell Dlg 2&quot;;</string>
-     </property>
-     <property name="text">
-      <string>Settings</string>
-     </property>
-    </widget>
-    <widget class="QRadioButton" name="radioButton">
-     <property name="geometry">
-      <rect>
-       <x>60</x>
-       <y>100</y>
-       <width>191</width>
+       <x>200</x>
+       <y>280</y>
+       <width>161</width>
        <height>21</height>
       </rect>
      </property>
      <property name="text">
-      <string>Option1</string>
+      <string>Company name :</string>
      </property>
     </widget>
-    <widget class="QRadioButton" name="radioButton_2">
+    <widget class="QPushButton" name="confirmCname">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>140</y>
-       <width>191</width>
-       <height>21</height>
+       <x>560</x>
+       <y>340</y>
+       <width>112</width>
+       <height>34</height>
       </rect>
      </property>
      <property name="text">
-      <string>Option2</string>
+      <string>Confirm</string>
      </property>
     </widget>
-    <widget class="QRadioButton" name="radioButton_3">
+    <widget class="QLineEdit" name="companyEdit">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>180</y>
-       <width>191</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Option3</string>
-     </property>
-    </widget>
-    <widget class="QRadioButton" name="radioButton_4">
-     <property name="geometry">
-      <rect>
-       <x>60</x>
-       <y>220</y>
-       <width>191</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Option4</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBox">
-     <property name="geometry">
-      <rect>
-       <x>270</x>
-       <y>100</y>
-       <width>191</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>setting1</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBox_2">
-     <property name="geometry">
-      <rect>
-       <x>270</x>
-       <y>140</y>
-       <width>191</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>setting2</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBox_3">
-     <property name="geometry">
-      <rect>
-       <x>270</x>
-       <y>180</y>
-       <width>191</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>setting3</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBox_4">
-     <property name="geometry">
-      <rect>
-       <x>270</x>
-       <y>220</y>
-       <width>191</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>setting4</string>
-     </property>
-    </widget>
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="geometry">
-      <rect>
-       <x>120</x>
+       <x>370</x>
        <y>270</y>
-       <width>193</width>
-       <height>28</height>
+       <width>571</width>
+       <height>41</height>
       </rect>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </widget>

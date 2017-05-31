@@ -44,16 +44,11 @@ class ProfileUI(QMainWindow):
         self.email_line = form.findChild(QLineEdit, "email_lineEdit")
         self.address_text = form.findChild(QTextEdit, "address_textEdit")
         self.bio_text = form.findChild(QTextEdit, "bio_textEdit")
-
         self.birth_edit = form.findChild(QLineEdit, "BirthDate")
-        self.nation_box = form.findChild(QLineEdit, "Nationality")
-        self.position_box = form.findChild(QLineEdit, "Position")
-        self.department_box = form.findChild(QLineEdit, "Department")
 
         #other components
         self.project_list = form.findChild(QListWidget, "working")
         self.event_list = form.findChild(QListWidget, "joining")
-        self.message_button = form.findChild(QPushButton, "message_button")
         self.back_button = form.findChild(QPushButton, "back_button")
 
         self.back_button.clicked.connect(self.back)
@@ -64,6 +59,17 @@ class ProfileUI(QMainWindow):
         self.nickname_line.setText(user.nickname)
         self.phone_line.setText(user.phone_number)
         self.email_line.setText(user.email)
+        self.self.address_text.setPlainText(user.address)
+        self.bio_text.setPlainText(user.biology)
+        self.birth_edit.setText(user.birth_date)
+
+        for work in self.parent.projectList:
+            if work.isMemberInProject(user.username):
+                self.project_list.addItem(QListWidgetItem(work.title))
+
+        for work in self.parent.eventList:
+            if work.isMemberInEvent(user.username):
+                self.event_list.addItem(QListWidgetItem(work.title))
 
     def back(self):
         self.parent.changePageProfileSection("back")

@@ -91,6 +91,19 @@ class WorkUI(QMainWindow):
         self.userInBox = []
         self.seeing = ""
 
+        self.removeproject = form.findChild(QPushButton, "remove_project")
+        self.removeproject.clicked.connect(self.removeProject)
+
+    def removeProject(self):
+        if self.seeing == "Project":
+            #self.parent.interest_work.status = "removed"
+            self.parent.send("removeProject",self.parent.interest_work.title)
+        else:
+            #self.parent.interest_event.status = "removed"
+            self.parent.send("removeEvent",self.parent.interest_event.title)
+        self.seeing == ""
+        self.parent.changePageWorkSection("back")
+
     def addMember(self):
         if self.seeing == "Project":
             if self.user_box.currentIndex() == -1:
@@ -285,6 +298,8 @@ class WorkUI(QMainWindow):
             self.due_date.setDate(QDate(int(work.dueDate[2]),int(work.dueDate[1]),int(work.dueDate[0])))
             self.description.setPlainText(work.description)
             self.status_label.setText(work.status)
+            if QDate(int(work.createdDate[2]), int(work.createdDate[1]), int(work.createdDate[0])) > QDate(int(work.dueDate[2]), int(work.dueDate[1]), int(work.dueDate[0])):
+                self.status_label.setText("Expired")
             #status label
             if work.status == "In Process":
                 self.status_label.setStyleSheet("font: 75 14pt \"MS UI Gothic\"; background-color : ; color : green;")
@@ -358,12 +373,14 @@ class WorkUI(QMainWindow):
             self.create_date.setDate(QDate(int(work.createdDate[2]), int(work.createdDate[1]), int(work.createdDate[0])))
             self.due_date.setDate(QDate(int(work.dueDate[2]), int(work.dueDate[1]), int(work.dueDate[0])))
             self.description.setPlainText(work.description)
-            self.status_label.setText(work.status)
+            self.status_label.setText("In process")
+            if QDate(int(work.createdDate[2]), int(work.createdDate[1]), int(work.createdDate[0])) > QDate(int(work.dueDate[2]), int(work.dueDate[1]), int(work.dueDate[0])):
+                self.status_label.setText("Expired")
             # status label
             if work.status == "In Process":
                 self.status_label.setStyleSheet("font: 75 14pt \"MS UI Gothic\"; background-color : ; color : green;")
             else:
-                self.status_label.setStyleSheet("font: 75 14pt \"MS UI Gothic\"; background-color : ; color : black;")
+                self.status_label.setStyleSheet("font: 75 14pt \"MS UI Gothic\"; background-color : ; color : red;")
             # commnet Widget
             for line in work.textList:
                 self.comment_widget.addItem(QListWidgetItem(str(line)))

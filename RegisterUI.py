@@ -31,6 +31,8 @@ class RegisterUI(QMainWindow):
         self.user_id = form.findChild(QLineEdit, "lineEdit_1")
         self.password = form.findChild(QLineEdit, "lineEdit_2")
         self.email = form.findChild(QLineEdit, "lineEdit_3")
+        self.name = form.findChild(QLineEdit, "lineEdit_4")
+        self.last_name = form.findChild(QLineEdit, "lineEdit_5")
         self.comform_button = form.findChild(QPushButton, "pushButton")
         self.back_button = form.findChild(QPushButton, "pushButton_2")
 
@@ -39,6 +41,13 @@ class RegisterUI(QMainWindow):
     # click button "confirm"
     def confirm(self):
         user = User(self.user_id.text(), self.password.text() , self.email.text())
+        user.name = self.name.text()
+        user.last_name = self.last_name.text()
+        self.user_id.clear()
+        self.password.clear()
+        self.email.clear()
+        self.name.clear()
+        self.last_name.clear()
         self.parent.changePageRegisterSection("register_confirm", user)
 
     def back(self):

@@ -62,14 +62,13 @@ QWidget#working{background-image: url(Images/chat_background.png) }
 QWidget#joining {background-image: url(Images/chat_background.png) }
 
 QWidget#page_label {background-image: url(Images/widget.png) }
-
-QWidget#profile_pic{background-image: url(Images/widget.png) }</string>
+</string>
   </property>
   <widget class="QLabel" name="page_label">
    <property name="geometry">
     <rect>
-     <x>820</x>
-     <y>90</y>
+     <x>800</x>
+     <y>120</y>
      <width>611</width>
      <height>91</height>
     </rect>
@@ -81,8 +80,8 @@ QWidget#profile_pic{background-image: url(Images/widget.png) }</string>
   <widget class="QPushButton" name="back_button">
    <property name="geometry">
     <rect>
-     <x>1950</x>
-     <y>80</y>
+     <x>1940</x>
+     <y>100</y>
      <width>171</width>
      <height>51</height>
     </rect>
@@ -97,32 +96,13 @@ QWidget#profile_pic{background-image: url(Images/widget.png) }</string>
     <string>Back</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="message_button">
-   <property name="geometry">
-    <rect>
-     <x>1740</x>
-     <y>80</y>
-     <width>171</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="cursor">
-    <cursorShape>PointingHandCursor</cursorShape>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font: 11pt &quot;MS Shell Dlg 2&quot;;</string>
-   </property>
-   <property name="text">
-    <string>Message</string>
-   </property>
-  </widget>
   <widget class="QScrollArea" name="detail_area">
    <property name="geometry">
     <rect>
-     <x>820</x>
-     <y>310</y>
+     <x>800</x>
+     <y>370</y>
      <width>1071</width>
-     <height>851</height>
+     <height>691</height>
     </rect>
    </property>
    <property name="verticalScrollBarPolicy">
@@ -137,7 +117,7 @@ QWidget#profile_pic{background-image: url(Images/widget.png) }</string>
       <x>0</x>
       <y>0</y>
       <width>1043</width>
-      <height>849</height>
+      <height>689</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout">
@@ -330,73 +310,6 @@ QWidget#profile_pic{background-image: url(Images/widget.png) }</string>
        </property>
       </widget>
      </item>
-     <item row="9" column="0">
-      <widget class="QLabel" name="label_16">
-       <property name="text">
-        <string>Nationality :</string>
-       </property>
-      </widget>
-     </item>
-     <item row="9" column="1">
-      <widget class="QLineEdit" name="Nationality">
-       <property name="cursor">
-        <cursorShape>ForbiddenCursor</cursorShape>
-       </property>
-       <property name="mouseTracking">
-        <bool>false</bool>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="10" column="0">
-      <widget class="QLabel" name="label_14">
-       <property name="text">
-        <string>Position :</string>
-       </property>
-      </widget>
-     </item>
-     <item row="10" column="1">
-      <widget class="QLineEdit" name="Position">
-       <property name="cursor">
-        <cursorShape>ForbiddenCursor</cursorShape>
-       </property>
-       <property name="mouseTracking">
-        <bool>false</bool>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="11" column="0">
-      <widget class="QLabel" name="label_15">
-       <property name="text">
-        <string>Department :</string>
-       </property>
-      </widget>
-     </item>
-     <item row="11" column="1">
-      <widget class="QLineEdit" name="Department">
-       <property name="cursor">
-        <cursorShape>ForbiddenCursor</cursorShape>
-       </property>
-       <property name="mouseTracking">
-        <bool>false</bool>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="12" column="1">
-      <widget class="QLabel" name="save_warn_label">
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-     </item>
     </layout>
     <zorder>label_5</zorder>
     <zorder>phone_lineEdit</zorder>
@@ -413,16 +326,9 @@ QWidget#profile_pic{background-image: url(Images/widget.png) }</string>
     <zorder>bio_textEdit</zorder>
     <zorder>label_12</zorder>
     <zorder>label_13</zorder>
-    <zorder>label_14</zorder>
-    <zorder>label_15</zorder>
-    <zorder>label_16</zorder>
     <zorder>label_17</zorder>
     <zorder>email_lineEdit</zorder>
-    <zorder>save_warn_label</zorder>
     <zorder>BirthDate</zorder>
-    <zorder>Nationality</zorder>
-    <zorder>Position</zorder>
-    <zorder>Department</zorder>
    </widget>
   </widget>
   <widget class="QLabel" name="profile_pic">

@@ -53,7 +53,7 @@ class UImanager(QMainWindow):
         self.host = host
         self.port = port
 
-        self.companyName = None
+        self.companyName = ""
         self.connect()
 
         if self.isServerOnline:
@@ -230,6 +230,7 @@ class UImanager(QMainWindow):
                         self.interest_event = obj
                     elif task == 'changeCompanyName':
                         self.companyName = obj
+                        self.main_widget.company_name.setText(self.companyName)
                     elif task == 'addDepartment':
                         message = obj
                         self.main_widget.updateWarnAdmin(message)
@@ -260,6 +261,7 @@ class UImanager(QMainWindow):
             self.socket.connect((self.host, self.port))
             msg = self.socket.recv(1024)
             self.companyName = msg.decode('ascii')
+            self.main_widget.company_name.setText(self.companyName)
             self.isServerOnline = True
         except ConnectionRefusedError:
             print("The server is currently offline.")

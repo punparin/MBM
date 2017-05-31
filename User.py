@@ -15,7 +15,7 @@ class User:
         self.nickname = ""
         self.address = ""
         self.phone_number = ""
-        self.birth_date = ""
+        self.birth_date = "9.8.1996"
         self.position = {}
         self.department = ""
         self.biology = ""

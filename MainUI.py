@@ -60,11 +60,7 @@ class MainUI(QMainWindow):
         self.address_text = form.findChild(QTextEdit, "address_textEdit")
         self.bio_text = form.findChild(QTextEdit, "bio_textEdit")
         self.upload_button = form.findChild(QPushButton, "upload_button")
-
         self.birth_edit = form.findChild(QDateEdit, "dateEdit")
-        self.nation_box = form.findChild(QComboBox, "nation_box")
-        self.position_box = form.findChild(QComboBox, "position_box")
-        self.department_box = form.findChild(QComboBox, "department_box")
         self.save_button = form.findChild(QPushButton, "save_button")
         self.cancel_button = form.findChild(QPushButton, "cancel_button")
         self.change_password_button = form.findChild(QPushButton, "change_password_button")
@@ -186,6 +182,17 @@ class MainUI(QMainWindow):
         self.removePosition.clicked.connect(self.RemovePosition)
         self.addEmployee.clicked.connect(self.AddEmployee)
         self.removeEmployee.clicked.connect(self.RemoveEmployee)
+
+        self.company_name = form.findChild(QLabel, "company_name")
+        self.companyEdit = form.findChild(QLineEdit, "companyEdit")
+        self.confirmCname = form.findChild(QPushButton, "confirmCname")
+        self.confirmCname.clicked.connect(self.changeCompanyName)
+
+    def changeCompanyName(self):
+        if self.parent.user.isAdmin == False:
+            return
+        self.parent.send('changeCompanyName', self.companyEdit.text())
+        self.companyEdit.clear()
 
     def updateWarnAdmin(self,message):
         self.positionLine.clear()
@@ -441,7 +448,9 @@ class MainUI(QMainWindow):
         self.parent.user.nickname = (self.nickname_line.text())
         self.parent.user.phone_number = self.phone_line.text()
         self.parent.user.email = self.email_line.text()
-        #have more
+        self.parent.user.address = self.address_text.toPlainText()
+        self.parent.user.biology = self.bio_text.toPlainText()
+        self.parent.user.birth_date = self.birth_edit.date().toString("dd.MM.yyyy")
         #send user(modified) back to server
         self.parent.send("updateProfile", self.parent.user)
         self.loadProfile()
@@ -454,6 +463,10 @@ class MainUI(QMainWindow):
         self.nickname_line.setText(self.parent.user.nickname)
         self.phone_line.setText(self.parent.user.phone_number)
         self.email_line.setText(self.parent.user.email)
+        self.address_text.setPlainText(self.parent.user.address)
+        self.bio_text.setPlainText(self.parent.user.biology)
+        lt = self.parent.user.birth_date.split('.')
+        self.birth_edit.setDate(QDate(int(lt[2]),int(lt[1]),int(lt[0])))
         self.save_warn_label.setText("")
 
     def confirm_password(self):
